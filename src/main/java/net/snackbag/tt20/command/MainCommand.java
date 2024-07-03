@@ -16,9 +16,9 @@ public class MainCommand {
             CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(
                 CommandManager.literal("tt20").executes(MainCommand::executeMain)
-                        .then(CommandManager.literal("toggle").executes(MainCommand::executeToggle))
+                        .then(CommandManager.literal("toggle").requires(source -> source.hasPermissionLevel(3)).executes(MainCommand::executeToggle))
                         .then(CommandManager.literal("tps").executes(MainCommand::executeTps))
-                        .then(CommandManager.literal("reload").executes(MainCommand::executeReload))
+                        .then(CommandManager.literal("reload").requires(source -> source.hasPermissionLevel(2)).executes(MainCommand::executeReload))
         );
     }
 

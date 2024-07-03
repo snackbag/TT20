@@ -3,7 +3,7 @@ package net.snackbag.tt20.util;
 import net.snackbag.tt20.TT20;
 
 public class TPSUtil {
-    public static String colorizeTPS(long tps) {
+    public static String colorizeTPS(double tps) {
         if (tps > 15) {
             return "§a" + tps;
         } else if (tps > 10) {

@@ -14,7 +14,7 @@ public class TPSUtil {
     }
 
     public static float tt20(float ticks, boolean limitZero) {
-        float newTicks = ticks * TT20.TPS_CALCULATOR.getTPS() / 20f;
+        float newTicks = ticks * (float) TT20.TPS_CALCULATOR.getTPS() / 20f;
 
         if (limitZero) return Math.max(newTicks, 1f);
         else return newTicks;
@@ -22,6 +22,13 @@ public class TPSUtil {
 
     public static int tt20(int ticks, boolean limitZero) {
         int newTicks = ticks * (int) TT20.TPS_CALCULATOR.getTPS() / 20;
+
+        if (limitZero) return Math.max(newTicks, 1);
+        else return newTicks;
+    }
+
+    public static double tt20(double ticks, boolean limitZero) {
+        double newTicks = ticks * TT20.TPS_CALCULATOR.getTPS() / 20;
 
         if (limitZero) return Math.max(newTicks, 1);
         else return newTicks;

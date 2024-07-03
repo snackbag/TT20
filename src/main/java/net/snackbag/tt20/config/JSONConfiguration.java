@@ -154,7 +154,7 @@ public class JSONConfiguration {
             element = element.getAsJsonObject().get(part);
         }
 
-        return element != null && element.isJsonPrimitive() && element.getAsJsonPrimitive().isString()
+        return element != null && element.isJsonPrimitive() && element.getAsJsonPrimitive().isBoolean()
                 ? element.getAsBoolean()
                 : null;
     }

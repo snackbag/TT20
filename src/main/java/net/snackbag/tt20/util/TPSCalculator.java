@@ -50,4 +50,8 @@ public class TPSCalculator {
         double tps = 1000 / (double) getMSPT();
         return tps > 20 ? 20 : tps;
     }
+
+    public double getMostAccurateTPS() {
+        return getTPS() > getAverageTPS() ? getAverageTPS() : getTPS();
+    }
 }

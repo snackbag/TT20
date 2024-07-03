@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class AbstractBlockMixin {
     @Inject(method = "calcBlockBreakingDelta", at = @At("RETURN"), cancellable = true)
     private void onBlockBreakingCalc(BlockState state, PlayerEntity player, BlockView world, BlockPos pos, CallbackInfoReturnable<Float> cir) {
-        if (!TT20.enabled) return;
+        if (!TT20.config.enabled()) return;
 
         if (cir.getReturnValue() != 0.0f) {
             cir.setReturnValue(TPSUtil.tt20(cir.getReturnValue()));

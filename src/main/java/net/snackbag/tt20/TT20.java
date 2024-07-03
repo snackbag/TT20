@@ -13,7 +13,6 @@ public class TT20 implements ModInitializer {
 	public static final String VERSION = "0.1.0";
 	public static final TPSCalculator TPS_CALCULATOR = new TPSCalculator();
 
-	public static boolean enabled = true;
 	public static final MainConfig config = new MainConfig();
 
 	@Override

@@ -27,7 +27,7 @@ public class ServerPlayerInteractionManagerMixin {
     @Redirect(method = "processBlockBreakingAction", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;calcBlockBreakingDelta(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)F"))
     private float onProcessBlockBreakingAction(BlockState instance, PlayerEntity playerEntity, BlockView blockView, BlockPos blockPos) {
         float v = instance.calcBlockBreakingDelta(playerEntity, playerEntity.getWorld(), blockPos);
-        if (!TT20.enabled) return v;
+        if (!TT20.config.enabled()) return v;
 
         int j = tickCounter - startMiningTime;
         return v + TPSUtil.tt20(j);

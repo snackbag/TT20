@@ -28,7 +28,7 @@ public class JSONConfiguration {
 
     public void save() {
         try {
-            File file = new File(getAbsolutePath());
+            File file = new File(getAbsolutePath() + fileName);
             file.getParentFile().mkdirs();
             file.createNewFile();
 
@@ -44,7 +44,7 @@ public class JSONConfiguration {
 
     public void reload() {
         try {
-            File file = new File(getAbsolutePath());
+            File file = new File(getAbsolutePath() + fileName);
             file.getParentFile().mkdirs();
 
             // if the file didn't exist before
@@ -54,7 +54,7 @@ public class JSONConfiguration {
                 writer.close();
             }
 
-            BufferedReader reader = new BufferedReader(new FileReader(getAbsolutePath()));
+            BufferedReader reader = new BufferedReader(new FileReader(getAbsolutePath() + fileName));
             json = gson.fromJson(reader, JsonObject.class);
         } catch (IOException e) {
             TT20.LOGGER.error("(CottonMC) Failed to reload JSONConfiguration '" + fileName + "'");
@@ -213,7 +213,7 @@ public class JSONConfiguration {
     }
 
     public String getAbsolutePath() {
-        return FabricLoader.getInstance().getGameDir().toAbsolutePath().toString() + "/tt20";
+        return FabricLoader.getInstance().getGameDir().toAbsolutePath() + "/tt20/";
     }
 
     private void collectStringKeys(JsonObject jsonObject, String prefix, Set<String> keys) {

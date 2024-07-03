@@ -5,6 +5,7 @@
 	"mixins": [
 		"AbstractBlockMixin",
 		"DedicatedServerWatchdogMixin",
+		"ItemEntityMixin",
 		"ItemMixin",
 		"ServerPlayerInteractionManagerMixin"
 	],

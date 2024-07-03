@@ -19,7 +19,7 @@ public class AbstractBlockMixin {
         if (!TT20.config.enabled()) return;
 
         if (cir.getReturnValue() != 0.0f) {
-            cir.setReturnValue(TPSUtil.tt20(cir.getReturnValue()));
+            cir.setReturnValue(TPSUtil.tt20(cir.getReturnValue(), true));
         }
     }
 }

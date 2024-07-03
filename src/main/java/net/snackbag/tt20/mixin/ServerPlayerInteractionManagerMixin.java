@@ -30,6 +30,6 @@ public class ServerPlayerInteractionManagerMixin {
         if (!TT20.config.enabled()) return v;
 
         int j = tickCounter - startMiningTime;
-        return v + TPSUtil.tt20(j);
+        return v + TPSUtil.tt20(j, true);
     }
 }

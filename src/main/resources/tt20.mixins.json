@@ -1,8 +1,10 @@
 {
 	"required": true,
-	"package": "net.snackbag.mixin",
+	"package": "net.snackbag.tt20.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
+		"AbstractBlockMixin",
+		"ServerPlayerInteractionManagerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

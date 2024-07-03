@@ -35,8 +35,9 @@ public class MainCommand {
         var source = context.getSource();
 
         source.sendMessage(Text.literal(
-                "§7TPS: " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getTPS(), true) +
-                        "§7 with average " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getAverageTPS(), true)
+                "§7TPS " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getTPS(), true) +
+                        "§7 with average " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getAverageTPS(), true) +
+                        "§7 accurate " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getMostAccurateTPS(), true)
         ));
 
         return 1;

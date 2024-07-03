@@ -12,7 +12,7 @@ TT20 only fixes the symptoms of TPS lag, not the actual lag. It re-calculates th
 
 ## What's covered?
 - [X] Block break delay
-- [ ] Eating delay
+- [X] Eating delay
 - [ ] Item pickup delay
 - [ ] Furnace delay
 - [ ] Blast furnace delay

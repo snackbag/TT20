@@ -1,12 +1,9 @@
-package net.snackbag;
+package net.snackbag.tt20;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.text.Text;
-import net.snackbag.command.CommandRegistry;
-import net.snackbag.util.TPSCalculator;
+import net.snackbag.tt20.command.CommandRegistry;
+import net.snackbag.tt20.util.TPSCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

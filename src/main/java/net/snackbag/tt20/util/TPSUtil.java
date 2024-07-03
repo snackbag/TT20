@@ -1,4 +1,6 @@
-package net.snackbag.util;
+package net.snackbag.tt20.util;
+
+import net.snackbag.tt20.TT20;
 
 public class TPSUtil {
     public static String colorizeTPS(long tps) {
@@ -9,5 +11,9 @@ public class TPSUtil {
         } else {
             return "§c" + tps;
         }
+    }
+
+    public static float tt20(float ticks) {
+        return ticks * TT20.TPS_CALCULATOR.getTPS() / 20f;
     }
 }

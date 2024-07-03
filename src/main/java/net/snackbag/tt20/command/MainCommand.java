@@ -1,4 +1,4 @@
-package net.snackbag.command;
+package net.snackbag.tt20.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
@@ -6,8 +6,8 @@ import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
-import net.snackbag.TT20;
-import net.snackbag.util.TPSUtil;
+import net.snackbag.tt20.TT20;
+import net.snackbag.tt20.util.TPSUtil;
 
 public class MainCommand {
     public static void register(

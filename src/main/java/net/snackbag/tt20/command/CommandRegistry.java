@@ -1,4 +1,4 @@
-package net.snackbag.command;
+package net.snackbag.tt20.command;
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 

@@ -1,4 +1,4 @@
-package net.snackbag.util;
+package net.snackbag.tt20.util;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 

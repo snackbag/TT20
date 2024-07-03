@@ -22,16 +22,11 @@ public class TPSCalculator {
         return currentTick - lastTick;
     }
 
-    public long getTPS() {
-        if (lastTick == null) {
-            return -1;
-        }
+    public double getTPS() {
+        if (lastTick == null) return -1;
+        if (getMSPT() <= 0) return 0.1;
 
-        long tps = 1000 / getMSPT();
-        if (tps > 20) {
-            return 20;
-        } else {
-            return tps;
-        }
+        double tps = 1000 / (double) getMSPT();
+        return tps > 20 ? 20 : tps;
     }
 }

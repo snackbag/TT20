@@ -3,17 +3,17 @@
 	"id": "tt20",
 	"version": "${version}",
 	"name": "TT20",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "TT20 helps reduce lag by optimizing how ticks work when the server's TPS is low. ",
 	"authors": [
-		"Me!"
+		"JX_Snack"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
-	"license": "CC0-1.0",
+	"license": "GPL-3.0",
 	"icon": "assets/tt20/icon.png",
-	"environment": "*",
+	"environment": "server",
 	"entrypoints": {
 		"main": [
 			"net.snackbag.TT20"
@@ -32,6 +32,5 @@
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"another-mod": "*"
 	}
 }

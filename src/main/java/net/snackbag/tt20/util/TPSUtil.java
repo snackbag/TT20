@@ -24,23 +24,27 @@ public class TPSUtil {
     }
 
     public static float tt20(float ticks, boolean limitZero) {
-        float newTicks = ticks * (float) TT20.TPS_CALCULATOR.getTPS() / 20f;
+        float newTicks = (float) rawTT20(ticks);
 
-        if (limitZero) return Math.max(newTicks, 1f);
+        if (limitZero) return newTicks > 0 ? newTicks : 1;
         else return newTicks;
     }
 
     public static int tt20(int ticks, boolean limitZero) {
-        int newTicks = ticks * (int) TT20.TPS_CALCULATOR.getTPS() / 20;
+        int newTicks = (int) Math.ceil(rawTT20(ticks));
 
-        if (limitZero) return Math.max(newTicks, 1);
+        if (limitZero) return newTicks > 0 ? newTicks : 1;
         else return newTicks;
     }
 
     public static double tt20(double ticks, boolean limitZero) {
-        double newTicks = ticks * TT20.TPS_CALCULATOR.getTPS() / 20;
+        double newTicks = (double) rawTT20(ticks);
 
-        if (limitZero) return Math.max(newTicks, 1);
+        if (limitZero) return newTicks > 0 ? newTicks : 1;
         else return newTicks;
+    }
+
+    public static double rawTT20(double ticks) {
+        return ticks * TT20.TPS_CALCULATOR.getAverageTPS() / 20;
     }
 }

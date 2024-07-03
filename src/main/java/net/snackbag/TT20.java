@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
+import net.snackbag.command.CommandRegistry;
 import net.snackbag.util.TPSCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,5 +18,6 @@ public class TT20 implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Starting TT20...");
+		CommandRegistry.registerCommands();
 	}
 }

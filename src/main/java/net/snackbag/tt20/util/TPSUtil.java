@@ -45,6 +45,6 @@ public class TPSUtil {
     }
 
     public static double rawTT20(double ticks) {
-        return ticks * TT20.TPS_CALCULATOR.getAverageTPS() / 20;
+        return ticks * TT20.TPS_CALCULATOR.getMostAccurateTPS() / 20;
     }
 }

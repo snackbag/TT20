@@ -32,8 +32,8 @@ public class MainCommand {
     private static int executeToggle(CommandContext<ServerCommandSource> context) {
         var source = context.getSource();
 
-        TT20.enabled = !TT20.enabled;
-        String enabledText = TT20.enabled ? "enabled" : "disabled";
+        TT20.config.enabled(!TT20.config.enabled());
+        String enabledText = TT20.config.enabled() ? "enabled" : "disabled";
         source.sendMessage(Text.literal("TT20 is now " + enabledText));
 
         return 1;
@@ -44,7 +44,7 @@ public class MainCommand {
         var source = context.getSource();
 
         source.sendMessage(Text.literal("Running TT20 version " + TT20.VERSION));
-        source.sendMessage(Text.literal("Enabled: " + TT20.enabled));
+        source.sendMessage(Text.literal("Enabled: " + TT20.config.enabled()));
 
         return 1;
     }

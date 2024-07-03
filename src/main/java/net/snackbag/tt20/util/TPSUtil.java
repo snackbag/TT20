@@ -16,4 +16,8 @@ public class TPSUtil {
     public static float tt20(float ticks) {
         return ticks * TT20.TPS_CALCULATOR.getTPS() / 20f;
     }
+
+    public static int tt20(int ticks) {
+        return ticks * (int) TT20.TPS_CALCULATOR.getTPS() / 20;
+    }
 }

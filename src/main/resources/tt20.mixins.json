@@ -5,6 +5,7 @@
 	"mixins": [
 		"AbstractBlockMixin",
 		"DedicatedServerWatchdogMixin",
+		"ItemMixin",
 		"ServerPlayerInteractionManagerMixin"
 	],
 	"injectors": {

@@ -7,6 +7,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import net.snackbag.TT20;
+import net.snackbag.util.TPSUtil;
 
 public class MainCommand {
     public static void register(
@@ -21,6 +22,10 @@ public class MainCommand {
     }
 
     private static int tps(CommandContext<ServerCommandSource> context) {
+        var source = context.getSource();
+
+        source.sendMessage(Text.literal("§7TPS: " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getTPS())));
+
         return 1;
     }
 

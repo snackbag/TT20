@@ -75,7 +75,7 @@ public class JSONConfiguration {
         return element != null;
     }
 
-    public void put(String key, @Nullable String value) {
+    private @Nullable Object[] preparePut(String key, @Nullable Object value) {
         String[] parts = splitKey(key);
         JsonObject current = json;
 
@@ -91,10 +91,26 @@ public class JSONConfiguration {
 
         if (value == null) {
             current.remove(parts[parts.length - 1]);
-            return;
+            return null;
         }
 
-        current.addProperty(parts[parts.length - 1], value);
+        return new Object[]{current, parts[parts.length - 1], value};
+    }
+
+    public void put(String key, @Nullable String value) {
+        Object[] values = preparePut(key, value);
+        if (values == null) return;
+
+        JsonObject current = (JsonObject) values[0];
+        current.addProperty((String) values[1], (String) values[2]);
+    }
+
+    public void put(String key, @Nullable Boolean value) {
+        Object[] values = preparePut(key, value);
+        if (values == null) return;
+
+        JsonObject current = (JsonObject) values[0];
+        current.addProperty((String) values[1], (Boolean) values[2]);
     }
 
     public void putIfEmpty(String key, @NotNull String value) {
@@ -105,7 +121,15 @@ public class JSONConfiguration {
         }
     }
 
-    public String getString(String key) {
+    public void putIfEmpty(String key, @NotNull Boolean value) {
+        Objects.requireNonNull(value);
+
+        if (!has(key)) {
+            put(key, value);
+        }
+    }
+
+    public String getAsString(String key) {
         JsonElement element = json;
 
         for (String part : splitKey(key)) {
@@ -120,11 +144,33 @@ public class JSONConfiguration {
                 : null;
     }
 
-    public String getStringOrDefault(String key, String def) {
+    public Boolean getAsBoolean(String key) {
+        JsonElement element = json;
+
+        for (String part : splitKey(key)) {
+            if (element == null || !element.getAsJsonObject().has(part)) {
+                return null;
+            }
+            element = element.getAsJsonObject().get(part);
+        }
+
+        return element != null && element.isJsonPrimitive() && element.getAsJsonPrimitive().isString()
+                ? element.getAsBoolean()
+                : null;
+    }
+
+    public String getAsStringOrDefault(String key, String def) {
         if (!has(key)) {
             return def;
         }
-        return getString(key);
+        return getAsString(key);
+    }
+
+    public Boolean getAsBooleanOrDefault(String key, Boolean def) {
+        if (!has(key)) {
+            return def;
+        }
+        return getAsBoolean(key);
     }
 
     public String getFileName() {

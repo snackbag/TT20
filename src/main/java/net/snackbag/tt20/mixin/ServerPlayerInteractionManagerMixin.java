@@ -2,14 +2,10 @@ package net.snackbag.tt20.mixin;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.snackbag.tt20.TT20;
-import net.snackbag.tt20.util.TPSUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,6 +26,6 @@ public class ServerPlayerInteractionManagerMixin {
         if (!TT20.config.enabled()) return v;
 
         int j = tickCounter - startMiningTime;
-        return v + TPSUtil.tt20(j, true);
+        return v + j;
     }
 }

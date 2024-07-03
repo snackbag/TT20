@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "tt20",
+	"version": "${version}",
+	"name": "TT20",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/tt20/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.snackbag.TT20"
+		],
+		"fabric-datagen": [
+			"net.snackbag.TT20DataGenerator"
+		]
+	},
+	"mixins": [
+		"tt20.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

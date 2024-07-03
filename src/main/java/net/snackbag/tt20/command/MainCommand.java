@@ -17,11 +17,21 @@ public class MainCommand {
         dispatcher.register(
                 CommandManager.literal("tt20").executes(MainCommand::executeMain)
                         .then(CommandManager.literal("toggle").executes(MainCommand::executeToggle))
-                        .then(CommandManager.literal("tps").executes(MainCommand::tps))
+                        .then(CommandManager.literal("tps").executes(MainCommand::executeTps))
+                        .then(CommandManager.literal("reload").executes(MainCommand::executeReload))
         );
     }
 
-    private static int tps(CommandContext<ServerCommandSource> context) {
+    private static int executeReload(CommandContext<ServerCommandSource> context) {
+        var source = context.getSource();
+
+        TT20.config.reload();
+        source.sendMessage(Text.literal("Reloaded config"));
+
+        return 1;
+    }
+
+    private static int executeTps(CommandContext<ServerCommandSource> context) {
         var source = context.getSource();
 
         source.sendMessage(Text.literal("§7TPS: " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getTPS())));
@@ -33,6 +43,8 @@ public class MainCommand {
         var source = context.getSource();
 
         TT20.config.enabled(!TT20.config.enabled());
+        TT20.config.save();
+
         String enabledText = TT20.config.enabled() ? "enabled" : "disabled";
         source.sendMessage(Text.literal("TT20 is now " + enabledText));
 

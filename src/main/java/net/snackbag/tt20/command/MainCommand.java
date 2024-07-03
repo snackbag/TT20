@@ -34,7 +34,10 @@ public class MainCommand {
     private static int executeTps(CommandContext<ServerCommandSource> context) {
         var source = context.getSource();
 
-        source.sendMessage(Text.literal("§7TPS: " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getTPS(), true)));
+        source.sendMessage(Text.literal(
+                "§7TPS: " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getTPS(), true) +
+                        "§7 with average " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getAverageTPS(), true)
+        ));
 
         return 1;
     }

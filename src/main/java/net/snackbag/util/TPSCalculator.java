@@ -18,7 +18,7 @@ public class TPSCalculator {
         currentTick = System.currentTimeMillis();
     }
 
-    public long getMSPT() {
+    private long getMSPT() {
         return currentTick - lastTick;
     }
 

@@ -3,9 +3,11 @@ package net.snackbag.tt20.util;
 import net.snackbag.tt20.TT20;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class TPSUtil {
-    private static final DecimalFormat df = new DecimalFormat("0.00");
+    private static final DecimalFormat df = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.ROOT));
 
     public static String colorizeTPS(double tps, boolean format) {
         if (tps > 15) {

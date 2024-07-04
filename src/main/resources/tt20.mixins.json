@@ -4,6 +4,7 @@
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
 		"AbstractBlockMixin",
+		"WorldChunkMixin",
 		"DedicatedServerWatchdogMixin",
 		"ItemEntityMixin",
 		"ItemMixin",

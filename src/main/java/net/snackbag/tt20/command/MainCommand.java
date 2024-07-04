@@ -42,6 +42,8 @@ public class MainCommand {
 
         TT20.config.reload();
         source.sendMessage(Text.literal("Reloaded config"));
+        TT20.blockEntityMaskConfig.reload();
+        source.sendMessage(Text.literal("Reloaded block entity mask config"));
 
         return 1;
     }

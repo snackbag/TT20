@@ -17,7 +17,7 @@ TT20 only fixes the symptoms of TPS lag, not the actual lag. It re-calculates th
 - [X] Block entity tick delay
 - [ ] Entity tick delay
 - [ ] Block state delay
-- [ ] Portal delay
+- [X] Portal delay
 - [ ] Sleeping delay
 - [ ] Potion delay
 

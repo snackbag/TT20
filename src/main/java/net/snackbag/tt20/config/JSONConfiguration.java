@@ -18,7 +18,7 @@ public class JSONConfiguration {
     private JsonObject json;
     private final Gson gson;
 
-    public JSONConfiguration(String fileName, boolean reload) {
+    public JSONConfiguration(String fileName) {
         this.fileName = fileName;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
 

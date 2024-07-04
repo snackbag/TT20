@@ -188,6 +188,21 @@ public class JSONConfiguration {
                 : null;
     }
 
+    public JsonArray getAsArray(String key) {
+        JsonElement element = json;
+
+        for (String part : splitKey(key)) {
+            if (element == null || !element.getAsJsonObject().has(part)) {
+                return null;
+            }
+            element = element.getAsJsonObject().get(part);
+        }
+
+        return element != null && element.isJsonPrimitive() && element.getAsJsonPrimitive().isJsonArray()
+                ? element.getAsJsonArray()
+                : null;
+    }
+
     public String getAsStringOrDefault(String key, String def) {
         if (!has(key)) {
             return def;

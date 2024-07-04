@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
@@ -22,6 +23,7 @@ public class WorldChunkMixin {
     private <T extends BlockEntity> void onTick(BlockEntityTicker<T> instance, World world, BlockPos blockPos, BlockState blockState, T t) {
         instance.tick(world, blockPos, blockState, t);
         if (!TT20.config.enabled()) return;
+        if (!TT20.blockEntityMaskConfig.getMask().matches(Registries.BLOCK.getId(blockState.getBlock()))) return;
 
         for (int i = 0; i < TT20.TPS_CALCULATOR.applicableMissedTicks(); i++) {
             instance.tick(world, blockPos, blockState, t);

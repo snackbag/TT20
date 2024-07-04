@@ -23,6 +23,7 @@ public class WorldChunkMixin {
     private <T extends BlockEntity> void onTick(BlockEntityTicker<T> instance, World world, BlockPos blockPos, BlockState blockState, T t) {
         instance.tick(world, blockPos, blockState, t);
         if (!TT20.config.enabled()) return;
+        if (!TT20.config.blockEntityAcceleration()) return;
         if (!TT20.blockEntityMaskConfig.getMask().isOkay(Registries.BLOCK.getId(blockState.getBlock()))) return;
 
         for (int i = 0; i < TT20.TPS_CALCULATOR.applicableMissedTicks(); i++) {

@@ -18,7 +18,7 @@ public class JSONConfiguration {
     private JsonObject json;
     private final Gson gson;
 
-    public JSONConfiguration(String fileName) {
+    public JSONConfiguration(String fileName, boolean reload) {
         this.fileName = fileName;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -213,7 +213,7 @@ public class JSONConfiguration {
     }
 
     public String getAbsolutePath() {
-        return FabricLoader.getInstance().getGameDir().toAbsolutePath() + "/tt20/";
+        return FabricLoader.getInstance().getConfigDir().toAbsolutePath() + "/tt20/";
     }
 
     private void collectStringKeys(JsonObject jsonObject, String prefix, Set<String> keys) {

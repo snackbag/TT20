@@ -198,7 +198,7 @@ public class JSONConfiguration {
             element = element.getAsJsonObject().get(part);
         }
 
-        return element != null && element.isJsonPrimitive() && element.getAsJsonPrimitive().isJsonArray()
+        return element != null && element.isJsonArray()
                 ? element.getAsJsonArray()
                 : null;
     }

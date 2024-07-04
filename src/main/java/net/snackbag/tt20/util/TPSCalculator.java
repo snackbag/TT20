@@ -38,7 +38,7 @@ public class TPSCalculator {
         tpsHistory.add(tps);
     }
 
-    private long getMSPT() {
+    public long getMSPT() {
         return currentTick - lastTick;
     }
 

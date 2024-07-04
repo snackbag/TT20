@@ -39,6 +39,7 @@ public class MainCommand {
                         "§7 with average " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getAverageTPS(), true) +
                         "§7 accurate " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getMostAccurateTPS(), true)
         ));
+        source.sendMessage(Text.literal("§8Missed ticks: §7" + TT20.TPS_CALCULATOR.getAllMissedTicks()));
 
         return 1;
     }

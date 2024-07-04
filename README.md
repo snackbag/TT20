@@ -10,11 +10,14 @@ TT20 is an abbreviation of the `ticks*tps/20` formula. It's used to calculate th
 ## Disclaimer
 TT20 only fixes the symptoms of TPS lag, not the actual lag. It re-calculates the amount of ticks things take. For example, when you're breaking a block it takes the original break time, multiplies it by ticks and divides it by 20 (the maximum TPS). This ensures that the end user feels almost no lag, even if the TPS is very low.
 
-## What's covered?
+## Roadmap
 - [X] Block break delay
 - [X] Eating delay
 - [X] Item pickup delay
 - [X] Block entity tick delay
 - [ ] Entity tick delay
+- [ ] Block state delay
+- [ ] Portal delay
+- [ ] Sleeping delay
 
 If you believe there is features missing, please tell us by creating a new issue (yes, also if you want compatibility with other mods!)

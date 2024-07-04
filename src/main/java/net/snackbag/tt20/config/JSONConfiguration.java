@@ -1,9 +1,6 @@
 package net.snackbag.tt20.config;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import net.fabricmc.loader.api.FabricLoader;
 import net.snackbag.tt20.TT20;
 import org.jetbrains.annotations.NotNull;
@@ -96,7 +93,7 @@ public class JSONConfiguration {
             return null;
         }
 
-        return new Object[]{current, parts[parts.length - 1], value};
+        return new Object[]{current, parts[parts.length - 1]};
     }
 
     public void put(String key, @Nullable String value) {
@@ -104,7 +101,29 @@ public class JSONConfiguration {
         if (values == null) return;
 
         JsonObject current = (JsonObject) values[0];
-        current.addProperty((String) values[1], (String) values[2]);
+        current.addProperty((String) values[1], value);
+    }
+
+    public void put(String key, @Nullable Object[] value) {
+        Object[] values = preparePut(key, value);
+        if (values == null) return;
+
+        JsonObject current = (JsonObject) values[0];
+
+        JsonArray array = new JsonArray();
+        for (Object object : value) {
+            if (object instanceof String) {
+                array.add((String) object);
+            } else if (object instanceof Boolean) {
+                array.add((Boolean) object);
+            } else if (object instanceof Number) {
+                array.add((Number) object);
+            } else {
+                throw new IllegalArgumentException("Unsupported object type: " + object.getClass().getName());
+            }
+        }
+
+        current.add((String) values[1], array);
     }
 
     public void put(String key, @Nullable Boolean value) {
@@ -112,10 +131,18 @@ public class JSONConfiguration {
         if (values == null) return;
 
         JsonObject current = (JsonObject) values[0];
-        current.addProperty((String) values[1], (Boolean) values[2]);
+        current.addProperty((String) values[1], value);
     }
 
     public void putIfEmpty(String key, @NotNull String value) {
+        Objects.requireNonNull(value);
+
+        if (!has(key)) {
+            put(key, value);
+        }
+    }
+
+    public void putIfEmpty(String key, @NotNull Object[] value) {
         Objects.requireNonNull(value);
 
         if (!has(key)) {

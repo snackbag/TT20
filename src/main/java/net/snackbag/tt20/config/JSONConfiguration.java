@@ -35,7 +35,7 @@ public class JSONConfiguration {
 
             reload();
         } catch (IOException e) {
-            TT20.LOGGER.error("(CottonMC) Failed to save JSONConfiguration '" + fileName + "'");
+            TT20.LOGGER.error("(TT20) Failed to save JSONConfiguration '" + fileName + "'");
             e.printStackTrace();
             return;
         }
@@ -56,7 +56,7 @@ public class JSONConfiguration {
             BufferedReader reader = new BufferedReader(new FileReader(getAbsolutePath() + fileName));
             json = gson.fromJson(reader, JsonObject.class);
         } catch (IOException e) {
-            TT20.LOGGER.error("(CottonMC) Failed to reload JSONConfiguration '" + fileName + "'");
+            TT20.LOGGER.error("(TT20) Failed to reload JSONConfiguration '" + fileName + "'");
             e.printStackTrace();
         }
     }

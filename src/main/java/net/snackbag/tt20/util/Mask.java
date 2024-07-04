@@ -10,12 +10,14 @@ import java.util.*;
 
 public class Mask {
     private final JSONConfiguration file;
+    private final MaskType maskType;
     private final Registry<?> registry;
     private final RegistryIndex index;
     private final Set<Identifier> entries;
 
     public Mask(Registry<?> registry, JSONConfiguration file, String maskKey) {
         this.file = file;
+        this.maskType = MaskType.fromString(maskKey);
         this.registry = registry;
         this.index = RegistryIndex.getIndex(this.registry);
         this.entries = new HashSet<>();
@@ -73,5 +75,13 @@ public class Mask {
 
     public boolean matches(Identifier identifier) {
         return entries.contains(identifier);
+    }
+
+    public boolean isOkay(Identifier identifier) {
+        if (maskType == MaskType.WHITELIST) {
+            return entries.contains(identifier);
+        } else {
+            return !entries.contains(identifier);
+        }
     }
 }

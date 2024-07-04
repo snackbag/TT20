@@ -5,11 +5,10 @@ import net.snackbag.tt20.util.Mask;
 
 public class BlockEntityMaskConfig extends JSONConfiguration {
     private Mask mask;
+    private boolean reloaded = false;
 
     public BlockEntityMaskConfig() {
         super("block_entity_mask.json");
-
-        this.mask = new Mask(Registries.BLOCK, this, "blocks");
 
         String[] defaultMask = {"*:*"};
 
@@ -17,6 +16,7 @@ public class BlockEntityMaskConfig extends JSONConfiguration {
         putIfEmpty("blocks", defaultMask);
 
         save();
+        reload();
     }
 
     public Mask getMask() {
@@ -26,6 +26,11 @@ public class BlockEntityMaskConfig extends JSONConfiguration {
     @Override
     public void reload() {
         super.reload();
-        this.mask = new Mask(Registries.BLOCK, this, "blocks");
+
+        if (reloaded) {
+            this.mask = new Mask(Registries.BLOCK, this, "blocks");
+        } else {
+            reloaded = true;
+        }
     }
 }

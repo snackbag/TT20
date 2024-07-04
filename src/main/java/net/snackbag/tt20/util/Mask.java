@@ -17,7 +17,7 @@ public class Mask {
 
     public Mask(Registry<?> registry, JSONConfiguration file, String maskKey) {
         this.file = file;
-        this.maskType = MaskType.fromString(maskKey);
+        this.maskType = MaskType.fromString(file.getAsString("type"));
         this.registry = registry;
         this.index = RegistryIndex.getIndex(this.registry);
         this.entries = new HashSet<>();

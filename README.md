@@ -14,8 +14,7 @@ TT20 only fixes the symptoms of TPS lag, not the actual lag. It re-calculates th
 - [X] Block break delay
 - [X] Eating delay
 - [X] Item pickup delay
-- [ ] Furnace delay
-- [ ] Blast furnace delay
-- [ ] Campfire delay
+- [X] Block entity tick delay
+- [ ] Entity tick delay
 
 If you believe there is features missing, please tell us by creating a new issue (yes, also if you want compatibility with other mods!)

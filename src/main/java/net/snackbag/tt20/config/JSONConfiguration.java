@@ -35,6 +35,8 @@ public class JSONConfiguration {
             FileWriter writer = new FileWriter(file);
             writer.write(gson.toJson(json));
             writer.close();
+
+            reload();
         } catch (IOException e) {
             TT20.LOGGER.error("(CottonMC) Failed to save JSONConfiguration '" + fileName + "'");
             e.printStackTrace();

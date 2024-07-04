@@ -3,6 +3,7 @@ package net.snackbag.tt20;
 import net.fabricmc.api.ModInitializer;
 
 import net.snackbag.tt20.command.CommandRegistry;
+import net.snackbag.tt20.config.BlockEntityMaskConfig;
 import net.snackbag.tt20.config.MainConfig;
 import net.snackbag.tt20.util.TPSCalculator;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ public class TT20 implements ModInitializer {
 	public static final TPSCalculator TPS_CALCULATOR = new TPSCalculator();
 
 	public static final MainConfig config = new MainConfig();
+	public static final BlockEntityMaskConfig blockEntityMaskConfig = new BlockEntityMaskConfig();
 
 	@Override
 	public void onInitialize() {

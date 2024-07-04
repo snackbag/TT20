@@ -18,6 +18,10 @@ repositories {
 	// for more information about repositories.
 }
 
+loom {
+	accessWidenerPath = file("src/main/resources/tt20.accesswidener")
+}
+
 fabricApi {
 	configureDataGeneration()
 }

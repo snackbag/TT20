@@ -14,6 +14,7 @@
 	"license": "GPL-3.0",
 	"icon": "assets/tt20/icon.png",
 	"environment": "*",
+	"accessWidener": "tt20.accesswidener",
 	"entrypoints": {
 		"main": [
 			"net.snackbag.tt20.TT20"

@@ -28,6 +28,7 @@ public class MainCommand {
 
         source.sendMessage(Text.literal("§7TT20 enabled: " + (TT20.config.enabled() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Block entity acceleration: " + (TT20.config.blockEntityAcceleration() ? "§aON" : "§cOFF")));
+        source.sendMessage(Text.literal("§7Potion effect acceleration: " + (TT20.config.potionEffectAcceleration() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Server watchdog: " + (TT20.config.serverWatchdog() ? "§aON" : "§cOFF")));
         executeTps(context, false);
         source.sendMessage(Text.literal("\n§8Version: §7" + TT20.VERSION));

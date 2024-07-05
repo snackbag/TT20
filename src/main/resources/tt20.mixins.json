@@ -4,8 +4,8 @@
     "compatibilityLevel": "JAVA_17",
     "mixins": [
         "DedicatedServerWatchdogMixin",
+        "LivingEntityMixin",
         "PlayerEntityMixin",
-        "StatusEffectInstanceMixin",
         "fluid.LavaFluidMixin",
         "fluid.WaterFluidMixin",
         "item.ItemEntityMixin",

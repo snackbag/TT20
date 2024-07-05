@@ -40,9 +40,12 @@ dependencies {
 
 processResources {
 	inputs.property "version", project.version
+	inputs.property "minecraft", stonecutter.current.version
+
+	def map = ["version": project.version, "minecraft": stonecutter.current.version]
 
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version
+		expand map
 	}
 }
 
@@ -57,6 +60,9 @@ java {
 	withSourcesJar()
 
 	if (stonecutter.compare(stonecutter.current.version, "1.20.6") >= 0) {
+		sourceCompatibility = JavaVersion.VERSION_21
+		targetCompatibility = JavaVersion.VERSION_21
+	} else if (stonecutter.compare(stonecutter.current.version, "1.21") >= 0) {
 		sourceCompatibility = JavaVersion.VERSION_21
 		targetCompatibility = JavaVersion.VERSION_21
 	} else {

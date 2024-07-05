@@ -16,7 +16,6 @@ public class AbstractBlockMixin {
     @Inject(method = "calcBlockBreakingDelta", at = @At("RETURN"), cancellable = true)
     private void onBlockBreakingCalc(BlockState state, PlayerEntity player, BlockView world, BlockPos pos, CallbackInfoReturnable<Float> cir) {
         if (!TT20.config.enabled()) return;
-        TT20.LOGGER.info(String.valueOf(cir.getReturnValue() * 20 / TT20.TPS_CALCULATOR.getMostAccurateTPS()));
         cir.setReturnValue((float) (cir.getReturnValue() * 20 / TT20.TPS_CALCULATOR.getMostAccurateTPS()));
     }
 }

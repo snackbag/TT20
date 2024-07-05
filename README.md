@@ -7,7 +7,7 @@ While you can still use this mod in singleplayer, most things will not run at no
 ## What does TT20 stand for?
 TT20 is an abbreviation of the `ticks*tps/20` formula. It's used to calculate the amount of ticks something takes, while taking the TPS into account.
 
-## Disclaimer
+## Caveats
 TT20 only fixes the symptoms of TPS lag, not the actual lag. It re-calculates the amount of ticks things take. For example, when you're breaking a block it takes the original break time, multiplies it by ticks and divides it by 20 (the maximum TPS). This ensures that the end user feels almost no lag, even if the TPS is very low.
 
 ## Roadmap

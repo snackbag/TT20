@@ -1,0 +1,12 @@
+plugins {
+    id "dev.kikugie.stonecutter"
+    id "fabric-loom" version "1.7-SNAPSHOT" apply false
+}
+
+plugins.apply "dev.kikugie.stonecutter"
+stonecutter.active "1.20.6" /* [SC] DO NOT EDIT */
+
+stonecutter.registerChiseled tasks.register("chiseledBuild", stonecutter.chiseled) { 
+    setGroup "project"
+    ofTask "build"
+}

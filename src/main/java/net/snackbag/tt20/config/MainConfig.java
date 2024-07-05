@@ -3,6 +3,7 @@ package net.snackbag.tt20.config;
 public class MainConfig extends JSONConfiguration {
     private boolean enabled = true;
     private boolean blockEntityAcceleration = false;
+    private boolean potionEffectAcceleration = true;
     private boolean serverWatchdog = true;
 
     public MainConfig() {
@@ -10,6 +11,7 @@ public class MainConfig extends JSONConfiguration {
 
         putIfEmpty("enabled", enabled);
         putIfEmpty("block-entity-acceleration", blockEntityAcceleration);
+        putIfEmpty("potion-effect-acceleration", potionEffectAcceleration);
         putIfEmpty("server-watchdog", serverWatchdog);
 
         save();
@@ -46,5 +48,13 @@ public class MainConfig extends JSONConfiguration {
 
     public boolean blockEntityAcceleration() {
         return blockEntityAcceleration;
+    }
+
+    public void potionEffectAcceleration(boolean enabled) {
+        potionEffectAcceleration = enabled;
+    }
+
+    public boolean potionEffectAcceleration() {
+        return potionEffectAcceleration;
     }
 }

@@ -14,7 +14,7 @@ public abstract class LivingEntityMixin {
 
     @Inject(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;tickStatusEffects()V"))
     private void fixPotionDelayTick(CallbackInfo ci) {
-        if (!TT20.config.enabled()) return;
+        if (!TT20.config.enabled() || !TT20.config.potionEffectAcceleration()) return;
 
         for (int i = 0; i < TT20.TPS_CALCULATOR.applicableMissedTicks(); i++) {
             tickStatusEffects();

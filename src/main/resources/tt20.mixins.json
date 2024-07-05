@@ -3,13 +3,14 @@
     "package": "net.snackbag.tt20.mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
-        "world.AbstractBlockMixin",
         "DedicatedServerWatchdogMixin",
+        "PlayerEntityMixin",
+        "StatusEffectInstanceMixin",
+        "fluid.LavaFluidMixin",
+        "fluid.WaterFluidMixin",
         "item.ItemEntityMixin",
         "item.ItemMixin",
-        "fluid.LavaFluidMixin",
-        "PlayerEntityMixin",
-        "fluid.WaterFluidMixin",
+        "world.AbstractBlockMixin",
         "world.WorldChunkMixin"
     ],
     "injectors": {

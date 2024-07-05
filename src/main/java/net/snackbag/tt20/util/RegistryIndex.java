@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RegistryIndex {
-    private static HashMap<Registry<?>, RegistryIndex> indexes = new HashMap<>();
+    private static final HashMap<Registry<?>, RegistryIndex> indexes = new HashMap<>();
 
     private final Registry<?> registry;
     private final List<Identifier> identifiers;

@@ -1,16 +1,18 @@
 {
-	"required": true,
-	"package": "net.snackbag.tt20.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"mixins": [
-		"AbstractBlockMixin",
-		"DedicatedServerWatchdogMixin",
-		"ItemEntityMixin",
-		"ItemMixin",
-		"PlayerEntityMixin",
-		"WorldChunkMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+    "required": true,
+    "package": "net.snackbag.tt20.mixin",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [
+        "world.AbstractBlockMixin",
+        "DedicatedServerWatchdogMixin",
+        "item.ItemEntityMixin",
+        "item.ItemMixin",
+        "fluid.LavaFluidMixin",
+        "PlayerEntityMixin",
+        "fluid.WaterFluidMixin",
+        "world.WorldChunkMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
 	}
 }

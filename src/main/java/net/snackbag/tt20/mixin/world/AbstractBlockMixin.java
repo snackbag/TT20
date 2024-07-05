@@ -1,4 +1,4 @@
-package net.snackbag.tt20.mixin;
+package net.snackbag.tt20.mixin.world;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
@@ -6,7 +6,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.snackbag.tt20.TT20;
-import net.snackbag.tt20.util.TPSUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

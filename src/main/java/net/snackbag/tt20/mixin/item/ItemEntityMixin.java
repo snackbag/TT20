@@ -1,4 +1,4 @@
-package net.snackbag.tt20.mixin;
+package net.snackbag.tt20.mixin.item;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.entity.ItemEntity;

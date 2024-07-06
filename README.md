@@ -1,3 +1,7 @@
+<video poster="https://snackbag.net/extras/imgd/tt20-thumbnail.png" controls>
+  <source src="https://snackbag.net/extras/imgd/tt20-video.mp4">
+</video>
+
 # TT20
 TT20 helps reduce lag by optimizing how ticks work when the server's TPS is low.
 

@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
+    //? if <=1.20.6 {
     @ModifyReturnValue(method = "getMaxNetherPortalTime", at = @At("RETURN"))
     private int netherPortalTimeTT20(int original) {
         if (!TT20.config.enabled()) return original;
@@ -18,6 +19,7 @@ public class PlayerEntityMixin {
 
         return TPSUtil.tt20(original, false);
     }
+    //?}
 
     @ModifyExpressionValue(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/player/PlayerEntity;sleepTimer:I", opcode = Opcodes.GETFIELD))
     private int tickTT20(int original) {

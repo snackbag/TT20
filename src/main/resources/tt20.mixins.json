@@ -5,7 +5,7 @@
     "mixins": [
         "DedicatedServerWatchdogMixin",
         //? if >=1.21
-        /*"EntityMixin",*/
+        /*"PortalManagerMixin",*/
         "LivingEntityMixin",
         "PlayerEntityMixin",
         "fluid.LavaFluidMixin",

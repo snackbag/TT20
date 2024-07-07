@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(WaterFluid.class)
-public class WaterFluidMixin {
+public abstract class WaterFluidMixin {
     @ModifyReturnValue(method = "getTickRate", at = @At("RETURN"))
     private int tickRateTT20(int original) {
         if (!TT20.config.enabled()) return original;

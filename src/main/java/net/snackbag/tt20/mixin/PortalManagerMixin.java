@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 
 @Mixin(PortalManager.class)
-public abstract class EntityMixin {
+public abstract class PortalManagerMixin {
     @Shadow private int ticksInPortal;
 
     @ModifyExpressionValue(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/world/dimension/PortalManager;ticksInPortal:I", opcode = Opcodes.GETFIELD))

@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Item.class)
-public class ItemMixin {
+public abstract class ItemMixin {
     @ModifyReturnValue(method = "getMaxUseTime", at = @At("RETURN"))
     private int onGetMaxUseTime(int original) {
         if (!TT20.config.enabled() || original == 0) return original;

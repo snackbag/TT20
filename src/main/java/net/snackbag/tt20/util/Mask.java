@@ -53,13 +53,13 @@ public class Mask {
 
         // if *:<path>
         if (split[0].equals("*") && !split[1].equals("*")) {
-            return index.getPathIndex().get(split[1]);
+            return index.getPathIndex().getOrDefault(split[1], new ArrayList<>());
         }
 
 
         // if <namespace>:*
         if (!split[0].equals("*") && split[1].equals("*")) {
-            return index.getNamespaceIndex().get(split[0]);
+            return index.getNamespaceIndex().getOrDefault(split[0], new ArrayList<>());
         }
 
         return null;

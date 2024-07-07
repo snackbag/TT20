@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class WaterFluidMixin {
     @ModifyReturnValue(method = "getTickRate", at = @At("RETURN"))
     private int tickRateTT20(int original) {
-        if (!TT20.config.enabled()) return original;
+        if (!TT20.config.enabled() || !TT20.config.fluidAcceleration()) return original;
         return TPSUtil.tt20(original, true);
     }
 }

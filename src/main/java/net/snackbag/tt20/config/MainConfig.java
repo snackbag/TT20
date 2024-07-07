@@ -4,6 +4,7 @@ public class MainConfig extends JSONConfiguration {
     private boolean enabled = true;
     private boolean blockEntityAcceleration = false;
     private boolean potionEffectAcceleration = true;
+    private boolean fluidAcceleration = true;
     private boolean serverWatchdog = true;
 
     public MainConfig() {
@@ -12,6 +13,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("enabled", enabled);
         putIfEmpty("block-entity-acceleration", blockEntityAcceleration);
         putIfEmpty("potion-effect-acceleration", potionEffectAcceleration);
+        putIfEmpty("fluid-acceleration", fluidAcceleration);
         putIfEmpty("server-watchdog", serverWatchdog);
 
         save();
@@ -56,5 +58,13 @@ public class MainConfig extends JSONConfiguration {
 
     public boolean potionEffectAcceleration() {
         return potionEffectAcceleration;
+    }
+
+    public void fluidAcceleration(boolean enabled) {
+        fluidAcceleration = enabled;
+    }
+
+    public boolean fluidAcceleration() {
+        return fluidAcceleration;
     }
 }

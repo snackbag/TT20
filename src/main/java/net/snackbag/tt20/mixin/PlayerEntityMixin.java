@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
-    //? if <=1.20.6 {
+    //? if <=1.20.5 {
     @ModifyReturnValue(method = "getMaxNetherPortalTime", at = @At("RETURN"))
     private int netherPortalTimeTT20(int original) {
         if (!TT20.config.enabled() || !TT20.config.portalAcceleration()) return original;

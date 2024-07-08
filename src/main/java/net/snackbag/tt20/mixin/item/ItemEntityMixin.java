@@ -14,7 +14,7 @@ public abstract class ItemEntityMixin {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void pickupDelayTT20(CallbackInfo ci) {
-        if (!TT20.config.enabled()) return;
+        if (!TT20.config.enabled() || !TT20.config.pickupAcceleration()) return;
 
         if (pickupDelay == 0) return;
 

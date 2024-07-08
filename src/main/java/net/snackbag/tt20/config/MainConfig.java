@@ -5,6 +5,7 @@ public class MainConfig extends JSONConfiguration {
     private boolean blockEntityAcceleration = false;
     private boolean potionEffectAcceleration = true;
     private boolean fluidAcceleration = true;
+    private boolean pickupAcceleration = true;
     private boolean serverWatchdog = true;
 
     public MainConfig() {
@@ -14,6 +15,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("block-entity-acceleration", blockEntityAcceleration);
         putIfEmpty("potion-effect-acceleration", potionEffectAcceleration);
         putIfEmpty("fluid-acceleration", fluidAcceleration);
+        putIfEmpty("pickup-acceleration", pickupAcceleration);
         putIfEmpty("server-watchdog", serverWatchdog);
 
         save();
@@ -66,5 +68,13 @@ public class MainConfig extends JSONConfiguration {
 
     public boolean fluidAcceleration() {
         return fluidAcceleration;
+    }
+
+    public void pickupAcceleration(boolean enabled) {
+        pickupAcceleration = enabled;
+    }
+
+    public boolean pickupAcceleration() {
+        return pickupAcceleration;
     }
 }

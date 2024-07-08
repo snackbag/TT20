@@ -16,6 +16,8 @@ public class TT20 implements ModInitializer {
 	public static final MainConfig config = new MainConfig();
 	public static final BlockEntityMaskConfig blockEntityMaskConfig = new BlockEntityMaskConfig();
 
+	public static boolean warned = false;
+
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Starting TT20...");

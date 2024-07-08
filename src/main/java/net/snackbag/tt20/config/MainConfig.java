@@ -3,11 +3,12 @@ package net.snackbag.tt20.config;
 public class MainConfig extends JSONConfiguration {
     private boolean enabled = true;
     private boolean blockEntityAcceleration = false;
+    private boolean blockBreakingAcceleration = true;
+    private boolean eatingAcceleration = true;
     private boolean potionEffectAcceleration = true;
     private boolean fluidAcceleration = true;
     private boolean pickupAcceleration = true;
-    private boolean eatingAcceleration = true;
-    private boolean blockBreakingAcceleration = true;
+    private boolean portalAcceleration = true;
     private boolean serverWatchdog = true;
 
     public MainConfig() {
@@ -20,6 +21,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("fluid-acceleration", fluidAcceleration);
         putIfEmpty("pickup-acceleration", pickupAcceleration);
         putIfEmpty("eating-acceleration", eatingAcceleration);
+        putIfEmpty("portal-acceleration", portalAcceleration);
         putIfEmpty("server-watchdog", serverWatchdog);
 
         save();
@@ -31,6 +33,12 @@ public class MainConfig extends JSONConfiguration {
 
         this.enabled = getAsBooleanOrDefault("enabled", enabled);
         this.blockEntityAcceleration = getAsBooleanOrDefault("block-entity-acceleration", blockEntityAcceleration);
+        this.blockBreakingAcceleration = getAsBooleanOrDefault("block-breaking-acceleration", blockBreakingAcceleration);
+        this.potionEffectAcceleration = getAsBooleanOrDefault("potion-effect-acceleration", potionEffectAcceleration);
+        this.fluidAcceleration = getAsBooleanOrDefault("fluid-acceleration", fluidAcceleration);
+        this.pickupAcceleration = getAsBooleanOrDefault("pickup-acceleration", pickupAcceleration);
+        this.eatingAcceleration = getAsBooleanOrDefault("eating-acceleration", eatingAcceleration);
+        this.portalAcceleration = getAsBooleanOrDefault("portal-acceleration", portalAcceleration);
         this.serverWatchdog = getAsBooleanOrDefault("block-entity-acceleration", serverWatchdog);
     }
 
@@ -67,7 +75,7 @@ public class MainConfig extends JSONConfiguration {
     }
 
     public void potionEffectAcceleration(boolean enabled) {
-        potionEffectAcceleration = enabled;
+        put("potion-effect-acceleration", enabled);
     }
 
     public boolean potionEffectAcceleration() {
@@ -75,7 +83,7 @@ public class MainConfig extends JSONConfiguration {
     }
 
     public void fluidAcceleration(boolean enabled) {
-        fluidAcceleration = enabled;
+        put("fluid-acceleration", enabled);
     }
 
     public boolean fluidAcceleration() {
@@ -83,7 +91,7 @@ public class MainConfig extends JSONConfiguration {
     }
 
     public void pickupAcceleration(boolean enabled) {
-        pickupAcceleration = enabled;
+        put("pickup-acceleration", enabled);
     }
 
     public boolean pickupAcceleration() {
@@ -91,10 +99,18 @@ public class MainConfig extends JSONConfiguration {
     }
 
     public void eatingAcceleration(boolean enabled) {
-        eatingAcceleration = enabled;
+        put("eating-acceleration", enabled);
     }
 
     public boolean eatingAcceleration() {
         return eatingAcceleration;
+    }
+
+    public void portalAcceleration(boolean enabled) {
+        put("portal-acceleration", enabled);
+    }
+
+    public boolean portalAcceleration() {
+        return portalAcceleration;
     }
 }

@@ -21,6 +21,9 @@
 		],
 		"fabric-datagen": [
 			"net.snackbag.tt20.TT20DataGenerator"
+		],
+		"client": [
+			"net.snackbag.tt20.TT20Client"
 		]
 	},
 	"mixins": [

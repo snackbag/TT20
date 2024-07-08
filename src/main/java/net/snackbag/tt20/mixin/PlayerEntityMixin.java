@@ -16,6 +16,7 @@ public abstract class PlayerEntityMixin {
     @ModifyReturnValue(method = "getMaxNetherPortalTime", at = @At("RETURN"))
     private int netherPortalTimeTT20(int original) {
         if (!TT20.config.enabled() || !TT20.config.portalAcceleration()) return original;
+        if (((Entity)(Object)this).getWorld().isClient()) return original;
         if (original == 1) return original;
 
         return TPSUtil.tt20(original, false);

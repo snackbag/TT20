@@ -9,6 +9,7 @@ public class MainConfig extends JSONConfiguration {
     private boolean fluidAcceleration = true;
     private boolean pickupAcceleration = true;
     private boolean portalAcceleration = true;
+    private boolean sleepingAcceleration = true;
     private boolean serverWatchdog = true;
 
     public MainConfig() {
@@ -22,6 +23,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("pickup-acceleration", pickupAcceleration);
         putIfEmpty("eating-acceleration", eatingAcceleration);
         putIfEmpty("portal-acceleration", portalAcceleration);
+        putIfEmpty("sleeping-acceleration", sleepingAcceleration);
         putIfEmpty("server-watchdog", serverWatchdog);
 
         save();
@@ -39,6 +41,7 @@ public class MainConfig extends JSONConfiguration {
         this.pickupAcceleration = getAsBooleanOrDefault("pickup-acceleration", pickupAcceleration);
         this.eatingAcceleration = getAsBooleanOrDefault("eating-acceleration", eatingAcceleration);
         this.portalAcceleration = getAsBooleanOrDefault("portal-acceleration", portalAcceleration);
+        this.sleepingAcceleration = getAsBooleanOrDefault("sleeping-acceleration", sleepingAcceleration);
         this.serverWatchdog = getAsBooleanOrDefault("block-entity-acceleration", serverWatchdog);
     }
 
@@ -112,5 +115,13 @@ public class MainConfig extends JSONConfiguration {
 
     public boolean portalAcceleration() {
         return portalAcceleration;
+    }
+
+    public void sleepingAcceleration(boolean enabled) {
+        put("sleeping-acceleration", enabled);
+    }
+
+    public boolean sleepingAcceleration() {
+        return sleepingAcceleration;
     }
 }

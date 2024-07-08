@@ -34,6 +34,7 @@ public class MainCommand {
         source.sendMessage(Text.literal("§7Pickup acceleration: " + (TT20.config.pickupAcceleration() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Eating acceleration: " + (TT20.config.eatingAcceleration() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Portal acceleration: " + (TT20.config.portalAcceleration() ? "§aON" : "§cOFF")));
+        source.sendMessage(Text.literal("§7Sleeping acceleration: " + (TT20.config.sleepingAcceleration() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Server watchdog: " + (TT20.config.serverWatchdog() ? "§aON" : "§cOFF")));
         executeTps(context, false);
         source.sendMessage(Text.literal("\n§8Version: §7" + TT20.VERSION));

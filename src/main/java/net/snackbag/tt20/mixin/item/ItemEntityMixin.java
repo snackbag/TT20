@@ -1,5 +1,6 @@
 package net.snackbag.tt20.mixin.item;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.snackbag.tt20.TT20;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,6 +16,7 @@ public abstract class ItemEntityMixin {
     @Inject(method = "tick", at = @At("HEAD"))
     private void pickupDelayTT20(CallbackInfo ci) {
         if (!TT20.config.enabled() || !TT20.config.pickupAcceleration()) return;
+        if (((Entity)(Object)this).getWorld().isClient()) return;
 
         if (pickupDelay == 0) return;
 

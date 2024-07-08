@@ -60,7 +60,7 @@ java {
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
-	if (stonecutter.compare(stonecutter.current.version, "1.20.6") >= 0) {
+	if (stonecutter.compare(stonecutter.current.version, "1.20.5") >= 0) {
 		sourceCompatibility = JavaVersion.VERSION_21
 		targetCompatibility = JavaVersion.VERSION_21
 	} else if (stonecutter.compare(stonecutter.current.version, "1.21") >= 0) {

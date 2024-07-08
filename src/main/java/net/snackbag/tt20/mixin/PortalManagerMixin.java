@@ -16,7 +16,7 @@ public abstract class PortalManagerMixin {
 
     @ModifyExpressionValue(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/world/dimension/PortalManager;ticksInPortal:I", opcode = Opcodes.GETFIELD))
     private int runMissedTicks(int original) {
-        if (!TT20.config.enabled()) return original;
+        if (!TT20.config.enabled() || !TT20.config.portalAcceleration()) return original;
 
         ticksInPortal = ticksInPortal + TT20.TPS_CALCULATOR.applicableMissedTicks();
         return ticksInPortal;

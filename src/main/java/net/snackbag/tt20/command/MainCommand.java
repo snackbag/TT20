@@ -28,6 +28,7 @@ public class MainCommand {
 
         source.sendMessage(Text.literal("§7TT20 enabled: " + (TT20.config.enabled() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Block entity acceleration: " + (TT20.config.blockEntityAcceleration() ? "§aON" : "§cOFF")));
+        source.sendMessage(Text.literal("§7Block breaking acceleration: " + (TT20.config.blockBreakingAcceleration() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Potion effect acceleration: " + (TT20.config.potionEffectAcceleration() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Fluid acceleration: " + (TT20.config.fluidAcceleration() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Pickup acceleration: " + (TT20.config.pickupAcceleration() ? "§aON" : "§cOFF")));

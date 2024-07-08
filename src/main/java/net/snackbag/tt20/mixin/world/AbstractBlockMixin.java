@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class AbstractBlockMixin {
     @ModifyReturnValue(method = "calcBlockBreakingDelta", at = @At("RETURN"))
     private float onBlockBreakingCalc(float original) {
-        if (!TT20.config.enabled()) return original;
+        if (!TT20.config.enabled() || !TT20.config.blockBreakingAcceleration()) return original;
         return original * 20 / (float) TT20.TPS_CALCULATOR.getMostAccurateTPS();
     }
 }

@@ -1,5 +1,6 @@
 package net.snackbag.tt20.mixin;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.snackbag.tt20.TT20;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,6 +16,7 @@ public abstract class LivingEntityMixin {
     @Inject(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;tickStatusEffects()V"))
     private void fixPotionDelayTick(CallbackInfo ci) {
         if (!TT20.config.enabled() || !TT20.config.potionEffectAcceleration()) return;
+        if (((Entity)(Object)this).getWorld().isClient()) return;
 
         for (int i = 0; i < TT20.TPS_CALCULATOR.applicableMissedTicks(); i++) {
             tickStatusEffects();

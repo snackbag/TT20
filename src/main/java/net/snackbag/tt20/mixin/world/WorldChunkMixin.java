@@ -20,6 +20,7 @@ public abstract class WorldChunkMixin {
         original.call(instance, world, blockPos, blockState, blockEntity);
         if (!TT20.config.enabled()) return;
         if (!TT20.config.blockEntityAcceleration()) return;
+        if (world.isClient()) return;
         if (!TT20.blockEntityMaskConfig.getMask().isOkay(Registries.BLOCK.getId(blockState.getBlock()))) return;
 
         for (int i = 0; i < TT20.TPS_CALCULATOR.applicableMissedTicks(); i++) {

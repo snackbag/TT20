@@ -31,6 +31,7 @@ public class MainCommand {
         source.sendMessage(Text.literal("§7Potion effect acceleration: " + (TT20.config.potionEffectAcceleration() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Fluid acceleration: " + (TT20.config.fluidAcceleration() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Pickup acceleration: " + (TT20.config.pickupAcceleration() ? "§aON" : "§cOFF")));
+        source.sendMessage(Text.literal("§7Eating acceleration: " + (TT20.config.eatingAcceleration() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Server watchdog: " + (TT20.config.serverWatchdog() ? "§aON" : "§cOFF")));
         executeTps(context, false);
         source.sendMessage(Text.literal("\n§8Version: §7" + TT20.VERSION));

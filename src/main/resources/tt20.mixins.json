@@ -17,5 +17,9 @@
     ],
     "injectors": {
         "defaultRequire": 1
-	}
+    },
+    "client": [
+        "client.ChatHudMixin",
+        "client.IntegratedServerMixin"
+    ]
 }

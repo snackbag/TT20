@@ -8,10 +8,12 @@
 		"JX_Snack"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"email": "contact@snackbag.net",
+		"homepage": "https://modrinth.com/mod/TT20/",
+		"sources": "https://github.com/snackbag/TT20",
+		"issues": "https://github.com/snackbag/TT20/issues"
 	},
-	"license": "GPL-3.0",
+	"license": "AGPL-3.0",
 	"icon": "assets/tt20/icon.png",
 	"environment": "*",
 	"accessWidener": "tt20.accesswidener",

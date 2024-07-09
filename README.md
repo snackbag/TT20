@@ -2,7 +2,7 @@
 TT20 helps reduce lag by optimizing how ticks work when the server's TPS is low.
 
 # Regarding singleplayer
-While you can still use this mod in singleplayer, most things will not run at normal speed, because you are running an integrated server. This mod is made for Minecraft servers, not for singleplayer use. **If you do have a way around this**, please tell us and we would be happy to fix this issue!
+While you can still use this mod in singleplayer, some things may not work correctly. You can always toggle any features in the configuration. We're trying our best to make this mod compatible with singleplayer, so if you find any issues, [please create an issue](https://github.com/snackbag/TT20/issues).
 
 ## What does TT20 stand for?
 TT20 is an abbreviation of the `ticks*tps/20` formula. It's used to calculate the amount of ticks something takes, while taking the TPS into account.

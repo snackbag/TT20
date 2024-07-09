@@ -23,7 +23,7 @@ public abstract class ChatHudMixin {
     *///?} else {
     private void onPlayerConnectWarn(DrawContext context, int currentTick, int mouseX, int mouseY, CallbackInfo ci) {
     //?}
-        if (TT20.warned) return;
+        if (TT20.warned || !TT20.config.singlePlayerWarning()) return;
         addMessage(Text.literal("§c§lCritical incompatibilities found!\n\n§c§6TT20 §cis not stable on singleplayer and you may find yourself having unwanted side effects. You can disable each feature in the config if it gets too annoying."));
         TT20.warned = true;
     }

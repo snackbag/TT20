@@ -40,6 +40,7 @@ public class MainCommand {
         source.sendMessage(Text.literal("\n§8Version: §7" + TT20.VERSION));
         source.sendMessage(Text.literal("§8MSPT: §7" + TT20.TPS_CALCULATOR.getMSPT()));
         source.sendMessage(Text.literal("§8Missed ticks: §7" + TT20.TPS_CALCULATOR.getAllMissedTicks()));
+        source.sendMessage(Text.literal("§8Automatic updater: §7" + (TT20.config.automaticUpdater() ? "§atrue" : "§cfalse")));
 
         return 1;
     }

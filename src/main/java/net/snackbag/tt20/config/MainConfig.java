@@ -12,6 +12,8 @@ public class MainConfig extends JSONConfiguration {
     private boolean sleepingAcceleration = true;
     private boolean serverWatchdog = true;
 
+    private boolean automaticUpdater = true;
+
     public MainConfig() {
         super("config.json");
 
@@ -25,6 +27,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("portal-acceleration", portalAcceleration);
         putIfEmpty("sleeping-acceleration", sleepingAcceleration);
         putIfEmpty("server-watchdog", serverWatchdog);
+        putIfEmpty("automatic-updater", automaticUpdater);
 
         save();
     }
@@ -43,6 +46,7 @@ public class MainConfig extends JSONConfiguration {
         this.portalAcceleration = getAsBooleanOrDefault("portal-acceleration", portalAcceleration);
         this.sleepingAcceleration = getAsBooleanOrDefault("sleeping-acceleration", sleepingAcceleration);
         this.serverWatchdog = getAsBooleanOrDefault("block-entity-acceleration", serverWatchdog);
+        this.automaticUpdater = getAsBooleanOrDefault("automatic-updater", automaticUpdater);
     }
 
     public void enabled(boolean enabled) {
@@ -123,5 +127,13 @@ public class MainConfig extends JSONConfiguration {
 
     public boolean sleepingAcceleration() {
         return sleepingAcceleration;
+    }
+
+    public void automaticUpdater(boolean enabled) {
+        put("automatic-updater", enabled);
+    }
+
+    public boolean automaticUpdater() {
+        return automaticUpdater;
     }
 }

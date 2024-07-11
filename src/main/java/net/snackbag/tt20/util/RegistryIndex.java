@@ -1,7 +1,12 @@
 package net.snackbag.tt20.util;
 
+//? if >=1.20.1 {
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+//?} else {
+/*import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
+*///?}
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;

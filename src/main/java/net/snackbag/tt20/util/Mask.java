@@ -1,7 +1,11 @@
 package net.snackbag.tt20.util;
 
 import com.google.gson.JsonElement;
+//? if >=1.20.1 {
 import net.minecraft.registry.Registry;
+//?} else {
+/*import net.minecraft.util.registry.Registry;
+*///?}
 import net.minecraft.util.Identifier;
 import net.snackbag.tt20.TT20;
 import net.snackbag.tt20.config.JSONConfiguration;

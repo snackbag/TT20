@@ -2,14 +2,14 @@ package net.snackbag.tt20.util;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TPSCalculator {
     public Long lastTick;
     public Long currentTick;
     private double allMissedTicks = 0;
-    private final List<Double> tpsHistory = new ArrayList<>();
+    private final List<Double> tpsHistory = new CopyOnWriteArrayList<>();
     private static final int historyLimit = 40;
 
     private static final int MAX_TPS = 20;

@@ -12,8 +12,8 @@ public class TPSCalculator {
     private final List<Double> tpsHistory = new CopyOnWriteArrayList<>();
     private static final int historyLimit = 40;
 
-    private static final int MAX_TPS = 20;
-    private static final int FULL_TICK = 50;
+    public static final int MAX_TPS = 20;
+    public static final int FULL_TICK = 50;
 
     public TPSCalculator() {
         ServerTickEvents.START_SERVER_TICK.register(server -> onTick());

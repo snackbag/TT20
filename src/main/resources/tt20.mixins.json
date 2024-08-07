@@ -11,6 +11,7 @@
         "item.ItemEntityMixin",
         "item.ItemMixin",
         "world.AbstractBlockMixin",
+        "world.GameRulesMixin",
         "world.ServerWorldMixin",
         "world.WorldChunkMixin"
     ],

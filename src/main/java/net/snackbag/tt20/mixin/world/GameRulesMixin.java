@@ -5,7 +5,6 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.world.GameRules;
 import net.snackbag.tt20.TT20;
 import net.snackbag.tt20.util.TPSCalculator;
-import net.snackbag.tt20.util.TPSUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 

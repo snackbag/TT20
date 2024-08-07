@@ -11,6 +11,7 @@ public class MainConfig extends JSONConfiguration {
     private boolean portalAcceleration = true;
     private boolean sleepingAcceleration = true;
     private boolean timeAcceleration = true;
+    private boolean randomTickSpeedAcceleration = true;
     private boolean serverWatchdog = true;
 
     private boolean singlePlayerWarning = true;
@@ -31,6 +32,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("server-watchdog", serverWatchdog);
         putIfEmpty("singleplayer-warning", singlePlayerWarning);
         putIfEmpty("time-acceleration", timeAcceleration);
+        putIfEmpty("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         putIfEmpty("automatic-updater", automaticUpdater);
 
         save();
@@ -52,6 +54,7 @@ public class MainConfig extends JSONConfiguration {
         this.serverWatchdog = getAsBooleanOrDefault("block-entity-acceleration", serverWatchdog);
         this.singlePlayerWarning = getAsBooleanOrDefault("singleplayer-warning", singlePlayerWarning);
         this.timeAcceleration = getAsBooleanOrDefault("time-acceleration", timeAcceleration);
+        this.randomTickSpeedAcceleration = getAsBooleanOrDefault("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         this.automaticUpdater = getAsBooleanOrDefault("automatic-updater", automaticUpdater);
     }
 
@@ -153,6 +156,14 @@ public class MainConfig extends JSONConfiguration {
 
     public void timeAcceleration(boolean enabled) {
         put("time-acceleration", enabled);
+    }
+
+    public boolean randomTickSpeedAcceleration() {
+        return randomTickSpeedAcceleration;
+    }
+
+    public void randomTickSpeedAcceleration(boolean enabled) {
+        put("random-tickspeed-acceleration", enabled);
     }
 
     public boolean singlePlayerWarning() {

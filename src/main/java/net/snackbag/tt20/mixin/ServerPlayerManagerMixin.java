@@ -2,6 +2,8 @@ package net.snackbag.tt20.mixin;
 
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
+//? if >1.20.1
+/*import net.minecraft.server.network.ConnectedClientData;*/
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.snackbag.tt20.ModUpdater;
@@ -14,7 +16,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerManager.class)
 public class ServerPlayerManagerMixin {
     @Inject(method = "onPlayerConnect", at = @At("TAIL"))
+    //? if <=1.20.1 {
     private void sendPlayerUpdateMessageIfCorrectPermissions(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
+    //?} else {
+    /*private void sendPlayerUpdateMessageIfCorrectPermissions(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci) {
+    *///?}
         if (!TT20.config.automaticUpdater() || !ModUpdater.hasUpdate) return;
 
         if (player.getServer().getPlayerManager().isOperator(player.getGameProfile())) {

@@ -8,6 +8,7 @@ import java.util.Locale;
 
 public class TPSUtil {
     private static final DecimalFormat df = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.ROOT));
+    private static final DecimalFormat dfMissedTicks = new DecimalFormat("0.0000", DecimalFormatSymbols.getInstance(Locale.ROOT));
 
     public static String colorizeTPS(double tps, boolean format) {
         if (tps > 15) {
@@ -21,6 +22,10 @@ public class TPSUtil {
 
     public static String formatTPS(double tps) {
         return df.format(tps);
+    }
+
+    public static String formatMissedTicks(double missedTicks) {
+        return dfMissedTicks.format(missedTicks);
     }
 
     public static float tt20(float ticks, boolean limitZero) {

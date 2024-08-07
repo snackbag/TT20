@@ -22,5 +22,6 @@ public class TT20 implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info("Starting TT20...");
 		CommandRegistry.registerCommands();
+		ModUpdater.check();
 	}
 }

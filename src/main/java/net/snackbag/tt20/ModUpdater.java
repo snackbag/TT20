@@ -1,7 +1,5 @@
 package net.snackbag.tt20;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.snackbag.shit.web.WebRequest;
@@ -14,6 +12,7 @@ import java.net.URL;
 public class ModUpdater {
     private final static URL updateUrl;
     public static String updateMessage;
+    public static boolean hasUpdate = false;
 
     static {
         try {
@@ -56,6 +55,7 @@ public class ModUpdater {
         }
 
         updateMessage = body.get("updateMessage").getAsString();
+        hasUpdate = true;
         TT20.LOGGER.warn("(TT20) User is running an outdated version of TT20. Latest: " + latest + " - current: " + TT20.VERSION);
     }
 

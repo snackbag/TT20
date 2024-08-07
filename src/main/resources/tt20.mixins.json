@@ -6,13 +6,12 @@
         "DedicatedServerWatchdogMixin",
         "LivingEntityMixin",
         "PlayerEntityMixin",
-        //? >=1.21
-        /*"PortalManagerMixin",*/
         "fluid.LavaFluidMixin",
         "fluid.WaterFluidMixin",
         "item.ItemEntityMixin",
         "item.ItemMixin",
         "world.AbstractBlockMixin",
+        "world.ServerWorldMixin",
         "world.WorldChunkMixin"
     ],
     "injectors": {

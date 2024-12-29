@@ -28,7 +28,8 @@ public class TT20 implements ModInitializer {
 			try {
 				ModUpdater.check();
 			} catch (RuntimeException e) {
-				LOGGER.error(String.valueOf(e));
+				LOGGER.error("Failed to check for updates.");
+				e.printStackTrace();
 			}
 		});
 

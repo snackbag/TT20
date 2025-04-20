@@ -13,7 +13,29 @@ public class MainCommand {
                 Commands.literal("tt20")
                         .then(Commands.literal("tps").executes(ctx -> executeTps(ctx, true)))
                         .then(Commands.literal("status").executes(MainCommand::executeStatus))
+                        .then(Commands.literal("toggle")
+                                .requires(src -> src.hasPermission(3))
+                                .executes(MainCommand::executeToggle))
+                        .then(Commands.literal("reload")
+                                .requires(src -> src.hasPermission(2))
+                                .executes(MainCommand::executeReload))
         );
+    }
+
+    private static int executeReload(CommandContext<CommandSourceStack> ctx) {
+        var source = ctx.getSource();
+
+        //Config.reload();
+        source.sendSuccess(() -> Component.literal(/*"Reloaded config"*/"Did nothing!!!"), false);
+
+        return 1;
+    }
+
+    private static int executeToggle(CommandContext<CommandSourceStack> ctx) {
+        Config.ENABLED.set(!Config.ENABLED.get());
+        Config.ENABLED.save();
+
+        return 1;
     }
 
     private static int executeTps(CommandContext<CommandSourceStack> ctx, boolean missedTicks) {

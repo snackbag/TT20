@@ -3,6 +3,7 @@
   "package": "net.snackbag.tt20.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "item.ItemMixin",
     "world.BlockMixin",
     "world.GameRulesMixin",
     "world.LevelChunkMixin",

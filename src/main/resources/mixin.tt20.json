@@ -5,6 +5,7 @@
   "mixins": [
     "LivingEntityMixin",
     "PlayerMixin",
+    "ServerPlayerListMixin",
     "fluid.LavaFluidMixin",
     "fluid.WaterFluidMixin",
     "item.ItemEntityMixin",

@@ -82,6 +82,7 @@ repositories {
     maven {
         url = "https://repo.spongepowered.org/repository/maven-releases"
     }
+    maven { url = "https://artifacts.snackbag.net/artifactory/shitlib" } // ShitLib
 }
 
 dependencies {
@@ -94,6 +95,9 @@ dependencies {
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.4.1")) {
         jarJar.ranged(it, "[0.4.1,)")
     }
+
+    implementation "net.snackbag.shit:shit:${project.shitlib_version}"
+    //include "net.snackbag.shit:shit:${project.shitlib_version}"
 }
 
 tasks.named('processResources', ProcessResources).configure {

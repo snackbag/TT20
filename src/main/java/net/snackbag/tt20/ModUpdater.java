@@ -46,7 +46,7 @@ public class ModUpdater {
             throw new RuntimeException("(TT20) Failed to check for updates, status is false.");
         }
 
-        String latest = body.get("latest-forge").getAsString();
+        String latest = body.get("latest").getAsString();
         boolean shouldUpdate = checkUpdatesAvailable(latest);
 
         if (!shouldUpdate) {

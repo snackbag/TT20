@@ -16,5 +16,6 @@
     "defaultRequire": 1
   },
   "client": [
+    "client.ChatComponentMixin"
   ]
 }

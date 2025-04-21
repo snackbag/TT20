@@ -1,7 +1,5 @@
 package net.snackbag.tt20.config;
 
-import net.snackbag.shit.config.JSONConfiguration;
-
 public class MainConfig extends JSONConfiguration {
     private boolean enabled = true;
     private boolean blockEntityAcceleration = false;

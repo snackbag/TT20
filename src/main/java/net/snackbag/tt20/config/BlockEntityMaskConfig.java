@@ -1,7 +1,6 @@
 package net.snackbag.tt20.config;
 
 import net.minecraftforge.registries.ForgeRegistries;
-import net.snackbag.shit.config.JSONConfiguration;
 import net.snackbag.tt20.util.Mask;
 
 public class BlockEntityMaskConfig extends JSONConfiguration {

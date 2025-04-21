@@ -32,8 +32,8 @@ public class MainCommand {
     }
 
     private static int executeToggle(CommandContext<CommandSourceStack> ctx) {
-        Config.ENABLED.set(!Config.ENABLED.get());
-        Config.ENABLED.save();
+        TT20.config.enabled(!TT20.config.enabled());
+        TT20.config.save();
 
         return 1;
     }
@@ -57,43 +57,43 @@ public class MainCommand {
     private static int executeStatus(CommandContext<CommandSourceStack> ctx) {
         CommandSourceStack source = ctx.getSource();
         source.sendSuccess(() -> Component.literal(
-                "§7TT20 enabled: " + (Config.ENABLED.get() ? "§aON" : "§cOFF")
+                "§7TT20 enabled: " + (TT20.config.enabled() ? "§aON" : "§cOFF")
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§7Block entity acceleration: " + (Config.BLOCK_ENTITY_ACCELERATION.get() ? "§aON" : "§cOFF")
+                "§7Block entity acceleration: " + (TT20.config.blockEntityAcceleration() ? "§aON" : "§cOFF")
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§7Block breaking acceleration: " + (Config.BLOCK_BREAKING_ACCELERATION.get() ? "§aON" : "§cOFF")
+                "§7Block breaking acceleration: " + (TT20.config.blockBreakingAcceleration() ? "§aON" : "§cOFF")
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§7Potion effect acceleration: " + (Config.POTION_EFFECT_ACCELERATION.get() ? "§aON" : "§cOFF")
+                "§7Potion effect acceleration: " + (TT20.config.potionEffectAcceleration() ? "§aON" : "§cOFF")
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§7Fluid acceleration: " + (Config.FLUID_ACCELERATION.get() ? "§aON" : "§cOFF")
+                "§7Fluid acceleration: " + (TT20.config.fluidAcceleration() ? "§aON" : "§cOFF")
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§7Pickup acceleration: " + (Config.PICKUP_ACCELERATION.get() ? "§aON" : "§cOFF")
+                "§7Pickup acceleration: " + (TT20.config.pickupAcceleration() ? "§aON" : "§cOFF")
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§7Eating acceleration: " + (Config.EATING_ACCELERATION.get() ? "§aON" : "§cOFF")
+                "§7Eating acceleration: " + (TT20.config.eatingAcceleration() ? "§aON" : "§cOFF")
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§7Portal acceleration: " + (Config.PORTAL_ACCELERATION.get() ? "§aON" : "§cOFF")
+                "§7Portal acceleration: " + (TT20.config.portalAcceleration() ? "§aON" : "§cOFF")
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§7Sleeping acceleration: " + (Config.SLEEPING_ACCELERATION.get() ? "§aON" : "§cOFF")
+                "§7Sleeping acceleration: " + (TT20.config.sleepingAcceleration() ? "§aON" : "§cOFF")
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§7Time acceleration: " + (Config.TIME_ACCELERATION.get() ? "§aON" : "§cOFF")
+                "§7Time acceleration: " + (TT20.config.timeAcceleration() ? "§aON" : "§cOFF")
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§7Random tickspeed acceleration: " + (Config.RANDOM_TICKSPEED_ACCELERATION.get() ? "§aON" : "§cOFF")
+                "§7Random tickspeed acceleration: " + (TT20.config.randomTickSpeedAcceleration() ? "§aON" : "§cOFF")
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§7Singleplayer warning: " + (Config.SINGLEPLAYER_WARNING.get() ? "§aON" : "§cOFF")
+                "§7Singleplayer warning: " + (TT20.config.singlePlayerWarning() ? "§aON" : "§cOFF")
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§7Server watchdog: " + (Config.SERVER_WATCHDOG.get() ? "§aON" : "§cOFF")
+                "§7Server watchdog: " + (TT20.config.serverWatchdog() ? "§aON" : "§cOFF")
         ), false);
 
         executeTps(ctx, false);
@@ -108,7 +108,7 @@ public class MainCommand {
                 "§8Missed ticks: §7" + TPSUtil.formatMissedTicks(TT20.TPS_CALCULATOR.getAllMissedTicks())
         ), false);
         source.sendSuccess(() -> Component.literal(
-                "§8Automatic updater: §7" + (Config.AUTOMATIC_UPDATER.get() ? "§aenabled" : "§cdisabled")
+                "§8Automatic updater: §7" + (TT20.config.automaticUpdater() ? "§aenabled" : "§cdisabled")
         ), false);
 
         return 1;

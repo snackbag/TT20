@@ -2,10 +2,9 @@ package net.snackbag.tt20.util;
 
 import com.google.gson.JsonElement;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.snackbag.shit.config.JSONConfiguration;
 import net.snackbag.tt20.TT20;
+import net.snackbag.tt20.config.JSONConfiguration;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -7,18 +7,15 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.command.ConfigCommand;
-import net.snackbag.tt20.util.Mask;
+import net.snackbag.tt20.config.BlockEntityMaskConfig;
+import net.snackbag.tt20.config.MainConfig;
 import org.slf4j.Logger;
 
 import net.snackbag.tt20.util.TPSCalculator;
-
-import java.util.Collections;
 
 @Mod(TT20.MODID)
 public class TT20 {
@@ -27,7 +24,8 @@ public class TT20 {
     public static final String VERSION = "0.7.1";
     public static final TPSCalculator TPS_CALCULATOR = new TPSCalculator();
 
-    public static Mask blockEntityMask;
+    public static final MainConfig config = new MainConfig();
+    public static final BlockEntityMaskConfig blockEntityMaskConfig = new BlockEntityMaskConfig();
 
     public TT20(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
@@ -35,14 +33,6 @@ public class TT20 {
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(TPS_CALCULATOR);
-
-        context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
-
-        blockEntityMask = new Mask(
-                ForgeRegistries.BLOCKS,
-                Config.BLOCK_ENTITY_MASK_TYPE.get(),
-                Collections.singletonList("blocks")
-        );
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

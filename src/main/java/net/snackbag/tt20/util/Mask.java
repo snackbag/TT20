@@ -1,58 +1,63 @@
 package net.snackbag.tt20.util;
 
+import com.google.gson.JsonElement;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.snackbag.shit.config.JSONConfiguration;
 import net.snackbag.tt20.TT20;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Mask {
+    private final JSONConfiguration file;
     private final MaskType maskType;
     private final IForgeRegistry<?> registry;
     private final Set<ResourceLocation> entries;
 
-    public Mask(IForgeRegistry<?> registry, String maskType, List<String> maskEntries) {
+    public Mask(IForgeRegistry<?> registry, JSONConfiguration file, String maskKey) {
+        this.file = file;
+        this.maskType = MaskType.fromString(file.getAsString("type"));
         this.registry = registry;
-        this.maskType = MaskType.fromString(maskType);
         this.entries = new HashSet<>();
 
-        for (String entry : maskEntries) {
-            entries.addAll(manageEntry(entry));
+        for (JsonElement element : file.getAsArray(maskKey)) {
+            if (!(element.isJsonPrimitive() && element.getAsJsonPrimitive().isString())) {
+                TT20.LOGGER.error("(TT20) Mask element '" + element + "' isn't a string");
+                return;
+            }
+
+            entries.addAll(manageEntry(element.getAsString()));
         }
     }
 
     private List<ResourceLocation> manageEntry(String entry) {
         String[] split = entry.split(":");
+
         if (split.length != 2) {
-            TT20.LOGGER.error("(TT20) Invalid mask entry '{}'. Format must be <namespace>:<path>", entry);
+            TT20.LOGGER.error("(TT20) '" + entry + "' is not a valid identifier. Correct format is <namespace>:<path>");
             return Collections.emptyList();
         }
 
-        String namespace = split[0];
-        String path = split[1];
+        final String targetNamespace = split[0];
+        final String targetPath = split[1];
 
-        // Handle wildcards
-        if (namespace.equals("*") && path.equals("*")) {
-            return new ArrayList<>(registry.getKeys());
-        }
-
-        // Exact match
-        if (!namespace.equals("*") && !path.equals("*")) {
-            return Collections.singletonList(new ResourceLocation(namespace, path));
-        }
-
-        // Wildcard namespace
-        if (namespace.equals("*")) {
-            return registry.getKeys().stream()
-                    .filter(rl -> rl.getPath().equals(path))
-                    .collect(Collectors.toList());
-        }
-
-        // Wildcard path
-        return registry.getKeys().stream()
-                .filter(rl -> rl.getNamespace().equals(namespace))
+        return registry.getEntries().stream()
+                .map(registryEntry -> registryEntry.getKey().location())
+                .filter(location ->
+                        (targetNamespace.equals("*") || location.getNamespace().equals(targetNamespace)) &&
+                                (targetPath.equals("*") || location.getPath().equals(targetPath))
+                )
                 .collect(Collectors.toList());
+    }
+
+    public IForgeRegistry<?> getRegistry() {
+        return registry;
+    }
+
+    public JSONConfiguration getFile() {
+        return file;
     }
 
     public boolean matches(ResourceLocation identifier) {
@@ -60,15 +65,6 @@ public class Mask {
     }
 
     public boolean isOkay(ResourceLocation identifier) {
-        return (maskType == MaskType.WHITELIST) == matches(identifier);
-    }
-
-    public enum MaskType {
-        WHITELIST,
-        BLACKLIST;
-
-        public static MaskType fromString(String type) {
-            return type.equalsIgnoreCase("blacklist") ? BLACKLIST : WHITELIST;
-        }
+        return (maskType == MaskType.WHITELIST) == entries.contains(identifier);
     }
 }

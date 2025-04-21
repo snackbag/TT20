@@ -3,7 +3,8 @@
   "package": "net.snackbag.tt20.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "world.BlockMixin"
+    "world.BlockMixin",
+    "world.GameRulesMixin"
   ],
   "injectors": {
     "defaultRequire": 1

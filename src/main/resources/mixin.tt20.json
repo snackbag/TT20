@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "LivingEntityMixin",
+    "PlayerMixin",
     "fluid.LavaFluidMixin",
     "fluid.WaterFluidMixin",
     "item.ItemEntityMixin",

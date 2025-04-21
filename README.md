@@ -21,7 +21,7 @@ TT20 only fixes the symptoms of TPS lag, not the actual lag. It re-calculates th
 - [ ] Sleeping delay
 - [ ] Potion delay
 - [ ] Fluid spread speed
-- [ ] Random tickspeed acceleration
+- [X] Random tickspeed acceleration
 - [ ] Time acceleration
 
 If you believe there is features missing, please tell us by creating a new issue (yes, also if you want compatibility with other mods!)

@@ -33,6 +33,8 @@ minecraft {
 
     copyIdeResources = true
 
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
     mixin {
         add sourceSets.main, "refmap.tt20.json"
         config "mixin.tt20.json"

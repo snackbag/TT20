@@ -11,10 +11,14 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.command.ConfigCommand;
+import net.snackbag.tt20.util.Mask;
 import org.slf4j.Logger;
 
 import net.snackbag.tt20.util.TPSCalculator;
+
+import java.util.Collections;
 
 @Mod(TT20.MODID)
 public class TT20 {
@@ -22,6 +26,8 @@ public class TT20 {
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final String VERSION = "0.7.1";
     public static final TPSCalculator TPS_CALCULATOR = new TPSCalculator();
+
+    public static Mask blockEntityMask;
 
     public TT20(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
@@ -31,6 +37,12 @@ public class TT20 {
         MinecraftForge.EVENT_BUS.register(TPS_CALCULATOR);
 
         context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        blockEntityMask = new Mask(
+                ForgeRegistries.BLOCKS,
+                Config.BLOCK_ENTITY_MASK_TYPE.get(),
+                Collections.singletonList("blocks")
+        );
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

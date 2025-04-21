@@ -3,6 +3,8 @@ package net.snackbag.tt20;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.List;
+
 @Mod.EventBusSubscriber(modid = TT20.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Config {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -21,6 +23,9 @@ public class Config {
     public static final ForgeConfigSpec.ConfigValue<Boolean> TIME_ACCELERATION;
     public static final ForgeConfigSpec.ConfigValue<Boolean> RANDOM_TICKSPEED_ACCELERATION;
     public static final ForgeConfigSpec.ConfigValue<Boolean> AUTOMATIC_UPDATER;
+
+    public static final ForgeConfigSpec.ConfigValue<String> BLOCK_ENTITY_MASK_TYPE;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> BLOCK_ENTITY_MASK;
 
     public static final ForgeConfigSpec SPEC;
 
@@ -42,8 +47,10 @@ public class Config {
         RANDOM_TICKSPEED_ACCELERATION = BUILDER.define("random-tickspeed-acceleration", true);
         AUTOMATIC_UPDATER             = BUILDER.define("automatic-updater", true);
 
+        BLOCK_ENTITY_MASK_TYPE        = BUILDER.define("block-entity-mask-type", "whitelist");
+        BLOCK_ENTITY_MASK             = BUILDER.defineList("block-entity-mask", List.of("*:*"), entry -> entry instanceof String);
+
         BUILDER.pop();
         SPEC = BUILDER.build();
     }
-
 }

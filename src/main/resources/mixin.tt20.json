@@ -5,6 +5,7 @@
   "mixins": [
     "world.BlockMixin",
     "world.GameRulesMixin",
+    "world.LevelChunkMixin",
     "world.ServerLevelMixin"
   ],
   "injectors": {

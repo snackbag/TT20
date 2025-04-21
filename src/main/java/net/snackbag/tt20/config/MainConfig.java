@@ -51,7 +51,7 @@ public class MainConfig extends JSONConfiguration {
         this.eatingAcceleration = getAsBooleanOrDefault("eating-acceleration", eatingAcceleration);
         this.portalAcceleration = getAsBooleanOrDefault("portal-acceleration", portalAcceleration);
         this.sleepingAcceleration = getAsBooleanOrDefault("sleeping-acceleration", sleepingAcceleration);
-        this.serverWatchdog = getAsBooleanOrDefault("block-entity-acceleration", serverWatchdog);
+        this.serverWatchdog = getAsBooleanOrDefault("server-watchdog", serverWatchdog);
         this.singlePlayerWarning = getAsBooleanOrDefault("singleplayer-warning", singlePlayerWarning);
         this.timeAcceleration = getAsBooleanOrDefault("time-acceleration", timeAcceleration);
         this.randomTickSpeedAcceleration = getAsBooleanOrDefault("random-tickspeed-acceleration", randomTickSpeedAcceleration);

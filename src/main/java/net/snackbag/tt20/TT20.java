@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 
 import net.snackbag.tt20.util.TPSCalculator;
 
+import java.util.concurrent.CompletableFuture;
+
 @Mod(TT20.MODID)
 public class TT20 {
     public static final String MODID = "tt20";
@@ -39,6 +41,15 @@ public class TT20 {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         LOGGER.info("Starting TT20...");
+
+        CompletableFuture.runAsync(() -> {
+            try {
+                ModUpdater.check();
+            } catch (RuntimeException e) {
+                LOGGER.error("Failed to check for updates.");
+                e.printStackTrace();
+            }
+        });
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

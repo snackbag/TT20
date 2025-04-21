@@ -1,4 +1,4 @@
-# TT20
+# TT20 Forge
 TT20 helps reduce lag by optimizing how ticks work when the server's TPS is low.
 
 # Regarding singleplayer
@@ -12,16 +12,16 @@ TT20 only fixes the symptoms of TPS lag, not the actual lag. It re-calculates th
 
 ## Roadmap
 - [X] Block break delay
-- [X] Eating delay
-- [X] Item pickup delay
-- [X] Block entity tick acceleration (experimental)
-- [ ] Entity death animation(?)
-- [ ] Block state delay
-- [X] Portal delay
-- [X] Sleeping delay
-- [X] Potion delay
-- [X] Fluid spread speed
-- [X] Random tickspeed acceleration
-- [X] Day/nighttime acceleration
+- [ ] Eating delay
+- [ ] Item pickup delay
+- [/] Block entity tick acceleration (experimental)
+- [/] Entity death animation(?)
+- [/] Block state delay
+- [ ] Portal delay
+- [ ] Sleeping delay
+- [ ] Potion delay
+- [ ] Fluid spread speed
+- [ ] Random tickspeed acceleration
+- [ ] Time acceleration
 
 If you believe there is features missing, please tell us by creating a new issue (yes, also if you want compatibility with other mods!)

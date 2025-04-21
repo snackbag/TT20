@@ -4,12 +4,12 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "world.BlockMixin",
-    "world.GameRulesMixin"
+    "world.GameRulesMixin",
+    "world.ServerLevelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-
   ]
 }

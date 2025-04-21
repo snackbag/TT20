@@ -3,6 +3,8 @@
   "package": "net.snackbag.tt20.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "fluid.LavaFluidMixin",
+    "fluid.WaterFluidMixin",
     "item.ItemEntityMixin",
     "item.ItemMixin",
     "world.BlockMixin",

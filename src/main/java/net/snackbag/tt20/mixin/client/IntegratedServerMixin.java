@@ -15,7 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class IntegratedServerMixin {
     @Inject(method = "setupServer", at = @At("HEAD"))
     private void disableTT20(CallbackInfoReturnable<Boolean> cir) {
+        TT20.config.reload();
         TT20.config.enabled(TT20.config.singlePlayerEnabled());
+        TT20.config.save();
     }
 
     @Inject(method = "stop", at = @At("HEAD"))

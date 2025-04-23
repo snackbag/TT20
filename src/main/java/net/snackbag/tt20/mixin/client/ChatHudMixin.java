@@ -26,7 +26,7 @@ public abstract class ChatHudMixin {
     private void onPlayerConnectWarn(DrawContext context, int currentTick, int mouseX, int mouseY, CallbackInfo ci) {
     //?}
         if (TT20.config.singlePlayerEnabled() && TT20.config.singlePlayerWarning() && !TT20.warned) {
-            addMessage(Text.literal("§c§lTT20 is Active!"));
+            addMessage(Text.literal("§c§6TT20 §cis §lActive§r§c!"));
             addMessage(Text.literal("§c§6TT20 §cis not stable on singleplayer and you may find yourself having unwanted side effects. You can disable each feature in the config."));
         }
         TT20.warned = true;

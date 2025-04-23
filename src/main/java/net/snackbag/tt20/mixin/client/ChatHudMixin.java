@@ -5,7 +5,6 @@ import net.fabricmc.api.Environment;
 //? if >=1.20.1
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.ChatHud;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.snackbag.tt20.TT20;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,8 +25,10 @@ public abstract class ChatHudMixin {
     *///?} else {
     private void onPlayerConnectWarn(DrawContext context, int currentTick, int mouseX, int mouseY, CallbackInfo ci) {
     //?}
-        if (TT20.warned || !TT20.config.singlePlayerWarning()) return;
-        addMessage(Text.literal("§c§lCritical incompatibilities found!\n\n§c§6TT20 §cis not stable on singleplayer and you may find yourself having unwanted side effects. You can disable each feature in the config if it gets too annoying."));
+        if (TT20.config.singlePlayerEnabled() && TT20.config.singlePlayerWarning() && !TT20.warned) {
+            addMessage(Text.literal("§c§6TT20 §cis §lActive§r§c!"));
+            addMessage(Text.literal("§c§6TT20 §cis not stable on singleplayer and you may find yourself having unwanted side effects. You can disable each feature in the config."));
+        }
         TT20.warned = true;
     }
 }

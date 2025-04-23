@@ -14,7 +14,6 @@ public class MainConfig extends JSONConfiguration {
     private boolean randomTickSpeedAcceleration = true;
     private boolean singlePlayerEnabled = true;
     private boolean serverWatchdog = true;
-
     private boolean singlePlayerWarning = true;
     private boolean automaticUpdater = true;
 
@@ -34,7 +33,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("singleplayer-warning", singlePlayerWarning);
         putIfEmpty("time-acceleration", timeAcceleration);
         putIfEmpty("random-tickspeed-acceleration", randomTickSpeedAcceleration);
-        putIfEmpty("singleplayer-enable", singlePlayerEnabled);
+        putIfEmpty("singleplayer-enabled", singlePlayerEnabled);
         putIfEmpty("automatic-updater", automaticUpdater);
 
         save();

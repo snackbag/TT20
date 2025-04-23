@@ -57,6 +57,9 @@ public class MainCommand {
         TT20.blockEntityMaskConfig.reload();
         source.sendMessage(Text.literal("Reloaded block entity mask config"));
 
+        if (!source.getServer().isDedicated()) TT20.config.enabled(TT20.config.singlePlayerEnabled());
+        TT20.config.save();
+
         return 1;
     }
 

@@ -12,6 +12,7 @@ public class MainConfig extends JSONConfiguration {
     private boolean sleepingAcceleration = true;
     private boolean timeAcceleration = true;
     private boolean bowAcceleration = true;
+    private boolean crossbowAcceleration = true;
     private boolean randomTickSpeedAcceleration = true;
     private boolean serverWatchdog = true;
 
@@ -33,7 +34,8 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("server-watchdog", serverWatchdog);
         putIfEmpty("singleplayer-warning", singlePlayerWarning);
         putIfEmpty("time-acceleration", timeAcceleration);
-        putIfEmpty("bow-acceleration", randomTickSpeedAcceleration);
+        putIfEmpty("bow-acceleration", bowAcceleration);
+        putIfEmpty("crossbow-acceleration", crossbowAcceleration);
         putIfEmpty("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         putIfEmpty("automatic-updater", automaticUpdater);
 
@@ -57,6 +59,7 @@ public class MainConfig extends JSONConfiguration {
         this.singlePlayerWarning = getAsBooleanOrDefault("singleplayer-warning", singlePlayerWarning);
         this.timeAcceleration = getAsBooleanOrDefault("time-acceleration", timeAcceleration);
         this.bowAcceleration = getAsBooleanOrDefault("bow-acceleration", bowAcceleration);
+        this.crossbowAcceleration = getAsBooleanOrDefault("crossbow-acceleration", crossbowAcceleration);
         this.randomTickSpeedAcceleration = getAsBooleanOrDefault("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         this.automaticUpdater = getAsBooleanOrDefault("automatic-updater", automaticUpdater);
     }
@@ -167,6 +170,14 @@ public class MainConfig extends JSONConfiguration {
 
     public void bowAcceleration(boolean enabled) {
         put("bow-acceleration", enabled);
+    }
+
+    public boolean crossbowAcceleration() {
+        return crossbowAcceleration;
+    }
+
+    public void crossbowAcceleration(boolean enabled) {
+        put("crossbow-acceleration", enabled);
     }
 
     public boolean randomTickSpeedAcceleration() {

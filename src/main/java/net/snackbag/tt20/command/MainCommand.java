@@ -41,6 +41,7 @@ public class MainCommand {
         sendMessage(context, literal("§7Portal acceleration: " + (TT20.config.portalAcceleration() ? "§aON" : "§cOFF")));
         sendMessage(context, literal("§7Sleeping acceleration: " + (TT20.config.sleepingAcceleration() ? "§aON" : "§cOFF")));
         sendMessage(context, literal("§7Time acceleration: " + (TT20.config.timeAcceleration() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Bow pull acceleration: " + (TT20.config.bowAcceleration() ? "§aON" : "§cOFF")));
         sendMessage(context, literal("§7Random tickspeed acceleration: " + (TT20.config.randomTickSpeedAcceleration() ? "§aON" : "§cOFF")));
         sendMessage(context, literal("§7Server watchdog: " + (TT20.config.serverWatchdog() ? "§aON" : "§cOFF")));
         executeTps(context, false);

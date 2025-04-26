@@ -16,6 +16,7 @@
     "accessor.ServerPlayerAccessor",
     "fluid.LavaFluidMixin",
     "fluid.WaterFluidMixin",
+    "item.BowItemMixin",
     "item.ItemEntityMixin",
     "item.ItemMixin",
     "world.BlockBehaviourMixin",

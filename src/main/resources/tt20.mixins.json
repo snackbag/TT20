@@ -17,6 +17,7 @@
     "fluid.LavaFluidMixin",
     "fluid.WaterFluidMixin",
     "item.BowItemMixin",
+    "item.CrossbowItemMixin",
     "item.ItemEntityMixin",
     "item.ItemMixin",
     "world.BlockBehaviourMixin",

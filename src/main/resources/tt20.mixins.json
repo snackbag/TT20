@@ -1,28 +1,27 @@
 {
-    "required": true,
-    "package": "net.snackbag.tt20.mixin",
-    "compatibilityLevel": "JAVA_17",
-    "mixins": [
-        "DedicatedServerWatchdogMixin",
-        "LivingEntityMixin",
-        "PlayerEntityMixin",
-        //? >=1.21
-        /*"PortalManagerMixin",*/
-        "ServerPlayerManagerMixin",
-        "fluid.LavaFluidMixin",
-        "fluid.WaterFluidMixin",
-        "item.ItemEntityMixin",
-        "item.ItemMixin",
-        "world.AbstractBlockMixin",
-        "world.GameRulesMixin",
-        "world.ServerWorldMixin",
-        "world.WorldChunkMixin"
-    ],
-    "injectors": {
-        "defaultRequire": 1
-    },
-    "client": [
-        "client.ChatHudMixin",
-        "client.IntegratedServerMixin"
-    ]
+  "required": true,
+  "package": "net.snackbag.tt20.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "DedicatedServerWatchdogMixin",
+    "LivingEntityMixin",
+    "PlayerEntityMixin",
+    "ServerPlayerManagerMixin",
+    "fluid.LavaFluidMixin",
+    "fluid.WaterFluidMixin",
+    "item.BowItemMixin",
+    "item.ItemEntityMixin",
+    "item.ItemMixin",
+    "world.AbstractBlockMixin",
+    "world.GameRulesMixin",
+    "world.ServerWorldMixin",
+    "world.WorldChunkMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "client.ChatHudMixin",
+    "client.IntegratedServerMixin"
+  ]
 }

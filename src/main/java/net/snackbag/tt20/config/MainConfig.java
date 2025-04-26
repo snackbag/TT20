@@ -11,6 +11,7 @@ public class MainConfig extends JSONConfiguration {
     private boolean portalAcceleration = true;
     private boolean sleepingAcceleration = true;
     private boolean timeAcceleration = true;
+    private boolean bowAcceleration = true;
     private boolean randomTickSpeedAcceleration = true;
     private boolean serverWatchdog = true;
 
@@ -32,6 +33,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("server-watchdog", serverWatchdog);
         putIfEmpty("singleplayer-warning", singlePlayerWarning);
         putIfEmpty("time-acceleration", timeAcceleration);
+        putIfEmpty("bow-acceleration", randomTickSpeedAcceleration);
         putIfEmpty("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         putIfEmpty("automatic-updater", automaticUpdater);
 
@@ -54,6 +56,7 @@ public class MainConfig extends JSONConfiguration {
         this.serverWatchdog = getAsBooleanOrDefault("block-entity-acceleration", serverWatchdog);
         this.singlePlayerWarning = getAsBooleanOrDefault("singleplayer-warning", singlePlayerWarning);
         this.timeAcceleration = getAsBooleanOrDefault("time-acceleration", timeAcceleration);
+        this.bowAcceleration = getAsBooleanOrDefault("bow-acceleration", bowAcceleration);
         this.randomTickSpeedAcceleration = getAsBooleanOrDefault("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         this.automaticUpdater = getAsBooleanOrDefault("automatic-updater", automaticUpdater);
     }
@@ -156,6 +159,14 @@ public class MainConfig extends JSONConfiguration {
 
     public void timeAcceleration(boolean enabled) {
         put("time-acceleration", enabled);
+    }
+
+    public boolean bowAcceleration() {
+        return bowAcceleration;
+    }
+
+    public void bowAcceleration(boolean enabled) {
+        put("bow-acceleration", enabled);
     }
 
     public boolean randomTickSpeedAcceleration() {

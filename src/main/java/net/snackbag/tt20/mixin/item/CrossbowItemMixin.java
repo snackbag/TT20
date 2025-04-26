@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(CrossbowItem.class)
 public class CrossbowItemMixin {
     @ModifyReturnValue(method = "getPullProgress", at = @At("RETURN"))
-    private static float bowProgress(float original) {
+    private static float crossbowProgress(float original) {
         if (!TT20.config.enabled() || !TT20.config.crossbowAcceleration()) return original;
 
         return original * TPSCalculator.MAX_TPS / (float) TT20.TPS_CALCULATOR.getMostAccurateTPS();

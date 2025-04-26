@@ -11,6 +11,7 @@ public class MainConfig extends JSONConfiguration {
     private boolean portalAcceleration = true;
     private boolean sleepingAcceleration = true;
     private boolean timeAcceleration = true;
+    private boolean bowAcceleration = true;
     private boolean randomTickSpeedAcceleration = true;
     private boolean tntAcceleration = false;
     private boolean vanillaLagback = true;
@@ -32,6 +33,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("sleeping-acceleration", sleepingAcceleration);
         putIfEmpty("server-watchdog", serverWatchdog);
         putIfEmpty("time-acceleration", timeAcceleration);
+        putIfEmpty("bow-acceleration", randomTickSpeedAcceleration);
         putIfEmpty("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         putIfEmpty("tnt-acceleration", tntAcceleration);
         putIfEmpty("vanilla-lagback", vanillaLagback);
@@ -56,6 +58,7 @@ public class MainConfig extends JSONConfiguration {
         this.sleepingAcceleration = getAsBooleanOrDefault("sleeping-acceleration", sleepingAcceleration);
         this.serverWatchdog = getAsBooleanOrDefault("server-watchdog", serverWatchdog);
         this.timeAcceleration = getAsBooleanOrDefault("time-acceleration", timeAcceleration);
+        this.bowAcceleration = getAsBooleanOrDefault("bow-acceleration", bowAcceleration);
         this.randomTickSpeedAcceleration = getAsBooleanOrDefault("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         this.tntAcceleration = getAsBooleanOrDefault("tnt-acceleration", tntAcceleration);
         this.vanillaLagback = getAsBooleanOrDefault("vanilla-lagback", vanillaLagback);
@@ -161,6 +164,14 @@ public class MainConfig extends JSONConfiguration {
 
     public void timeAcceleration(boolean enabled) {
         put("time-acceleration", enabled);
+    }
+
+    public boolean bowAcceleration() {
+        return bowAcceleration;
+    }
+
+    public void bowAcceleration(boolean enabled) {
+        put("bow-acceleration", enabled);
     }
 
     public boolean randomTickSpeedAcceleration() {

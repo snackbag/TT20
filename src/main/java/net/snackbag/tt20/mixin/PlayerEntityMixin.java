@@ -29,9 +29,6 @@ public abstract class PlayerEntityMixin {
 
         if (!TT20.config.enabled() || !TT20.config.sleepingAcceleration()) return original;
         if (((Entity)(Object)this).getWorld().isClient()) return original;
-        if (player.isSleeping()) {
-            return original + TT20.TPS_CALCULATOR.applicableMissedTicks();
-        }
-        return original;
+        return player.isSleeping() ? original + TT20.TPS_CALCULATOR.applicableMissedTicks() : original;
     }
 }

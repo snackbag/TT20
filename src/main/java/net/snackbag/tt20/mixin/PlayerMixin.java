@@ -29,12 +29,14 @@ public abstract class PlayerMixin {
 
     @ModifyExpressionValue(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;sleepCounter:I", opcode = Opcodes.GETFIELD))
     private int tickTT20(int original) {
+        Player player = (Player)(Object)this;
+
         if (!TT20.config.enabled() || !TT20.config.sleepingAcceleration()) return original;
         //? if >=1.20.1 {
         if (((Entity)(Object)this).level().isClientSide()) return original;
         //?} else {
         /*if (((Entity)(Object)this).level.isClientSide()) return original;
         *///?}
-        return original + TT20.TPS_CALCULATOR.applicableMissedTicks();
+        return player.isSleeping() ? original + TT20.TPS_CALCULATOR.applicableMissedTicks() : original;
     }
 }

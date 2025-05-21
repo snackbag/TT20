@@ -14,8 +14,8 @@ public class MainConfig extends JSONConfiguration {
     private boolean bowAcceleration = true;
     private boolean crossbowAcceleration = true;
     private boolean randomTickSpeedAcceleration = true;
+    private boolean singlePlayerEnabled = true;
     private boolean serverWatchdog = true;
-
     private boolean singlePlayerWarning = true;
     private boolean automaticUpdater = true;
 
@@ -37,6 +37,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("bow-acceleration", bowAcceleration);
         putIfEmpty("crossbow-acceleration", crossbowAcceleration);
         putIfEmpty("random-tickspeed-acceleration", randomTickSpeedAcceleration);
+        putIfEmpty("singleplayer-enabled", singlePlayerEnabled);
         putIfEmpty("automatic-updater", automaticUpdater);
 
         save();
@@ -61,6 +62,7 @@ public class MainConfig extends JSONConfiguration {
         this.bowAcceleration = getAsBooleanOrDefault("bow-acceleration", bowAcceleration);
         this.crossbowAcceleration = getAsBooleanOrDefault("crossbow-acceleration", crossbowAcceleration);
         this.randomTickSpeedAcceleration = getAsBooleanOrDefault("random-tickspeed-acceleration", randomTickSpeedAcceleration);
+        this.singlePlayerEnabled = getAsBooleanOrDefault("singleplayer-enabled", singlePlayerEnabled);
         this.automaticUpdater = getAsBooleanOrDefault("automatic-updater", automaticUpdater);
     }
 
@@ -186,6 +188,14 @@ public class MainConfig extends JSONConfiguration {
 
     public void randomTickSpeedAcceleration(boolean enabled) {
         put("random-tickspeed-acceleration", enabled);
+    }
+
+    public boolean singlePlayerEnabled() {
+        return singlePlayerEnabled;
+    }
+
+    public void singlePlayerEnabled(boolean enabled) {
+        put("singleplayer-enabled", enabled);
     }
 
     public boolean singlePlayerWarning() {

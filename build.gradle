@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.7-SNAPSHOT'
+	id 'fabric-loom' version '1.10.1'
 	id 'maven-publish'
 	id "dev.kikugie.j52j" version "1.0"
 }

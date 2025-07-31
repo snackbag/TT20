@@ -1,31 +1,28 @@
 {
 	"schemaVersion": 1,
-	"id": "tt20",
-	"version": "${version}",
-	"name": "TT20",
-	"description": "TT20 helps reduce lag by optimizing how ticks work when the server's TPS is low. ",
+	"id": "${id}",
+	"version": "${modversion}",
+	"name": "${display_name}",
+	"description": "${description}",
 	"authors": [
-		"JX_Snack"
+		"${author}"
 	],
 	"contact": {
 		"email": "contact@snackbag.net",
 		"homepage": "https://modrinth.com/mod/TT20/",
-		"sources": "https://github.com/snackbag/TT20",
-		"issues": "https://github.com/snackbag/TT20/issues"
+		"sources": "${sources}",
+		"issues": "https://github.com/${github}/issues"
 	},
-	"license": "AGPL-3.0",
-	"icon": "assets/tt20/icon.png",
+	"license": "${license}",
+	"icon": "assets/${id}/icon.png",
 	"environment": "*",
 	"accessWidener": "tt20.accesswidener",
 	"entrypoints": {
 		"main": [
-			"net.snackbag.tt20.TT20"
-		],
-		"fabric-datagen": [
-			"net.snackbag.tt20.TT20DataGenerator"
+			"${group}.${namespace}.TT20"
 		],
 		"client": [
-			"net.snackbag.tt20.TT20Client"
+			"${group}.${namespace}.TT20Client"
 		]
 	},
 	"mixins": [

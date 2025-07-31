@@ -1,0 +1,25 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "${license}"
+showAsResourcePack = false
+
+issueTrackerURL = "https://github.com/${github}/issues"
+
+[[mods]]
+modId = "${id}"
+version = "${modversion}"
+displayName = "${display_name}"
+authors = "${author}"
+description = "${description}"
+logoFile = "assets/tt20/icon.png"
+displayURL = "https://github.com/${github}"
+
+[[mixins]]
+config = "tt20.mixins.json"
+
+[[dependencies."${id}"]]
+modId = "minecraft"
+mandatory = true
+versionRange = "${minecraft}"
+ordering = "NONE"
+side = "BOTH"

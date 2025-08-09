@@ -19,3 +19,7 @@ repositories {
 	// for more information about repositories.
 	maven("https://artifacts.snackbag.net/artifactory/shitlib") // ShitLib
 }
+
+dependencies {
+	implementation("net.snackbag.shit:shit:${property("deps.shitlib")}")
+}

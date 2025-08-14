@@ -10,7 +10,7 @@
 	"contact": {
 		"email": "contact@snackbag.net",
 		"homepage": "https://modrinth.com/mod/TT20/",
-		"sources": "${sources}",
+		"sources": "https://github.com/${github}",
 		"issues": "https://github.com/${github}/issues"
 	},
 	"license": "${license}",

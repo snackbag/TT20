@@ -22,10 +22,13 @@ plugins {
 
 blahaj {
     init(rootProject) {
+        mc("1.19.2", "fabric", "forge")
         mc("1.20.1", "fabric", "forge")
-        mc("1.21.1", "fabric", "neoforge")
-        mc("1.21.4", "fabric")
-        mc("1.21.5", "fabric")
+        mc("1.20.2", "fabric", "forge", "neoforge")
+        mc("1.20.3", "fabric", "forge", "neoforge")
+        mc("1.20.5", "fabric",          "neoforge")
+        mc("1.21",   "fabric", "forge", "neoforge")
+        mc("1.21.2", "fabric",          "neoforge")
     }
 }
 

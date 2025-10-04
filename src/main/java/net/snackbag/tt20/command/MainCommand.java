@@ -38,6 +38,7 @@ public class MainCommand {
         source.sendMessage(Text.literal("§7Time acceleration: " + (TT20.config.timeAcceleration() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Random tickspeed acceleration: " + (TT20.config.randomTickSpeedAcceleration() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Singleplayer warning: " + (TT20.config.singlePlayerWarning() ? "§aON" : "§cOFF")));
+        source.sendMessage(Text.literal("§7Singleplayer enabled: " + (TT20.config.singlePlayerEnabled() ? "§aON" : "§cOFF")));
         source.sendMessage(Text.literal("§7Server watchdog: " + (TT20.config.serverWatchdog() ? "§aON" : "§cOFF")));
         executeTps(context, false);
         source.sendMessage(Text.literal("\n§8Version: §7" + TT20.VERSION));
@@ -55,6 +56,9 @@ public class MainCommand {
         source.sendMessage(Text.literal("Reloaded config"));
         TT20.blockEntityMaskConfig.reload();
         source.sendMessage(Text.literal("Reloaded block entity mask config"));
+
+        if (!source.getServer().isDedicated()) TT20.config.enabled(TT20.config.singlePlayerEnabled());
+        TT20.config.save();
 
         return 1;
     }

@@ -26,7 +26,11 @@ public abstract class PlayerEntityMixin {
     @ModifyExpressionValue(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/player/PlayerEntity;sleepTimer:I", opcode = Opcodes.GETFIELD))
     private int tickTT20(int original) {
         if (!TT20.config.enabled() || !TT20.config.sleepingAcceleration()) return original;
+        //? if >=1.21.9 {
+        /*if (((Entity)(Object)this).getEntityWorld().isClient()) return original;
+        *///?} else {
         if (((Entity)(Object)this).getWorld().isClient()) return original;
+        //?}
         return original + TT20.TPS_CALCULATOR.applicableMissedTicks();
     }
 }

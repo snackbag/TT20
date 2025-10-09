@@ -14,7 +14,11 @@ public abstract class AbstractBlockMixin {
     @ModifyReturnValue(method = "calcBlockBreakingDelta", at = @At("RETURN"))
     private float onBlockBreakingCalc(float original, @Local PlayerEntity player) {
         if (!TT20.config.enabled() || !TT20.config.blockBreakingAcceleration()) return original;
+        //? if >=1.21.9 {
+        /*if (player.getEntityWorld().isClient()) return original;
+        *///?} else {
         if (player.getWorld().isClient()) return original;
+        //?}
         return original * TPSCalculator.MAX_TPS / (float) TT20.TPS_CALCULATOR.getMostAccurateTPS();
     }
 }

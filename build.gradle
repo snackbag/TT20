@@ -1,7 +1,6 @@
 plugins {
-	id 'fabric-loom' version '1.10.1'
+	id 'fabric-loom' version '1.11-SNAPSHOT'
 	id 'maven-publish'
-	id "dev.kikugie.j52j" version "1.0"
 }
 
 base {
@@ -9,12 +8,11 @@ base {
 }
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
 	maven { url = "https://artifacts.snackbag.net/artifactory/shitlib" } // ShitLib
+    maven {
+        name = "Terraformers"
+        url = "https://maven.terraformersmc.com/"
+    }
 }
 
 loom {
@@ -41,6 +39,9 @@ dependencies {
 	// ShitLib
 	implementation "net.snackbag.shit:shit:${project.shitlib_version}"
 	include "net.snackbag.shit:shit:${project.shitlib_version}"
+
+    // ModMenu
+    modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
 
 processResources {
@@ -77,8 +78,7 @@ java {
 }
 
 jar {
-	archivesBaseName = "tt20-${project.version}+mc${stonecutter.current.version}"
-	version = null
+    inputs.property "archivesName", "tt20-${project.version}+mc${stonecutter.current.version}"
 
 	from("LICENSE") {
 		rename { "${it}_${project.base.archivesName.get()}"}

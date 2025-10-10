@@ -77,8 +77,7 @@ java {
 }
 
 jar {
-	archivesBaseName = "tt20-${project.version}+mc${stonecutter.current.version}"
-	version = null
+    inputs.property "archivesName", "tt20-${project.version}+mc${stonecutter.current.version}"
 
 	from("LICENSE") {
 		rename { "${it}_${project.base.archivesName.get()}"}

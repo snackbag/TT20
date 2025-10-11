@@ -5,7 +5,8 @@
 	"name": "TT20",
 	"description": "TT20 helps reduce lag by optimizing how ticks work when the server's TPS is low. ",
 	"authors": [
-		"JX_Snack"
+		"JX_Snack",
+        "Lemonnik"
 	],
 	"contact": {
 		"email": "contact@snackbag.net",

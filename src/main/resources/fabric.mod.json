@@ -14,7 +14,7 @@
 		"sources": "https://github.com/snackbag/TT20",
 		"issues": "https://github.com/snackbag/TT20/issues"
 	},
-	"license": "AGPL-3.0",
+	"license": "PolyForm Shield License 1.0.0",
 	"icon": "assets/tt20/icon.png",
 	"environment": "*",
 	"accessWidener": "tt20.accesswidener",

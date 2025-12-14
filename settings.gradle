@@ -24,7 +24,7 @@ stonecutter {
     centralScript = "build.gradle"
 
     create(getRootProject()) {
-        versions "1.19.2", "1.20.1", "1.20.2", "1.20.3", "1.20.5", "1.21", "1.21.2", "1.21.9"
+        versions "1.19.2", "1.20.1", "1.20.2", "1.20.3", "1.20.5", "1.21", "1.21.2", "1.21.9", "1.21.11"
         vcsVersion = "1.20.1"
     }
 }

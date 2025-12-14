@@ -1,4 +1,4 @@
-package net.snackbag.tt20.util;
+package net.snackbag.tt20.config.rework.utils;
 
 //? if >=1.20.1 {
 import net.minecraft.registry.Registry;

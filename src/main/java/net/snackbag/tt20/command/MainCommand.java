@@ -18,8 +18,13 @@ public class MainCommand {
                 CommandManager.literal("tt20").executes(MainCommand::executeMain)
                         .then(CommandManager.literal("tps").executes(MainCommand::executeTps))
                         .then(CommandManager.literal("status").executes(MainCommand::executeStatus))
+                        //? if (>=1.21.11) {
+                        /*.then(CommandManager.literal("toggle").requires(CommandManager.requirePermissionLevel(CommandManager.ADMINS_CHECK)).executes(MainCommand::executeToggle))
+                        .then(CommandManager.literal("reload").requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK)).executes(MainCommand::executeReload))
+                        *///?} else {
                         .then(CommandManager.literal("toggle").requires(source -> source.hasPermissionLevel(3)).executes(MainCommand::executeToggle))
                         .then(CommandManager.literal("reload").requires(source -> source.hasPermissionLevel(2)).executes(MainCommand::executeReload))
+                        //?}
         );
     }
 

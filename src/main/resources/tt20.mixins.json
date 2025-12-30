@@ -6,6 +6,8 @@
     "DedicatedServerWatchdogMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
+    //? >=1.21
+    "PortalManagerMixin",
     "ServerPlayerEntityMixin",
     "ServerPlayerManagerMixin",
     "fluid.LavaFluidMixin",

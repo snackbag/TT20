@@ -1,0 +1,71 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.set-matrix.outputs.versions }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect supported Minecraft versions
+        id: set-matrix
+        shell: bash
+        run: |
+          versions=$(for d in versions/*/; do [ -f "${d}gradle.properties" ] && basename "$d"; done | sort -V)
+          [ -n "$versions" ] || { echo "No version folders found under versions/" >&2; exit 1; }
+          json="["; sep=""
+          while IFS= read -r v; do
+          [ -n "$v" ] || continue
+          json+="${sep}\"${v}\""; sep=","
+          done <<< "$versions"
+          json+="]"
+          echo "versions=$json" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        mc: ${{ fromJson(needs.matrix.outputs.versions) }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build (${{ matrix.mc }})
+        run: ./gradlew "${{ matrix.mc }}:build" --no-daemon
+
+      - name: Upload artifact (${{ matrix.mc }})
+        uses: actions/upload-artifact@v4
+        with:
+          name: tt20-${{ matrix.mc }}
+          if-no-files-found: error
+          path: |
+            versions/${{ matrix.mc }}/build/libs/*.jar
+            !versions/${{ matrix.mc }}/build/libs/*-sources.jar
+            !versions/${{ matrix.mc }}/build/libs/*-dev.jar

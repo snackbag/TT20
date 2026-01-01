@@ -9,3 +9,4 @@ cp versions/1.20.5/build/libs/tt20-0.7.2.jar publish-builds/tt20-0.7.2+mc1.20.5.
 cp versions/1.21/build/libs/tt20-0.7.2.jar publish-builds/tt20-0.7.2+mc1.21.jar
 cp versions/1.21.2/build/libs/tt20-0.7.2.jar publish-builds/tt20-0.7.2+mc1.21.2.jar
 cp versions/1.21.9/build/libs/tt20-0.7.2.jar publish-builds/tt20-0.7.2+mc1.21.9.jar
+cp versions/1.21.11/build/libs/tt20-0.7.2.jar publish-builds/tt20-0.7.2+mc1.21.11.jar

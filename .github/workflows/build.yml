@@ -60,12 +60,16 @@ jobs:
       - name: Build (${{ matrix.mc }})
         run: ./gradlew "${{ matrix.mc }}:build" --no-daemon
 
+      - name: Prepare publish-builds (${{ matrix.mc }})
+        shell: bash
+        run: |
+          # Allow missing files for other MC versions
+          bash ./copybuilds.sh || true
+
       - name: Upload artifact (${{ matrix.mc }})
         uses: actions/upload-artifact@v4
         with:
           name: tt20-${{ matrix.mc }}
           if-no-files-found: error
           path: |
-            versions/${{ matrix.mc }}/build/libs/*.jar
-            !versions/${{ matrix.mc }}/build/libs/*-sources.jar
-            !versions/${{ matrix.mc }}/build/libs/*-dev.jar
+            publish-builds/*.jar

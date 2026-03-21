@@ -1,5 +1,5 @@
 plugins {
-	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
 
@@ -19,7 +19,6 @@ loom {
 	runConfigs.all {
 		ideConfigGenerated = true
 		runDir = "../../run"
-		accessWidenerPath = file("../../src/main/resources/tt20.accesswidener")
 	}
 }
 
@@ -30,17 +29,16 @@ fabricApi {
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${property('deps.minecraft')}"
-	mappings "net.fabricmc:yarn:${property('deps.yarn_mappings')}:v2"
 
-	modImplementation "net.fabricmc:fabric-loader:${property('deps.fabric_loader')}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${property('deps.fabric_api')}"
+	implementation "net.fabricmc:fabric-loader:${property('deps.fabric_loader')}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${property('deps.fabric_api')}"
 
 	// ShitLib
 	implementation "net.snackbag.shit:shit:${project.shitlib_version}"
 	include "net.snackbag.shit:shit:${project.shitlib_version}"
 
     // ModMenu
-    modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+    compileOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
 
 processResources {
@@ -55,7 +53,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 17
+	it.options.release = 25
 }
 
 java {
@@ -63,17 +61,11 @@ java {
 	// if it is present.
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
-
-	if (stonecutter.compare(stonecutter.current.version, "1.20.5") >= 0) {
-		sourceCompatibility = JavaVersion.VERSION_21
-		targetCompatibility = JavaVersion.VERSION_21
-	} else if (stonecutter.compare(stonecutter.current.version, "1.21") >= 0) {
-		sourceCompatibility = JavaVersion.VERSION_21
-		targetCompatibility = JavaVersion.VERSION_21
-	} else {
-		sourceCompatibility = JavaVersion.VERSION_17
-		targetCompatibility = JavaVersion.VERSION_17
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
 	}
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {

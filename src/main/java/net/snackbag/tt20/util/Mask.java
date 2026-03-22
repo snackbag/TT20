@@ -1,12 +1,20 @@
 package net.snackbag.tt20.util;
 
 import com.google.gson.JsonElement;
-//? if >=1.20.1 {
+//? if >=26.1 {
+/*import net.minecraft.core.Registry;
+*///? } else if >=1.20.1 {
 import net.minecraft.registry.Registry;
 //?} else {
 /*import net.minecraft.util.registry.Registry;
 *///?}
+
+//? if >=26.1 {
+/*import net.minecraft.resources.Identifier;
+*///? } else {
 import net.minecraft.util.Identifier;
+//? }
+
 import net.snackbag.tt20.TT20;
 import net.snackbag.tt20.config.JSONConfiguration;
 
@@ -17,7 +25,11 @@ public class Mask {
     private final MaskType maskType;
     private final Registry<?> registry;
     private final RegistryIndex index;
+    //? if >=26.1 {
+    /*private final Set<Identifier> entries;
+    *///? } else {
     private final Set<Identifier> entries;
+     //? }
 
     public Mask(Registry<?> registry, JSONConfiguration file, String maskKey) {
         this.file = file;
@@ -52,7 +64,11 @@ public class Mask {
 
         // if <namespace>:<path>
         if (!split[0].equals("*") && !split[1].equals("*")) {
+            //? if >=26.1 {
+            /*return List.of(Identifier.fromNamespaceAndPath(split[0], split[1]));
+            *///? } else {
             return List.of(Identifier.of(split[0], split[1]));
+             //? }
         }
 
         // if *:<path>

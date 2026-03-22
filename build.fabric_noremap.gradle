@@ -38,7 +38,7 @@ dependencies {
 	include "net.snackbag.shit:shit:${project.shitlib_version}"
 
     // ModMenu
-    compileOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
+    implementation("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
 
 processResources {

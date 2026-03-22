@@ -50,4 +50,19 @@ public abstract class PortalManagerMixin {
         return ticksInPortal;
     }
 }
-*///?}
+*///?} else {
+
+import net.snackbag.tt20.TT20;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(TT20.class)
+public class PortalManagerMixin {
+    @Inject(method = "onInitialize", at = @At("HEAD"))
+    public void onInitialize(CallbackInfo ci) {
+        throw new RuntimeException("Tried to load PortalManagerMixin on <21.1");
+    }
+}
+//?}

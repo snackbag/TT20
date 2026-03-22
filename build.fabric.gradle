@@ -19,7 +19,6 @@ loom {
 	runConfigs.all {
 		ideConfigGenerated = true
 		runDir = "../../run"
-		accessWidenerPath = file("../../src/main/resources/tt20.accesswidener")
 	}
 }
 

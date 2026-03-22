@@ -1,7 +1,12 @@
 package net.snackbag.tt20.mixin;
 
+//? if >=26.1 {
+/*import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+*///?} else {
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+//?}
 import net.snackbag.tt20.TT20;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -11,18 +16,30 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
+    //? if >=26.1 {
+    /*@Shadow protected abstract void tickEffects();
+
+    @Inject(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;tickEffects()V"))
+    *///?} else {
     @Shadow protected abstract void tickStatusEffects();
 
     @Inject(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;tickStatusEffects()V"))
+    //?}
     private void fixPotionDelayTick(CallbackInfo ci) {
         if (!TT20.config.enabled() || !TT20.config.potionEffectAcceleration()) return;
-        //? if >=1.21.9 {
+        //? if >=26.1 {
+        /*if (((Entity)(Object)this).level().isClientSide()) return;
+        *///?} else if >=1.21.9 {
         /*if (((Entity)(Object)this).getEntityWorld().isClient()) return;
         *///?} else {
         if (((Entity)(Object)this).getWorld().isClient()) return;
         //?}
         for (int i = 0; i < TT20.TPS_CALCULATOR.applicableMissedTicks(); i++) {
+            //? if >=26.1 {
+            /*tickEffects();
+            *///?} else {
             tickStatusEffects();
+            //?}
         }
     }
 }

@@ -2,19 +2,35 @@ package net.snackbag.tt20.mixin.world;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
+//? if >=26.1 {
+/*import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.entity.player.Player;
+*///? } else {
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.entity.player.PlayerEntity;
+//? }
 import net.snackbag.tt20.TT20;
 import net.snackbag.tt20.util.TPSCalculator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+//? if >=26.1 {
+/*@Mixin(BlockBehaviour.class)
+*///? } else {
 @Mixin(AbstractBlock.class)
+//? }
 public abstract class AbstractBlockMixin {
+    //? if >=26.1 {
+    /*@ModifyReturnValue(method = "getDestroyProgress", at = @At("RETURN"))
+    private float onBlockBreakingCalc(float original, @Local Player player) {
+    *///? } else {
     @ModifyReturnValue(method = "calcBlockBreakingDelta", at = @At("RETURN"))
     private float onBlockBreakingCalc(float original, @Local PlayerEntity player) {
+    //? }
         if (!TT20.config.enabled() || !TT20.config.blockBreakingAcceleration()) return original;
-        //? if >=1.21.9 {
+        //? if >=26.1 {
+        /*if (player.level().isClientSide()) return original;
+        *///? } else if >=1.21.9 {
         /*if (player.getEntityWorld().isClient()) return original;
         *///?} else {
         if (player.getWorld().isClient()) return original;

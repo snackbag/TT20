@@ -3,6 +3,8 @@ plugins {
 	id 'maven-publish'
 }
 
+version = property("mod.version")
+
 base {
 	archivesName = project.archives_base_name
 }

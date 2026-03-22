@@ -9,14 +9,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.LevelChunk;
 *///?} else {
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.WorldChunk;
 //?}
 
 //? if >=1.20.1 && <26.1 {
@@ -30,9 +28,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 //? if >=26.1 {
-/*@Mixin(LevelChunk.BoundTickingBlockEntity.class)
+/*@Mixin(targets = "net.minecraft.world.level.chunk.LevelChunk$BoundTickingBlockEntity")
 *///?} else {
-@Mixin(WorldChunk.DirectBlockEntityTickInvoker.class)
+@Mixin(targets = "net.minecraft.world.chunk.WorldChunk$DirectBlockEntityTickInvoker")
 //?}
 public abstract class WorldChunkMixin {
     //? if >=26.1 {

@@ -22,7 +22,7 @@ public abstract class ItemEntityMixin {
     private void pickupDelayTT20(CallbackInfo ci) {
         if (!TT20.config.enabled() || !TT20.config.pickupAcceleration()) return;
         //? if >=1.21.9 {
-        /*if (((Entity)(Object)this).level().isClientSide()) return;
+        /*if (((Entity)(Object)this).getEntityWorld().isClient()) return;
         *///?} else if >=1.21.9 {
         /*if (((Entity)(Object)this).getEntityWorld().isClient()) return;
         *///?} else {

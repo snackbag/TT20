@@ -1,0 +1,7 @@
+name: ${name}
+version: ${version}
+main: com.topi_banana.unitemplate.UniTemplateMod
+description: ${description}
+author: ${authors}
+website: ${homepage}
+api-version: "${minecraft_dependency}"

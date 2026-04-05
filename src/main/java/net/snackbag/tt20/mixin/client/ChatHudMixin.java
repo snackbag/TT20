@@ -44,8 +44,10 @@ public abstract class ChatHudMixin {
     @Inject(method = "render", at = @At("HEAD"))
     //?}
 
-    //? if >=1.21.11 {
+    //?if >= 26.1 {
     /*private void onPlayerConnectWarn(GuiGraphicsExtractor graphics, Font font, int ticks, int mouseX, int mouseY, ChatComponent.DisplayMode displayMode, boolean changeCursorOnInsertions, CallbackInfo ci) {
+    *///?} else if >=1.21.11 {
+    /*private void onPlayerConnectWarn(DrawContext context, TextRenderer textRenderer, int currentTick, int mouseX, int mouseY, boolean interactable, boolean bl, CallbackInfo ci) {
     *///?} elif >=1.20.5 && <1.21.11 {
     /*private void onPlayerConnectWarn(DrawContext context, int currentTick, int mouseX, int mouseY, boolean focused, CallbackInfo ci) {
     *///?} elif >=1.20.1 && <1.20.5 {
@@ -54,7 +56,7 @@ public abstract class ChatHudMixin {
     /*private void onPlayerConnectWarn(MatrixStack matrices, int currentTick, CallbackInfo ci) {
     *///?}
         if (TT20.warned || !TT20.config.singlePlayerWarning()) return;
-        //? if >=1.21.11 {
+        //? if >=26.1 {
         /*addClientSystemMessage(Component.literal("§c§lCritical incompatibilities found!\n\n§c§6TT20 §cis not stable on singleplayer and you may find yourself having unwanted side effects. You can disable each feature in the config if it gets too annoying."));
         *///?} else {
         addMessage(Text.literal("§c§lCritical incompatibilities found!\n\n§c§6TT20 §cis not stable on singleplayer and you may find yourself having unwanted side effects. You can disable each feature in the config if it gets too annoying."));

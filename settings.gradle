@@ -1,30 +1,39 @@
 pluginManagement {
     repositories {
-        maven {
-            name = 'Fabric'
-            url = 'https://maven.fabricmc.net/'
-        }
-
-        maven {
-            name = "KikuGie Snapshots"
-            url = "https://maven.kikugie.dev/snapshots"
-        }
-
-        mavenCentral()
         gradlePluginPortal()
+        mavenCentral()
+        maven { url "https://maven.fabricmc.net/" }
+        maven { url "https://maven.architectury.dev" }
+        maven { url "https://maven.minecraftforge.net" }
+        maven { url "https://maven.neoforged.net/releases/" }
     }
 }
 
 plugins {
-    id "dev.kikugie.stonecutter" version "0.7.10"
+    id "dev.kikugie.stonecutter" version "0.4.4"
+    id "org.gradle.toolchains.foojay-resolver-convention"  version "0.9.0"
 }
 
 stonecutter {
-    kotlinController = false
     centralScript = "build.gradle"
 
-    create(getRootProject()) {
-        versions "1.19.2", "1.20.1", "1.20.2", "1.20.3", "1.20.5", "1.21", "1.21.2", "1.21.9", "1.21.11"
-        vcsVersion = "1.20.1"
+    shared {
+        def mc = { String version, String... loaders ->
+            for (loader in loaders) {
+                vers("${loader}-${version}", version)
+            }
+        }
+        
+        mc("1.19.2", "fabric", "forge")
+        mc("1.20.1", "fabric", "forge")
+        mc("1.20.2", "fabric", "forge")
+        mc("1.20.3", "fabric", "neoforge")
+        mc("1.20.5", "fabric", "neoforge")
+        mc("1.21", "fabric", "neoforge")
+        mc("1.21.2", "fabric", "neoforge")
+        mc("1.21.9", "fabric", "neoforge")
+        mc("1.21.11", "fabric", "neoforge")
+        //mc("26.1.1", "fabric", "neoforge")
     }
+    create(rootProject)
 }

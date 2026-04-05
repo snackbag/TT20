@@ -1,7 +1,9 @@
 plugins {
     id "dev.kikugie.stonecutter"
-    id "fabric-loom" version "${loom_version}" apply false
 }
+stonecutter.active "fabric-1.20.1"
 
-plugins.apply "dev.kikugie.stonecutter"
-stonecutter.active "1.20.1" /* [SC] DO NOT EDIT */
+stonecutter.registerChiseled tasks.register("build-all", stonecutter.chiseled) {
+    setGroup "project"
+    ofTask "build"
+}

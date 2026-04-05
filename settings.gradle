@@ -27,10 +27,10 @@ stonecutter {
     create(getRootProject()) {
         def remapScript = "build.fabric.gradle"
         def noremapScript = "build.fabric_noremap.gradle"
-        def allVersions = ["1.19.2", "1.20.1", "1.20.2", "1.20.3", "1.20.5", "1.21", "1.21.2", "1.21.9", "1.21.11", "26.1"]
+        def allVersions = ["1.19.2", "1.20.1", "1.20.2", "1.20.3", "1.20.5", "1.21", "1.21.2", "1.21.9", "1.21.11", "26.1.1"]
 
         allVersions.each { ver ->
-            def script = ver == "26.1" ? noremapScript : remapScript
+            def script = ver.matches("^26\\..*") ? noremapScript : remapScript
             version(ver, ver).buildscript = script
         }
         vcsVersion = "1.20.1"

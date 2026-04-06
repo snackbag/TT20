@@ -9,8 +9,21 @@ import net.minecraft.client.gui.GuiGraphics;
 //? if >=1.21.11
 //import net.minecraft.client.gui.Font;
 
+//? if fabric {
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+//?}
+
+//? if forge {
+/*import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+*///?}
+
+//? if neoforge {
+/*import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+*///?}
+
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.network.chat.Component;
 import net.snackbag.tt20.TT20;
@@ -20,7 +33,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+//? if fabric
 @Environment(EnvType.CLIENT)
+
+//? if forge || neoforge
+//@OnlyIn(Dist.CLIENT)
+
 @Mixin(ChatComponent.class)
 public abstract class ChatHudMixin {
     @Shadow public abstract void addMessage(Component message);

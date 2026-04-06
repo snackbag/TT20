@@ -16,6 +16,7 @@ plugins {
 }
 
 repositories {
+    mavenCentral()
     maven {
         url 'https://jitpack.io'
     }
@@ -140,9 +141,15 @@ dependencies {
     if (project.platform == 'forge') {
         forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
         compileOnly "org.spongepowered:mixin:0.8.5"
+
+        compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.3"))
+        implementation(include("io.github.llamalad7:mixinextras-forge:0.5.3"))
     }
     if (project.platform == 'neoforge') {
         neoForge "net.neoforged:neoforge:${project.neoforge_version}"
+
+        compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.3"))
+        implementation(include("io.github.llamalad7:mixinextras-neoforge:0.5.3"))
     }
     if (project.platform == 'paper') {
         compileOnly "io.papermc.paper:paper-api:${project.minecraft_version}-R0.1-SNAPSHOT"

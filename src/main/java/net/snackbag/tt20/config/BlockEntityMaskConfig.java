@@ -7,6 +7,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 *///?}
 import net.snackbag.tt20.util.Mask;
 
+@SuppressWarnings("deprecation")
 public class BlockEntityMaskConfig extends JSONConfiguration {
     private Mask mask;
     private boolean reloaded = false;

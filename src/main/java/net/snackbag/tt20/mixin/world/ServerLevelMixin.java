@@ -19,10 +19,10 @@ public abstract class ServerLevelMixin {
         boolean isLan = server != null && server.isPublished();
 
         //? if >=1.20.1 {
-        /*boolean isPaused = Minecraft.getInstance().isSingleplayer() && Minecraft.getInstance().isPaused() && !isLan;
+        boolean isPaused = Minecraft.getInstance().isSingleplayer() && Minecraft.getInstance().isPaused() && !isLan;
         //?} else {
-        */boolean isPaused = server.isSingleplayer() && Minecraft.getInstance().isPaused() && !isLan;
-        //?}
+        /*boolean isPaused = server.isSingleplayer() && Minecraft.getInstance().isPaused() && !isLan;
+        *///?}
 
         if (!TT20.config.enabled() || !TT20.config.timeAcceleration() || isPaused) return original;
         return original + TT20.TPS_CALCULATOR.applicableMissedTicks();

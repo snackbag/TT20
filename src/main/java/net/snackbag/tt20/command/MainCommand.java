@@ -42,7 +42,6 @@ public class MainCommand {
         source.sendSystemMessage(Component.literal("§7Sleeping acceleration: " + (TT20.config.sleepingAcceleration() ? "§aON" : "§cOFF")));
         source.sendSystemMessage(Component.literal("§7Time acceleration: " + (TT20.config.timeAcceleration() ? "§aON" : "§cOFF")));
         source.sendSystemMessage(Component.literal("§7Random tickspeed acceleration: " + (TT20.config.randomTickSpeedAcceleration() ? "§aON" : "§cOFF")));
-        source.sendSystemMessage(Component.literal("§7Singleplayer warning: " + (TT20.config.singlePlayerWarning() ? "§aON" : "§cOFF")));
         source.sendSystemMessage(Component.literal("§7Server watchdog: " + (TT20.config.serverWatchdog() ? "§aON" : "§cOFF")));
         executeTps(context, false);
         source.sendSystemMessage(Component.literal("\n§8Version: §7" + TT20.VERSION));

@@ -12,8 +12,6 @@ plugins {
 
     // https://github.com/Fallen-Breath/yamlang
     id 'me.fallenbreath.yamlang' version '1.5.0'
-
-    id 'com.vulpeus.mod_relocator'
 }
 
 repositories {
@@ -76,18 +74,23 @@ List<String> MIXIN_CONFIG_PATHS = ['tt20.mixins.json']
 String LANG_DIR = 'assets/tt20/lang'
 JavaVersion JAVA_COMPATIBILITY
 JavaVersion MIXIN_COMPATIBILITY
+int javaVersion
 if (mcVersion >= 260001) { // 26.1
     JAVA_COMPATIBILITY = JavaVersion.VERSION_25
     MIXIN_COMPATIBILITY = JavaVersion.VERSION_25
+    javaVersion = 25
 } else if (mcVersion >= 12005) { // 1.20.5
     JAVA_COMPATIBILITY = JavaVersion.VERSION_21
     MIXIN_COMPATIBILITY = JavaVersion.VERSION_21
+    javaVersion = 21
 } else if (mcVersion >= 11800) { // 1.18
     JAVA_COMPATIBILITY = JavaVersion.VERSION_17
     MIXIN_COMPATIBILITY = JavaVersion.VERSION_17
+    javaVersion = 17
 } else if (mcVersion >= 11700) { // 1.17
     JAVA_COMPATIBILITY = JavaVersion.VERSION_16
     MIXIN_COMPATIBILITY = JavaVersion.VERSION_16
+    javaVersion = 16
 } else {
     JAVA_COMPATIBILITY = JavaVersion.VERSION_1_8
     MIXIN_COMPATIBILITY = JavaVersion.VERSION_1_8
@@ -257,7 +260,7 @@ yamlang {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = JAVA_COMPATIBILITY
+    it.options.release = javaVersion
     options.encoding = "UTF-8"
     options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
     if (JAVA_COMPATIBILITY <= JavaVersion.VERSION_1_8) {
@@ -298,13 +301,3 @@ if (use_paperweight) {
         dependsOn(tasks.reobfJar)
     }
 }
-
-relocator {
-    group = project.group
-    platform = project.platform
-    originalJar = project.file("build/libs/${project.mod_name}-${version}.jar")
-    mergedJar = project.file("build/libs/${project.mod_name}-${version}-relocate.jar")
-    mixins = MIXIN_CONFIG_PATHS
-}
-
-build.finalizedBy(relocate);

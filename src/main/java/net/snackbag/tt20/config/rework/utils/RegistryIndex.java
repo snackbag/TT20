@@ -1,4 +1,4 @@
-package net.snackbag.tt20.util;
+package net.snackbag.tt20.config.rework.utils;
 
 //? if >=26.1 {
 /*import net.minecraft.core.Registry;

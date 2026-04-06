@@ -16,7 +16,11 @@ public abstract class PlayerEntityMixin {
     @ModifyReturnValue(method = "getPortalWaitTime", at = @At("RETURN"))
     private int netherPortalTimeTT20(int original) {
         if (!TT20.config.enabled() || !TT20.config.portalAcceleration()) return original;
+        //? if >1.19.2 {
         if (((Entity)(Object)this).level().isClientSide()) return original;
+        //?} else {
+        /*if (((Entity)(Object)this).level.isClientSide()) return original;
+        *///?}
         if (original == 1) return original;
 
         return TPSUtil.tt20(original, false);
@@ -26,11 +30,11 @@ public abstract class PlayerEntityMixin {
     @ModifyExpressionValue(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;sleepCounter:I", opcode = Opcodes.GETFIELD))
     private int tickTT20(int original) {
         if (!TT20.config.enabled() || !TT20.config.sleepingAcceleration()) return original;
-        //? if >=1.21.9 {
-        /*if (((Entity)(Object)this).getEntityWorld().isClient()) return original;
-        *///?} else {
+        //? if >=1.20.1 {
         if (((Entity)(Object)this).level().isClientSide()) return original;
-        //?}
+        //?} else {
+        /*if (((Entity)(Object)this).level.isClientSide()) return original;
+        *///?}
         return original + TT20.TPS_CALCULATOR.applicableMissedTicks();
     }
 }

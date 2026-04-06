@@ -19,9 +19,9 @@ public class MainCommand {
                         .then(Commands.literal("tps").executes(MainCommand::executeTps))
                         .then(Commands.literal("status").executes(MainCommand::executeStatus))
                         //? if (>=1.21.11) {
-                        .then(Commands.literal("toggle").requires(source -> source.hasPermission(3)).executes(MainCommand::executeToggle))
-                        .then(Commands.literal("reload").requires(source -> source.hasPermission(2)).executes(MainCommand::executeReload))
-                        //?} else {
+                        /*.then(Commands.literal("toggle").requires(Commands.hasPermission(Commands.LEVEL_ADMINS)).executes(MainCommand::executeToggle))
+                        .then(Commands.literal("reload").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS)).executes(MainCommand::executeReload))
+                        *///?} else {
                         .then(Commands.literal("toggle").requires(source -> source.hasPermission(3)).executes(MainCommand::executeToggle))
                         .then(Commands.literal("reload").requires(source -> source.hasPermission(2)).executes(MainCommand::executeReload))
                         //?}

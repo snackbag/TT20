@@ -25,6 +25,7 @@
   ],
 
   "depends": {
-    "minecraft": "${minecraft_dependency}"
+    "minecraft": "${minecraft_dependency}",
+    "java": ">=${java}"
   }
 }

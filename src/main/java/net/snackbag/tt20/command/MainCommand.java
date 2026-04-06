@@ -31,8 +31,6 @@ public class MainCommand {
     }
 
     private static int executeStatus(CommandContext<CommandSourceStack> context) {
-        var source = context.getSource();
-
         sendMessage(context, literal("§7TT20 enabled: " + (TT20.config.enabled() ? "§aON" : "§cOFF")));
         sendMessage(context, literal("§7Block entity acceleration: " + (TT20.config.blockEntityAcceleration() ? "§aON" : "§cOFF")));
         sendMessage(context, literal("§7Block breaking acceleration: " + (TT20.config.blockBreakingAcceleration() ? "§aON" : "§cOFF")));
@@ -55,8 +53,6 @@ public class MainCommand {
     }
 
     private static int executeReload(CommandContext<CommandSourceStack> context) {
-        var source = context.getSource();
-
         TT20.config.reload();
         sendMessage(context, literal("Reloaded config"));
         TT20.blockEntityMaskConfig.reload();
@@ -70,8 +66,6 @@ public class MainCommand {
     }
 
     private static int executeTps(CommandContext<CommandSourceStack> context, boolean missedTicks) {
-        var source = context.getSource();
-
         sendMessage(context, literal(
                 "§7TPS " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getTPS(), true) +
                         "§7 with average " + TPSUtil.colorizeTPS(TT20.TPS_CALCULATOR.getAverageTPS(), true) +
@@ -84,8 +78,6 @@ public class MainCommand {
     }
 
     private static int executeToggle(CommandContext<CommandSourceStack> context) {
-        var source = context.getSource();
-
         TT20.config.enabled(!TT20.config.enabled());
         TT20.config.save();
 

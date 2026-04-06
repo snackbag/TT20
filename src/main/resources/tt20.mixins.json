@@ -22,7 +22,6 @@
     "world.LevelChunkMixin"
   ],
   "client": [
-    "client.ChatComponentMixin",
     "client.IntegratedServerMixin"
   ],
   "injectors": {

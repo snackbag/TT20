@@ -3,8 +3,8 @@ package net.snackbag.tt20.config;
 //? if >=1.20.1 {
 import net.minecraft.core.registries.BuiltInRegistries;
 //?} else {
-//import net.minecraft.core.Registry;
-/*import net.minecraft.util.registry.Registry;
+/*import net.minecraft.core.Registry;
+import net.minecraft.util.registry.Registry;
 *///?}
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;

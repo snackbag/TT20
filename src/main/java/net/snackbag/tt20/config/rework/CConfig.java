@@ -49,4 +49,8 @@ public abstract class CConfig {
             return false;
         }
     }
+
+    public boolean save() {
+        return CExporter.save(categories, getFileName(), getFormat());
+    }
 }

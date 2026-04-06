@@ -18,7 +18,7 @@ public class TT20Config extends CConfig {
 
     @Override
     protected @NotNull CExporter.Format getFormat() {
-        return CExporter.Format.TOML;
+        return CExporter.Format.JSON5;
     }
 
     private static final CCategory MAIN = CCategory.of("main", "Main TT20 configuration");

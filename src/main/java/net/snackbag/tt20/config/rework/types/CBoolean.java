@@ -11,6 +11,10 @@ public class CBoolean extends CValue<Boolean> {
         this.defaultValue = value;
     }
 
+    public void toggle() {
+        this.value = !value;
+    }
+
     @Override
     public Boolean get() {
         return value;

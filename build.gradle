@@ -87,6 +87,18 @@ if (mcVersion >= 260001) { // 26.1
     MIXIN_COMPATIBILITY = JavaVersion.VERSION_1_8
 }
 
+def parchmentVersions = [
+        "1.19.2":  "1.19.2:2022.11.27",
+        "1.20.1":  "1.20.1:2023.09.03",
+        "1.20.2":  "1.20.2:2023.12.10",
+        "1.20.3":  "1.20.3:2023.12.31",
+        "1.20.5":  "1.20.6:2024.06.16",
+        "1.21":    "1.21.1:2024.11.17",
+        "1.21.2":  "1.21.3:2024.12.07",
+        "1.21.9":  "1.21.9:2025.10.05",
+        "1.21.11": "1.21.11:2025.12.20"
+]
+
 group = project.maven_group
 
 version = "${project.mod_version}+mc${project.minecraft_version}-${project.platform}"
@@ -109,7 +121,10 @@ dependencies {
     // loom
     if (use_architectury_loom) {
         minecraft "com.mojang:minecraft:${project.minecraft_version}"
-        mappings loom.officialMojangMappings()
+        mappings loom.layered() {
+            officialMojangMappings()
+            parchment("org.parchmentmc.data:parchment-${parchmentVersions[project.minecraft_version]}@zip")
+        }
     }
     if (use_paperweight) {
         paperweight.paperDevBundle("${project.minecraft_version}-R0.1-SNAPSHOT")

@@ -15,8 +15,11 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class CExporter {
+    private static final Logger LOGGER = Logger.getLogger("TT20/Config");
+
     public enum Format {
         JSON5(".json5"),
         TOML(".toml");
@@ -32,382 +35,344 @@ public class CExporter {
         }
     }
 
-    private static Path getConfigDir() {
-        return FabricLoader.getInstance().getConfigDir().toAbsolutePath();
-    }
-
     public static CMap load(CMap defaults, String fileName, Format format) {
-        String finalFileName = fileName + format.extension();
-        Path inputPath = getConfigDir().resolve(finalFileName);
+        Path path = configPath(fileName, format);
 
-        if (!Files.exists(inputPath)) {
-            System.out.println("Config file " + finalFileName + " not found, creating new one.");
+        if (!Files.exists(path)) {
+            LOGGER.info("Config file " + path.getFileName() + " not found - writing defaults.");
             save(defaults, fileName, format);
-            return new CMap();
+            return defaults;
         }
 
         try {
-            String content = Files.readString(inputPath);
-
-            if (format == Format.JSON5) {
-                return parseJson5(content, defaults);
-            } else if (format == Format.TOML) {
-                // TODO: return CMap from parsed TOML
-            }
-
-            return defaults;
+            String content = Files.readString(path);
+            return switch (format) {
+                case JSON5 -> parseJson5(content, defaults);
+                case TOML  -> parseToml(content, defaults);
+            };
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warning("Failed to read config " + path.getFileName() + ": " + e.getMessage());
             return defaults;
         }
     }
 
-    public static boolean save(CMap config, String fileName, Format format){
-        String finalFileName = fileName + format.extension();
+    public static boolean save(CMap config, String fileName, Format format) {
+        Path path = configPath(fileName, format);
 
-        Path outputPath = getConfigDir().resolve(finalFileName);
         try {
-            Files.createDirectories(outputPath.getParent());
+            Files.createDirectories(path.getParent());
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warning("Failed to create config directory: " + e.getMessage());
             return false;
         }
 
-        StringBuilder builder = new StringBuilder();
+        String content = switch (format) {
+            case JSON5 -> serializeJson5(config);
+            case TOML  -> serializeToml(config);
+        };
 
-        addStart(format, builder);
+        try {
+            Files.writeString(path, content);
+            return true;
+        } catch (IOException e) {
+            LOGGER.warning("Failed to write config " + path.getFileName() + ": " + e.getMessage());
+            return false;
+        }
+    }
+
+    private static String serializeJson5(CMap config) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{\n");
+
+        List<CCategory> categories = new ArrayList<>(config.map().keySet());
+        for (int ci = 0; ci < categories.size(); ci++) {
+            CCategory category = categories.get(ci);
+            boolean lastCategory = (ci == categories.size() - 1);
+
+            for (String desc : category.description()) {
+                sb.append("    // ").append(desc).append("\n");
+            }
+
+            sb.append("    \"").append(category.id()).append("\": {\n");
+
+            List<Map.Entry<String, CValue<?>>> entries =
+                    new ArrayList<>(config.map().get(category).entrySet());
+
+            for (int vi = 0; vi < entries.size(); vi++) {
+                boolean lastValue = (vi == entries.size() - 1);
+                appendJson5Value(sb, entries.get(vi).getKey(), entries.get(vi).getValue(), lastValue);
+            }
+
+            sb.append("    }");
+            if (!lastCategory) sb.append(",");
+            sb.append("\n");
+        }
+
+        sb.append("}\n");
+        return sb.toString();
+    }
+
+    private static void appendJson5Value(StringBuilder sb, String key, CValue<?> value, boolean last) {
+        String comma = last ? "" : ",";
+
+        if (value instanceof CBoolean cBoolean) {
+            sb.append("        \"").append(key).append("\": ")
+                    .append(cBoolean.get())
+                    .append(comma)
+                    .append(" // ").append(value.comment)
+                    .append("\n");
+
+        } else if (value instanceof CEnum<?> cEnum) {
+            sb.append("        \"").append(key).append("\": ")
+                    .append("\"").append(cEnum.get().name()).append("\"")
+                    .append(comma)
+                    .append(" // ").append(value.comment)
+                    .append(" [").append(enumOptions(cEnum)).append("]")
+                    .append("\n");
+
+        } else if (value instanceof CMask cMask) {
+            sb.append("        \"").append(key).append("\": [ // ").append(value.comment).append("\n");
+            List<String> masks = List.of(cMask.getMaskStr());
+            for (int i = 0; i < masks.size(); i++) {
+                sb.append("            \"").append(masks.get(i)).append("\"");
+                if (i < masks.size() - 1) sb.append(",");
+                sb.append("\n");
+            }
+            sb.append("        ]").append(comma).append("\n");
+        }
+    }
+
+    private static String serializeToml(CMap config) {
+        StringBuilder sb = new StringBuilder();
+
         for (CCategory category : config.map().keySet()) {
-            for (String descStr : category.description()) {
-                addComment(format, builder, descStr);
+            for (String desc : category.description()) {
+                sb.append("# ").append(desc).append("\n");
             }
-            addCategory(format, builder, category);
+            sb.append("[").append(category.id()).append("]\n");
+
             for (Map.Entry<String, CValue<?>> entry : config.map().get(category).entrySet()) {
-                addValue(entry.getKey(), entry.getValue(), format, builder);
+                appendTomlValue(sb, entry.getKey(), entry.getValue());
             }
-            addCategoryEnd(format, builder);
-        }
-        addEnd(format, builder);
 
-
-        try {
-            Files.writeString(outputPath, builder.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+            sb.append("\n");
         }
 
-        return true;
+        return sb.toString();
     }
 
-    private static void addStart(Format format, StringBuilder builder) {
-        if (format == Format.JSON5) {
-            builder.append("{\n");
-        }
-    }
+    private static void appendTomlValue(StringBuilder sb, String key, CValue<?> value) {
+        if (value instanceof CBoolean cBoolean) {
+            sb.append(key).append(" = ")
+                    .append(cBoolean.get())
+                    .append(" # ").append(value.comment)
+                    .append("\n");
 
-    private static void addComment(Format format, StringBuilder builder, String comment) {
-        if (format == Format.JSON5) {
-            builder.append("    // ").append(comment).append("\n");
-        } else if (format == Format.TOML) {
-            builder.append("# ").append(comment).append("\n");
-        }
-    }
+        } else if (value instanceof CEnum<?> cEnum) {
+            sb.append(key).append(" = ")
+                    .append("\"").append(cEnum.get().name()).append("\"")
+                    .append(" # ").append(value.comment)
+                    .append(" [").append(enumOptions(cEnum)).append("]")
+                    .append("\n");
 
-    private static void addCategory(Format format, StringBuilder builder, CCategory category) {
-        if (format == Format.JSON5) {
-            builder.append("    \"").append(category.id()).append("\": {\n");
-        } else if (format == Format.TOML) {
-            builder.append("[").append(category.id()).append("]\n");
-        }
-    }
-
-    private static void addCategoryEnd(Format format, StringBuilder builder) {
-        if (format == Format.JSON5) {
-            builder.append("    },\n");
-        }
-    }
-
-    private static void addValue(String key, CValue<?> value, Format format, StringBuilder builder) {
-        if (format == Format.JSON5) {
-            builder.append("        \"").append(key).append("\": ");
-
-            if (value instanceof CBoolean cBoolean) {
-                builder.append(cBoolean.get()).append(",").append(" // ").append(value.comment).append("\n");
-            } else if (value instanceof CEnum<?> cEnum) {
-                builder.append("\"").append(cEnum.get().name()).append("\",").append(" // ").append(value.comment);
-                addEnumComment(builder, cEnum);
-            } else if (value instanceof CMask cMask) {
-                builder.append("[ // ").append(value.comment);
-                for (String maskStr : cMask.getMaskStr()) {
-                    builder.append("\n").append("            \"").append(maskStr).append("\",");
-                }
-                builder.append("\n").append("        ]").append("\n");
+        } else if (value instanceof CMask cMask) {
+            sb.append("# ").append(value.comment).append("\n");
+            sb.append(key).append(" = [");
+            List<String> masks = List.of(cMask.getMaskStr());
+            for (int i = 0; i < masks.size(); i++) {
+                sb.append("\"").append(masks.get(i)).append("\"");
+                if (i < masks.size() - 1) sb.append(", ");
             }
-        } else if (format == Format.TOML) {
-            if (!(value instanceof CMask)) {
-                builder.append(key).append(" = ");
-            }
-            if (value instanceof CBoolean cBoolean) {
-                builder.append(cBoolean.get()).append(" # ").append(value.comment).append("\n");
-            } else if (value instanceof CEnum<?> cEnum) {
-                builder.append("\"").append(cEnum.get().name()).append("\"").append(" # ").append(value.comment);
-                addEnumComment(builder, cEnum);
-            } else if (value instanceof CMask cMask) {
-                builder.append("# ").append(value.comment).append("\n");
-                builder.append(key).append(" = ").append("\"\"\"");
-                for (String maskStr : cMask.getMaskStr()) {
-                    builder.append("\n    ").append(maskStr).append("\n");
-                }
-                builder.append("\"\"\"");
-            }
+            sb.append("]\n");
         }
     }
 
-    private static void addEnumComment(StringBuilder builder, CEnum<?> cEnum) {
-        builder.append(" [");
-        for (Enum<?> enumValue : cEnum.getEnumClass().getEnumConstants()) {
-            builder.append(enumValue.name()).append(" / ");
-        }
-        builder.deleteCharAt(builder.length() - 3);
-        builder.deleteCharAt(builder.length() - 2);
-        builder.deleteCharAt(builder.length() - 1);
-        builder.append("]").append("\n");
-    }
-
-    private static void addEnd(Format format, StringBuilder builder) {
-        if (format == Format.JSON5) {
-            builder.append("}");
-        }
-    }
-
-    private static CMap parseJson5(String json, CMap config) {
-        String clearJson = clearJson(json);
-        String[] lines = clearJson.split("\n");
+    private static CMap parseJson5(String raw, CMap defaults) {
+        List<String> lines = stripJson5Comments(raw);
 
         CCategory currentCategory = null;
-        String currentMask = null;
-        List<String> maskList = new ArrayList<>();
+        String currentMaskKey = null;
+        List<String> maskAccum = new ArrayList<>();
 
         for (String line : lines) {
-            if (line.startsWith("\"") && line.endsWith("{")) { // category line
-                int quoteStart = line.indexOf('"');
-                int quoteEnd = line.indexOf('"', quoteStart + 1);
+            if (line.matches("\"[^\"]+\"\\s*:\\s*\\{")) {
+                currentCategory = findCategory(defaults, extractFirstQuoted(line));
+                continue;
+            }
 
-                if (quoteStart != -1 && quoteEnd != -1) {
-                    String categoryId = line.substring(quoteStart + 1, quoteEnd);
+            if (line.matches("\"[^\"]+\"\\s*:\\s*\\[")) {
+                currentMaskKey = extractFirstQuoted(line);
+                maskAccum.clear();
+                continue;
+            }
 
-                    for (CCategory category : config.map().keySet()) {
-                        if (category.id().equals(categoryId)) {
-                            currentCategory = category;
-                            break;
-                        }
+            if (currentMaskKey != null) {
+                if (line.equals("]")) {
+                    if (currentCategory != null) {
+                        applyMask(defaults, currentCategory, currentMaskKey, maskAccum);
                     }
+                    currentMaskKey = null;
+                    maskAccum.clear();
+                } else if (line.startsWith("\"") && line.endsWith("\"")) {
+                    maskAccum.add(line.substring(1, line.length() - 1));
                 }
+                continue;
             }
 
-            if (line.startsWith("\"") && line.endsWith(",")) { // value line
-                line = line.substring(0, line.length() - 1);
-                int colonIndex = line.indexOf(':');
-
-                String keyPart = line.substring(0, colonIndex).trim();
-                String key = keyPart.replaceAll("^[\"']|[\"']$", "");
-
-                String valuePart = line.substring(colonIndex + 1).trim();
-                String value = valuePart.replaceAll("^[\"']|[\"']$", "");
-                Boolean booleanValue = null;
-                
-                if (value.equals("true") || value.equals("false")) {
-                    booleanValue = Boolean.parseBoolean(value);
-                }
-
-                Map<String, CValue<?>> values = config.map().get(currentCategory);
-                for (String vKey : values.keySet()) {
-                    if (vKey.equals(key)) {
-                        CValue<?> cValue = values.get(vKey);
-                        if (booleanValue != null && cValue instanceof CBoolean cBoolean) {
-                            cBoolean.set(booleanValue);
-                        } else if (value.chars().allMatch(Character::isUpperCase) && cValue instanceof CEnum<?> cEnum) {
-                            cEnum.setEnumStr(value);
-                        }
-                    }
-                }
-            }
-
-            if (line.startsWith("\"") && line.endsWith("[")) { // mask line start
-                int quoteStart = line.indexOf('"');
-                int quoteEnd = line.indexOf('"', quoteStart + 1);
-
-                if (quoteStart != -1 && quoteEnd != -1) {
-                    currentMask = line.substring(quoteStart + 1, quoteEnd);
-                }
-            }
-
-            if (currentMask != null && line.startsWith("\"") && line.endsWith("\"")) { // in mask array
-                maskList.add(line.substring(1, line.length() - 1));
-            }
-
-            if (currentMask != null && line.equals("]")) { // mask line end
-                Map<String, CValue<?>> values = config.map().get(currentCategory);
-                for (CValue<?> cValue : values.values()) {
-                    if (cValue.key.equals(currentMask) && cValue instanceof CMask cMask) {
-                        cMask.setMaskStr(maskList);
-                        String maskTypeKey = cMask.getMaskTypeKey();
-                        CValue<?> maskTypeValue = values.get(maskTypeKey);
-                        if (maskTypeValue instanceof CEnum<?> cEnum && cEnum.getEnumClass() == MaskType.class) {
-                            cMask.setMaskType((MaskType) cEnum.get());
-                        }
-
-                        currentMask = null;
-                        maskList.clear();
-                        break;
-                    }
-                }
-            }
-        }
-        return config;
-    }
-
-    private static CMap parseToml(String toml, CMap config) {
-        String clearJson = clearToml(toml);
-        String[] lines = clearJson.split("\n");
-
-        CCategory currentCategory = null;
-        String currentMask = null;
-        List<String> maskList = new ArrayList<>();
-
-        for (String line : lines) {
-            if (line.startsWith("[") && line.endsWith("]")) { // category line
-                String categoryId = line.substring(1, line.length() - 1);
-
-                for (CCategory category : config.map().keySet()) {
-                    if (category.id().equals(categoryId)) {
-                        currentCategory = category;
-                        break;
-                    }
-                }
-            }
-
-            if (line.matches("[A-Za-z]+ = [A-Za-z]+")) { // value line
-                int equalsIndex = line.indexOf('=');
-
-                String key = line.substring(0, equalsIndex).trim();
-
-                String valuePart = line.substring(equalsIndex + 1).trim();
-                String value = valuePart.replaceAll("^[\"']|[\"']$", "");
-
-                Boolean booleanValue = null;
-
-                if (value.equals("true") || value.equals("false")) {
-                    booleanValue = Boolean.parseBoolean(value);
-                }
-
-                Map<String, CValue<?>> values = config.map().get(currentCategory);
-                for (String vKey : values.keySet()) {
-                    if (vKey.equals(key)) {
-                        CValue<?> cValue = values.get(vKey);
-                        if (booleanValue != null && cValue instanceof CBoolean cBoolean) {
-                            cBoolean.set(booleanValue);
-                        } else if (value.chars().allMatch(Character::isUpperCase) && cValue instanceof CEnum<?> cEnum) {
-                            cEnum.setEnumStr(value);
-                        }
-                    }
-                }
-            }
-
-            if (!line.startsWith("\"\"\"") && line.endsWith("\"\"\"")) { // mask line start
-                currentMask = line.split("=", 2)[0].trim();
-            }
-
-            if (currentMask != null) { // in mask array
-                maskList.add(line);
-            }
-
-            if (currentMask != null && line.equals("\"\"\"")) { // mask line end
-                Map<String, CValue<?>> values = config.map().get(currentCategory);
-                for (CValue<?> cValue : values.values()) {
-                    if (cValue.key.equals(currentMask) && cValue instanceof CMask cMask) {
-                        cMask.setMaskStr(maskList);
-                        String maskTypeKey = cMask.getMaskTypeKey();
-                        CValue<?> maskTypeValue = values.get(maskTypeKey);
-                        if (maskTypeValue instanceof CEnum<?> cEnum && cEnum.getEnumClass() == MaskType.class) {
-                            cMask.setMaskType((MaskType) cEnum.get());
-                        }
-
-                        currentMask = null;
-                        maskList.clear();
-                        break;
-                    }
-                }
+            if (currentCategory != null && line.matches("\"[^\"]+\"\\s*:.*")) {
+                int colon = line.indexOf(':');
+                String key = extractFirstQuoted(line.substring(0, colon + 1));
+                String rawValue = line.substring(colon + 1).trim();
+                String value = rawValue.replaceAll("^\"(.*)\"$", "$1");
+                applyValue(defaults, currentCategory, key, value);
             }
         }
 
-        return config;
+        return defaults;
     }
 
-    private static String clearJson(String json) {
-        String[] lines = json.split("\n");
-        StringBuilder builder = new StringBuilder();
+    private static List<String> stripJson5Comments(String raw) {
+        List<String> result = new ArrayList<>();
 
-        for (String line : lines) {
+        for (String line : raw.split("\n")) {
             boolean inQuotes = false;
-            StringBuilder cleanLine = new StringBuilder();
-
+            StringBuilder clean = new StringBuilder();
             line = line.trim();
-            if (line.endsWith(",")) line = line.substring(0, line.length() - 1);
-            if (line.isEmpty()) continue;
-            if (line.equals("{") || line.equals("}")) continue;
 
             for (int i = 0; i < line.length(); i++) {
                 char c = line.charAt(i);
-
-                if (c == '"' || c == '\'') {
-                    inQuotes = !inQuotes;
-                }
-
-                if (!inQuotes && c == '/' && i + 1 < line.length() && line.charAt(i + 1) == '/') {
-                    break;
-                }
-
-                cleanLine.append(c);
+                if (c == '"') inQuotes = !inQuotes;
+                if (!inQuotes && c == '/' && i + 1 < line.length() && line.charAt(i + 1) == '/') break;
+                clean.append(c);
             }
 
-            String trimmed = cleanLine.toString().trim();
-            if (!trimmed.isEmpty()) {
-                builder.append(trimmed).append('\n');
-            }
+            String trimmed = clean.toString().trim();
+            if (trimmed.endsWith(",")) trimmed = trimmed.substring(0, trimmed.length() - 1).trim();
+            if (trimmed.isEmpty() || trimmed.equals("{") || trimmed.equals("}")) continue;
+
+            result.add(trimmed);
         }
 
-        return builder.toString();
+        return result;
     }
 
-    private static String clearToml(String toml) {
-        String[] lines = toml.split("\n");
-        StringBuilder builder = new StringBuilder();
+    private static CMap parseToml(String raw, CMap defaults) {
+        List<String> lines = stripTomlComments(raw);
+        CCategory currentCategory = null;
 
         for (String line : lines) {
+            if (line.matches("\\[[^\\[\\]]+\\]")) {
+                String id = line.substring(1, line.length() - 1).trim();
+                currentCategory = findCategory(defaults, id);
+                continue;
+            }
+
+            if (currentCategory == null) continue;
+
+            int eq = line.indexOf('=');
+            if (eq < 1) continue;
+
+            String key = line.substring(0, eq).trim();
+            String rawValue = line.substring(eq + 1).trim();
+
+            if (rawValue.startsWith("[") && rawValue.endsWith("]")) {
+                String inner = rawValue.substring(1, rawValue.length() - 1);
+                List<String> items = new ArrayList<>();
+                for (String item : inner.split(",")) {
+                    String clean = item.trim().replaceAll("^\"(.*)\"$", "$1");
+                    if (!clean.isEmpty()) items.add(clean);
+                }
+                applyMask(defaults, currentCategory, key, items);
+                continue;
+            }
+
+            String value = rawValue.replaceAll("^\"(.*)\"$", "$1");
+            applyValue(defaults, currentCategory, key, value);
+        }
+
+        return defaults;
+    }
+
+    private static List<String> stripTomlComments(String raw) {
+        List<String> result = new ArrayList<>();
+
+        for (String line : raw.split("\n")) {
             boolean inQuotes = false;
-            int cutIndex = -1;
+            int cutAt = -1;
 
             for (int i = 0; i < line.length(); i++) {
                 char c = line.charAt(i);
-
-                if (c == '"') {
-                    inQuotes = !inQuotes;
-                } else if (c == '#' && !inQuotes) {
-                    cutIndex = i;
-                    break;
-                }
+                if (c == '"') inQuotes = !inQuotes;
+                if (!inQuotes && c == '#') { cutAt = i; break; }
             }
 
-            String cleaned = (cutIndex != -1)
-                    ? line.substring(0, cutIndex).trim()
-                    : line.trim();
-
-            if (!cleaned.isEmpty()) {
-                builder.append(cleaned).append('\n');
-            }
+            String trimmed = (cutAt >= 0 ? line.substring(0, cutAt) : line).trim();
+            if (!trimmed.isEmpty()) result.add(trimmed);
         }
 
-        return builder.toString();
+        return result;
+    }
+
+    private static Path configPath(String fileName, Format format) {
+        return FabricLoader.getInstance().getConfigDir()
+                .toAbsolutePath()
+                .resolve(fileName + format.extension());
+    }
+
+    private static String extractFirstQuoted(String segment) {
+        int start = segment.indexOf('"');
+        if (start < 0) return "";
+        int end = segment.indexOf('"', start + 1);
+        if (end < 0) return "";
+        return segment.substring(start + 1, end);
+    }
+
+    private static CCategory findCategory(CMap config, String id) {
+        for (CCategory cat : config.map().keySet()) {
+            if (cat.id().equals(id)) return cat;
+        }
+        return null;
+    }
+
+    private static void applyValue(CMap config, CCategory category, String key, String value) {
+        Map<String, CValue<?>> values = config.map().get(category);
+        if (values == null) return;
+
+        CValue<?> target = values.get(key);
+        if (target == null) return;
+
+        if (target instanceof CBoolean cBoolean) {
+            if (value.equals("true") || value.equals("false")) {
+                cBoolean.set(Boolean.parseBoolean(value));
+            }
+        } else if (target instanceof CEnum<?> cEnum) {
+            cEnum.setEnumStr(value.toUpperCase());
+        }
+    }
+
+    private static void applyMask(CMap config, CCategory category, String key, List<String> items) {
+        Map<String, CValue<?>> values = config.map().get(category);
+        if (values == null) return;
+
+        CValue<?> target = values.get(key);
+        if (!(target instanceof CMask cMask)) return;
+
+        cMask.setMaskStr(new ArrayList<>(items));
+
+        String maskTypeKey = cMask.getMaskTypeKey();
+        CValue<?> maskTypeValue = values.get(maskTypeKey);
+        if (maskTypeValue instanceof CEnum<?> cEnum && cEnum.getEnumClass() == MaskType.class) {
+            cMask.setMaskType((MaskType) cEnum.get());
+        }
+    }
+
+    private static String enumOptions(CEnum<?> cEnum) {
+        StringBuilder sb = new StringBuilder();
+        Enum<?>[] constants = cEnum.getEnumClass().getEnumConstants();
+        for (int i = 0; i < constants.length; i++) {
+            sb.append(constants[i].name());
+            if (i < constants.length - 1) sb.append(" / ");
+        }
+        return sb.toString();
     }
 }

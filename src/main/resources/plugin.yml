@@ -1,6 +1,6 @@
 name: ${name}
 version: ${version}
-main: com.topi_banana.unitemplate.UniTemplateMod
+main: net.snackbag.tt20.TT20
 description: ${description}
 author: ${authors}
 website: ${homepage}

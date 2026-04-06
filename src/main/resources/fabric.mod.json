@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "${id}",
   "version": "${version}",
-
   "name": "${name}",
   "description": "${description}",
   "authors": [
@@ -13,17 +12,19 @@
     "sources": "${sources}",
     "issues": "${issue}"
   },
-
-  "icon": "assets/unitemplate/icon.png",
-
+  "license": "${license}",
+  "icon": "assets/${id}/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.topi_banana.unitemplate.UniTemplateMod"
+      "net.snackbag.tt20.TT20"
+    ],
+    "client": [
+      "net.snackbag.tt20.TT20Client"
     ]
   },
   "mixins": [
-    "unitemplate.mixins.json"
+    "tt20.mixins.json"
   ],
 
   "depends": {

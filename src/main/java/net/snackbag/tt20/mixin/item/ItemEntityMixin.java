@@ -1,7 +1,12 @@
 package net.snackbag.tt20.mixin.item;
 
+//? if >=26.1 {
+/*import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+*///?} else {
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+//?}
 import net.snackbag.tt20.TT20;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,7 +21,11 @@ public abstract class ItemEntityMixin {
     @Inject(method = "tick", at = @At("HEAD"))
     private void pickupDelayTT20(CallbackInfo ci) {
         if (!TT20.config.enabled() || !TT20.config.pickupAcceleration()) return;
-        //? if >=1.21.9 {
+        //? if >=26.1 {
+        /*if (((Entity)(Object)this).level().isClientSide()) return;
+        *///?} else if >=1.21.9 {
+        /*if (((Entity)(Object)this).getEntityWorld().isClient()) return;
+        *///?} else if >=1.21.9 {
         /*if (((Entity)(Object)this).getEntityWorld().isClient()) return;
         *///?} else {
         if (((Entity)(Object)this).getWorld().isClient()) return;

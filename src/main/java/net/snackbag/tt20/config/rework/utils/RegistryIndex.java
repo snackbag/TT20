@@ -1,13 +1,21 @@
 package net.snackbag.tt20.config.rework.utils;
 
-//? if >=1.20.1 {
+//? if >=26.1 {
+/*import net.minecraft.core.Registry;
+*///? } else if >=1.20.1 {
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 //?} else {
 /*import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 *///?}
+
+//? if >=26.1 {
+/*import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+*///? } else {
 import net.minecraft.util.Identifier;
+ //? }
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,8 +40,13 @@ public class RegistryIndex {
         this.namespaceIndex = new HashMap<>();
         this.pathIndex = new HashMap<>();
 
+        //? if >=26.1 {
+        /*for (ResourceKey<?> key : registry.registryKeySet()) {
+            Identifier identifier = key.identifier();
+        *///? } else {
         for (RegistryKey<?> key : registry.getKeys()) {
             Identifier identifier = key.getValue();
+        //? }
             String namespace = identifier.getNamespace();
             String path = identifier.getPath();
 

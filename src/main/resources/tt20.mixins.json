@@ -2,10 +2,12 @@
   "required": true,
   "package": "net.snackbag.tt20.mixin",
   "compatibilityLevel": "JAVA_17",
+  "plugin": "net.snackbag.tt20.mixin.TT20MixinPlugin",
   "mixins": [
     "DedicatedServerWatchdogMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
+    "PortalManagerMixin",
     "ServerPlayerEntityMixin",
     "ServerPlayerManagerMixin",
     "fluid.LavaFluidMixin",

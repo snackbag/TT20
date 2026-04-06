@@ -133,6 +133,9 @@ dependencies {
     if (project.platform == 'fabric') {
         modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
         modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+        if (convertVersion(project.minecraft_version) >= 12005) {
+            modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+        }
     }
     if (project.platform == 'forge') {
         forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"

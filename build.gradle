@@ -3,6 +3,7 @@ plugins {
 
     // https://github.com/architectury/architectury-loom
     id 'dev.architectury.loom' version '1.13-SNAPSHOT' apply false
+    id 'dev.architectury.loom-no-remap' version '1.14-SNAPSHOT' apply false
 
     // https://docs.papermc.io/paper/dev/userdev
     id 'io.papermc.paperweight.userdev' version '2.0.0-beta.21' apply false
@@ -48,14 +49,6 @@ repositories {
 def use_architectury_loom = project.platform in ['fabric', 'quilt', 'forge', 'neoforge']
 def use_paperweight = project.platform in ['paper']
 
-if (use_architectury_loom) {
-    apply plugin: 'dev.architectury.loom'
-}
-if (use_paperweight) {
-    apply plugin: 'io.papermc.paperweight.userdev'
-    apply plugin: 'xyz.jpenilla.run-paper'
-}
-
 static Number convertVersion(String version) {
     def parts = version.split('\\.')*.toInteger()
     def major = parts[0] * 10000
@@ -65,6 +58,18 @@ static Number convertVersion(String version) {
 }
 
 def mcVersion = convertVersion(project.minecraft_version)
+
+if (use_architectury_loom) {
+    if (mcVersion >= 260100) {
+        apply plugin: 'dev.architectury.loom-no-remap'
+    } else {
+        apply plugin: 'dev.architectury.loom'
+    }
+}
+if (use_paperweight) {
+    apply plugin: 'io.papermc.paperweight.userdev'
+    apply plugin: 'xyz.jpenilla.run-paper'
+}
 
 String MOD_ICON_PATH = 'assets/tt20/icon.png'
 List<String> MIXIN_CONFIG_PATHS = ['tt20.mixins.json']
@@ -123,9 +128,12 @@ dependencies {
     // loom
     if (use_architectury_loom) {
         minecraft "com.mojang:minecraft:${project.minecraft_version}"
-        mappings loom.layered() {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${parchmentVersions[project.minecraft_version]}@zip")
+
+        if (mcVersion < 260100) {
+            mappings loom.layered() {
+                officialMojangMappings()
+                parchment("org.parchmentmc.data:parchment-${parchmentVersions[project.minecraft_version]}@zip")
+            }
         }
     }
     if (use_paperweight) {
@@ -133,10 +141,22 @@ dependencies {
     }
 
     if (project.platform == 'fabric') {
-        modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
-        modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
-        if (convertVersion(project.minecraft_version) >= 12005) {
-            modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+        if (mcVersion < 260100) {
+            modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+            modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+        } else {
+            implementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+            implementation("com.terraformersmc:modmenu:${project.modmenu_version}") {
+                exclude group: "net.fabricmc.fabric-api"
+            }
+        }
+        if (mcVersion >= 12005) {
+            if (mcVersion < 260100) {
+                runtimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+            } else {
+                modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+            }
+
         }
     }
     if (project.platform == 'forge') {
@@ -214,6 +234,7 @@ processResources {
                         "sources": project.mod_sources,
                         "issue": project.mod_issue,
                         "license": project.mod_license,
+                        "java": JAVA_COMPATIBILITY,
                         "java_compatibility_level": "JAVA_${MIXIN_COMPATIBILITY.ordinal() + 1}",
                 ]
                 expand valueMap
@@ -236,6 +257,7 @@ yamlang {
 }
 
 tasks.withType(JavaCompile).configureEach {
+    it.options.release = JAVA_COMPATIBILITY
     options.encoding = "UTF-8"
     options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
     if (JAVA_COMPATIBILITY <= JavaVersion.VERSION_1_8) {

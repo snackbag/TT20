@@ -114,7 +114,7 @@ public class TT20
 
 	public static Component literal(String string) {
         //? if >1.18.2 {
-        return literal(string);
+        return Component.literal(string);
          //?} else {
         /*return new TextComponent(string);
         *///?}

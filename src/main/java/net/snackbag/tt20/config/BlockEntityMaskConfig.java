@@ -4,10 +4,7 @@ package net.snackbag.tt20.config;
 import net.minecraft.core.registries.BuiltInRegistries;
 //?} else {
 /*import net.minecraft.core.Registry;
-import net.minecraft.util.registry.Registry;
 *///?}
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 import net.snackbag.tt20.util.Mask;
 
 public class BlockEntityMaskConfig extends JSONConfiguration {

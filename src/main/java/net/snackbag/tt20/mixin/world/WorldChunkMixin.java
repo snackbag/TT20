@@ -2,16 +2,12 @@ package net.snackbag.tt20.mixin.world;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-//? if >=1.20.1 {
-
-//?} else {
-/*import net.minecraft.util.registry.Registry;
-*///?}
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+
+//? if >=1.20.1
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -29,11 +25,14 @@ public abstract class WorldChunkMixin {
         if (!TT20.config.enabled()) return;
         if (!TT20.config.blockEntityAcceleration()) return;
         if (world.isClientSide()) return;
-        //? if >=1.20.1 {
+        //? if >=1.21.2 {
+        /*Registry<Block> registry = world.registryAccess().lookupOrThrow(Registries.BLOCK);
+        if (!TT20.blockEntityMaskConfig.getMask().isOkay(registry.getKey(blockState.getBlock()))) return;
+        *///?} else if >=1.20.1 {
         Registry<Block> registry = world.registryAccess().registryOrThrow(Registries.BLOCK);
         if (!TT20.blockEntityMaskConfig.getMask().isOkay(registry.getKey(blockState.getBlock()))) return;
         //?} else {
-        /*if (!TT20.blockEntityMaskConfig.getMask().isOkay(Registry.BLOCK.getId(blockState.getBlock()))) return;
+        /*if (!TT20.blockEntityMaskConfig.getMask().isOkay(Registry.BLOCK.getKey(blockState.getBlock()))) return;
         *///?}
 
         for (int i = 0; i < TT20.TPS_CALCULATOR.applicableMissedTicks(); i++) {

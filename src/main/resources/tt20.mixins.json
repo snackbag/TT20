@@ -22,7 +22,7 @@
     "world.GameRulesMixin",
     "world.LevelChunkMixin",
     "world.ServerLevelMixin"
-  ]
+  ],
   "injectors": {
     "defaultRequire": 1
   }

@@ -5,21 +5,22 @@
   "compatibilityLevel": "${java_compatibility_level}",
   "plugin": "net.snackbag.tt20.mixin.TT20MixinPlugin",
   "mixins": [
-    "ServerWatchdogMixin",
     "LivingEntityMixin",
     "MinecraftServerMixin",
     "PlayerMixin",
     "PortalProcessorMixin",
-    "accessor.ServerPlayerAccessor",
+    "PrimedTntMixin",
     "ServerPlayerManagerMixin",
+    "ServerWatchdogMixin",
+    "accessor.ServerPlayerAccessor",
     "fluid.LavaFluidMixin",
     "fluid.WaterFluidMixin",
     "item.ItemEntityMixin",
     "item.ItemMixin",
     "world.BlockBehaviourMixin",
     "world.GameRulesMixin",
-    "world.ServerLevelMixin",
-    "world.LevelChunkMixin"
+    "world.LevelChunkMixin",
+    "world.ServerLevelMixin"
   ],
   "client": [
     "client.IntegratedServerMixin"

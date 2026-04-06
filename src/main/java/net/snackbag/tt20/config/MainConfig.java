@@ -12,8 +12,9 @@ public class MainConfig extends JSONConfiguration {
     private boolean sleepingAcceleration = true;
     private boolean timeAcceleration = true;
     private boolean randomTickSpeedAcceleration = true;
-    private boolean serverWatchdog = true;
+    private boolean tntAcceleration = false;
 
+    private boolean serverWatchdog = true;
     private boolean automaticUpdater = true;
 
     public MainConfig() {
@@ -31,6 +32,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("server-watchdog", serverWatchdog);
         putIfEmpty("time-acceleration", timeAcceleration);
         putIfEmpty("random-tickspeed-acceleration", randomTickSpeedAcceleration);
+        putIfEmpty("tnt-acceleration", tntAcceleration);
         putIfEmpty("automatic-updater", automaticUpdater);
 
         save();
@@ -52,6 +54,7 @@ public class MainConfig extends JSONConfiguration {
         this.serverWatchdog = getAsBooleanOrDefault("block-entity-acceleration", serverWatchdog);
         this.timeAcceleration = getAsBooleanOrDefault("time-acceleration", timeAcceleration);
         this.randomTickSpeedAcceleration = getAsBooleanOrDefault("random-tickspeed-acceleration", randomTickSpeedAcceleration);
+        this.tntAcceleration = getAsBooleanOrDefault("tnt-acceleration", tntAcceleration);
         this.automaticUpdater = getAsBooleanOrDefault("automatic-updater", automaticUpdater);
     }
 
@@ -157,6 +160,14 @@ public class MainConfig extends JSONConfiguration {
 
     public boolean randomTickSpeedAcceleration() {
         return randomTickSpeedAcceleration;
+    }
+
+    public void tntAcceleration(boolean enabled) {
+        put("tnt-acceleration", enabled);
+    }
+
+    public boolean tntAcceleration() {
+        return tntAcceleration;
     }
 
     public void randomTickSpeedAcceleration(boolean enabled) {

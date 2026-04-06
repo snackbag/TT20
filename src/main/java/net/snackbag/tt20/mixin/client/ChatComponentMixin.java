@@ -27,8 +27,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Environment(EnvType.CLIENT)
 
 @Mixin(ChatComponent.class)
-public abstract class ChatHudMixin {
-    @Shadow public abstract void addMessage(Component message);
+public abstract class ChatComponentMixin {
+    @Shadow public abstract void addMessage(Component chatComponent);
     //? if >=1.21.11 {
     /*@Inject(method = "render(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/Font;IIIZZ)V", at = @At("HEAD"))
     *///?} else {
@@ -36,13 +36,13 @@ public abstract class ChatHudMixin {
     //?}
 
     //? if >=1.21.11 {
-    /*private void onPlayerConnectWarn(GuiGraphics context, Font textRenderer, int currentTick, int mouseX, int mouseY, boolean interactable, boolean bl, CallbackInfo ci) {
+    /*private void onPlayerConnectWarn(GuiGraphics guiGraphics, Font font, int tickCount, int mouseX, int mouseY, boolean focused, boolean changeCursorOnInsertions, CallbackInfo ci) {
     *///?} elif >=1.20.5 && <1.21.11 {
     /*private void onPlayerConnectWarn(GuiGraphics guiGraphics, int tickCount, int mouseX, int mouseY, boolean focused, CallbackInfo ci) {
     *///?} elif >=1.20.1 && <1.20.5 {
-    private void onPlayerConnectWarn(GuiGraphics context, int currentTick, int mouseX, int mouseY, CallbackInfo ci) {
+    private void onPlayerConnectWarn(GuiGraphics guiGraphics, int tickCount, int mouseX, int mouseY, CallbackInfo ci) {
     //?} elif 1.19.2 {
-    /*private void onPlayerConnectWarn(PoseStack poseStack, int i, CallbackInfo ci) {
+    /*private void onPlayerConnectWarn(PoseStack poseStack, int tickCount, CallbackInfo ci) {
     *///?}
         if (TT20.warned || !TT20.config.singlePlayerWarning()) return;
         addMessage(Component.literal("§c§lCritical incompatibilities found!\n\n§c§6TT20 §cis not stable on singleplayer and you may find yourself having unwanted side effects. You can disable each feature in the config if it gets too annoying."));

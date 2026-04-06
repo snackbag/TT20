@@ -15,7 +15,7 @@ import java.util.function.BooleanSupplier;
 @Mixin(MinecraftServer.class)
 public class MinecraftServerMixin {
     @Inject(method = "tickServer", at = @At("TAIL"))
-    private void tt20$serverTick(BooleanSupplier booleanSupplier, CallbackInfo ci) {
+    private void tt20$serverTick(BooleanSupplier hasTimeLeft, CallbackInfo ci) {
         TT20.TPS_CALCULATOR.onTick();
     }
 

@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ServerLevel.class)
-public abstract class ServerWorldMixin {
+public abstract class ServerLevelMixin {
     @ModifyExpressionValue(
             method = "tickTime",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/WritableLevelData;getDayTime()J")

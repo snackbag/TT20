@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
 import net.snackbag.tt20.ModUpdater;
 import net.snackbag.tt20.TT20;
+import net.snackbag.tt20.mixin.accessor.ServerPlayerAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,13 +21,13 @@ public abstract class ServerPlayerManagerMixin {
 
     @Inject(method = "placeNewPlayer", at = @At("TAIL"))
     //? if >1.20.1 {
-    /*private void sendPlayerUpdateMessageIfCorrectPermissions(Connection connection, ServerPlayer player, CommonListenerCookie commonListenerCookie, CallbackInfo ci) {
+    /*private void sendPlayerUpdateMessageIfCorrectPermissions(Connection connection, ServerPlayer player, CommonListenerCookie cookie, CallbackInfo ci) {
     *///?} else {
-    private void sendPlayerUpdateMessageIfCorrectPermissions(Connection connection, ServerPlayer player, CallbackInfo ci) {
+    private void sendPlayerUpdateMessageIfCorrectPermissions(Connection netManager, ServerPlayer player, CallbackInfo ci) {
     //?}
         if (!TT20.config.automaticUpdater() || !ModUpdater.hasUpdate) return;
         //? if >=1.21.9 {
-        /*if (((ServerPlayerEntityMixin) player).getServer().getPlayerList().isOp(player.nameAndId())) {
+        /*if (((ServerPlayerAccessor) player).getServer().getPlayerList().isOp(player.nameAndId())) {
         *///?} else {
         if (player.getServer().getPlayerList().isOp(player.getGameProfile())) {
         //?}

@@ -17,20 +17,20 @@ import org.spongepowered.asm.mixin.injection.At;
 public class GameRulesMixin {
     //? if (>=1.21.11) {
     /*@ModifyReturnValue(method = "get", at = @At("RETURN"))
-    private Object randomTickSpeedAcceleration(Object original, @Local(argsOnly = true) GameRule<?> rule) {
+    private Object randomTickSpeedAcceleration(Object original, @Local(argsOnly = true) GameRule<?> gameRule) {
     *///?} else {
     @ModifyReturnValue(method = "getInt", at = @At("RETURN"))
-    private int randomTickSpeedAcceleration(int original, @Local(argsOnly = true) GameRules.Key<GameRules.IntegerValue> rule) {
+    private int randomTickSpeedAcceleration(int original, @Local(argsOnly = true) GameRules.Key<GameRules.IntegerValue> key) {
     //?}
         if (!TT20.config.enabled() || !TT20.config.randomTickSpeedAcceleration()) return original;
 
         //? if (>=1.21.11) {
-        /*if (rule != GameRules.RANDOM_TICK_SPEED) return original;
+        /*if (gameRule != GameRules.RANDOM_TICK_SPEED) return original;
 
         if (!(original instanceof Integer value)) return original;
         return (int) (value * TPSCalculator.MAX_TPS / (float) TT20.TPS_CALCULATOR.getMostAccurateTPS());
         *///?} else {
-        if (rule != GameRules.RULE_RANDOMTICKING) return original;
+        if (key != GameRules.RULE_RANDOMTICKING) return original;
 
         return (int) (original * TPSCalculator.MAX_TPS / (float) TT20.TPS_CALCULATOR.getMostAccurateTPS());
         //?}

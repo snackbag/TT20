@@ -1,7 +1,16 @@
 package net.snackbag.tt20.config;
 
 import com.google.gson.*;
+
+//? if fabric
 import net.fabricmc.loader.api.FabricLoader;
+
+//? if forge
+//import net.minecraftforge.fml.loading.FMLPaths;
+
+//? if neoforge
+//import net.neoforged.fml.loading.FMLPaths;
+
 import net.snackbag.tt20.TT20;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -257,7 +266,11 @@ public class JSONConfiguration {
     }
 
     public String getAbsolutePath() {
+        //? if fabric
         return FabricLoader.getInstance().getConfigDir().toAbsolutePath() + "/tt20/";
+
+        //? if forge || neoforge
+        //return FMLPaths.GAMEDIR.get().resolve(FMLPaths.CONFIGDIR.get()) + "/tt20/";
     }
 
     private void collectStringKeys(JsonObject jsonObject, String prefix, Set<String> keys) {

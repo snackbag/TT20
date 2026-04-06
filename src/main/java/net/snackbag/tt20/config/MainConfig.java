@@ -13,6 +13,7 @@ public class MainConfig extends JSONConfiguration {
     private boolean timeAcceleration = true;
     private boolean randomTickSpeedAcceleration = true;
     private boolean tntAcceleration = false;
+    private boolean vanillaLagback = true;
 
     private boolean serverWatchdog = true;
     private boolean automaticUpdater = true;
@@ -33,6 +34,8 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("time-acceleration", timeAcceleration);
         putIfEmpty("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         putIfEmpty("tnt-acceleration", tntAcceleration);
+        putIfEmpty("vanilla-lagback", vanillaLagback);
+
         putIfEmpty("automatic-updater", automaticUpdater);
 
         save();
@@ -55,6 +58,8 @@ public class MainConfig extends JSONConfiguration {
         this.timeAcceleration = getAsBooleanOrDefault("time-acceleration", timeAcceleration);
         this.randomTickSpeedAcceleration = getAsBooleanOrDefault("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         this.tntAcceleration = getAsBooleanOrDefault("tnt-acceleration", tntAcceleration);
+        this.vanillaLagback = getAsBooleanOrDefault("vanilla-lagback", vanillaLagback);
+
         this.automaticUpdater = getAsBooleanOrDefault("automatic-updater", automaticUpdater);
     }
 
@@ -168,6 +173,14 @@ public class MainConfig extends JSONConfiguration {
 
     public boolean tntAcceleration() {
         return tntAcceleration;
+    }
+
+    public void vanillaLagback(boolean enabled) {
+        put("vanilla-lagback", enabled);
+    }
+
+    public boolean vanillaLagback() {
+        return vanillaLagback;
     }
 
     public void randomTickSpeedAcceleration(boolean enabled) {

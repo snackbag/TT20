@@ -2,8 +2,3 @@ plugins {
     id "dev.kikugie.stonecutter"
 }
 stonecutter.active "fabric-1.20.1"
-
-stonecutter.registerChiseled tasks.register("build-all", stonecutter.chiseled) {
-    setGroup "project"
-    ofTask "build"
-}

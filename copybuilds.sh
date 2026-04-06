@@ -17,14 +17,16 @@ mkdir -p "$out_dir"
 for mcdir in versions/*; do
   [ -d "$mcdir" ] || continue
 
-  mcver="$(basename "$mcdir")"
-  jar="$mcdir/build/libs/$mod_id-$mod_version.jar"
-  out="$out_dir/$mod_id-$mod_version+mc$mcver.jar"
+  dirname="$(basename "$mcdir")"
+
+  mcplatform="${dirname%%-*}"
+  mcver="${dirname#*-}"
+  jar="$mcdir/build/libs/$mod_id-$mod_version+mc$mcver-$mcplatform.jar"
 
   if [ -f "$jar" ]; then
-    cp "$jar" "$out"
-    echo "Copied mc$mcver"
+    cp "$jar" "$out_dir/"
+    echo "Copied $mcplatform-$mcver"
   else
-    echo "Skipping mc$mcver (not found)"
+    echo "Skipping $mcplatform-$mcver (not found)"
   fi
 done

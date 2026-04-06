@@ -1,6 +1,6 @@
 modLoader = "javafml"
 loaderVersion = "[1,)"
-license = "LGPLv3"
+license = "${license}"
 issueTrackerURL = "${issue}"
 
 [[mods]]
@@ -9,9 +9,8 @@ version = "${version}"
 displayName = "${name}"
 displayURL = "${homepage}"
 authors = "${authors}"
-description = '''
-${description}
-'''
+displayTest="IGNORE_ALL_VERSION"
+description = '''${description}'''
 logoFile = "icon.png"
 
 [[dependencies."${id}"]]
@@ -22,4 +21,4 @@ ordering = "NONE"
 side="BOTH"
 
 [[mixins]]
-config = "unitemplate.mixins.json"
+config = "${id}.mixins.json"

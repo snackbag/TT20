@@ -32,6 +32,16 @@ repositories {
         name = 'papermc'
         url = 'https://repo.papermc.io/repository/maven-public/'
     }
+    maven {
+        url "https://libraries.minecraft.net"
+    }
+    maven {
+        url = "https://artifacts.snackbag.net/artifactory/shitlib"
+    }
+    maven {
+        name = "Terraformers"
+        url = "https://maven.terraformersmc.com/"
+    }
 }
 
 def use_architectury_loom = project.platform in ['fabric', 'quilt', 'forge', 'neoforge']
@@ -50,23 +60,26 @@ static Number convertVersion(String version) {
     def major = parts[0] * 10000
     def minor = parts[1] * 100
     def patch = parts.size() > 2 ? parts[2] : 0
-    return major + minor + patch
+    return major + minor + patch // ex. 1.20.1 -> 12001 || 26.1 -> 260100 || 26.1.1 -> 260101
 }
 
 def mcVersion = convertVersion(project.minecraft_version)
 
-String MOD_ICON_PATH = 'assets/unitemplate/icon.png'
-List<String> MIXIN_CONFIG_PATHS = ['unitemplate.mixins.json']
-String LANG_DIR = 'assets/unitemplate/lang'
+String MOD_ICON_PATH = 'assets/tt20/icon.png'
+List<String> MIXIN_CONFIG_PATHS = ['tt20.mixins.json']
+String LANG_DIR = 'assets/tt20/lang'
 JavaVersion JAVA_COMPATIBILITY
 JavaVersion MIXIN_COMPATIBILITY
-if (mcVersion >= 12005) {
+if (mcVersion >= 260001) { // 26.1
+    JAVA_COMPATIBILITY = JavaVersion.VERSION_25
+    MIXIN_COMPATIBILITY = JavaVersion.VERSION_25
+} else if (mcVersion >= 12005) { // 1.20.5
     JAVA_COMPATIBILITY = JavaVersion.VERSION_21
     MIXIN_COMPATIBILITY = JavaVersion.VERSION_21
-} else if (mcVersion >= 11800) {
+} else if (mcVersion >= 11800) { // 1.18
     JAVA_COMPATIBILITY = JavaVersion.VERSION_17
     MIXIN_COMPATIBILITY = JavaVersion.VERSION_17
-} else if (mcVersion >= 11700) {
+} else if (mcVersion >= 11700) { // 1.17
     JAVA_COMPATIBILITY = JavaVersion.VERSION_16
     MIXIN_COMPATIBILITY = JavaVersion.VERSION_16
 } else {
@@ -74,39 +87,17 @@ if (mcVersion >= 12005) {
     MIXIN_COMPATIBILITY = JavaVersion.VERSION_1_8
 }
 
-String modVersionSuffix = ''
-String artifactVersion = project.mod_version
-String artifactVersionSuffix = ''
-// detect github action environment variables
-// https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
-if (System.getenv("BUILD_RELEASE") != "true") {
-    String buildNumber = System.getenv("BUILD_ID")
-    modVersionSuffix += buildNumber != null ? ('+build.' + buildNumber) : '-SNAPSHOT'
-    artifactVersionSuffix = '-SNAPSHOT'  // A non-release artifact is always a SNAPSHOT artifact
-}
-String fullModVersion = project.mod_version + modVersionSuffix
-String fullProjectVersion = "v${artifactVersion}+mc${project.minecraft_version}-${project.platform}${modVersionSuffix}"
-String fullArtifactVersion = "${artifactVersion}-mc${project.minecraft_version}-${project.platform}${artifactVersionSuffix}"
-// Example version values:
-//   artifactVersion         1.0.3                             (the base mod version)
-//   modVersionSuffix        +build.88                         (use github action build number if possible)
-//   artifactVersionSuffix   -SNAPSHOT
-//   fullModVersion          1.0.3+build.88                    (the actual mod version to use in the mod)
-//   fullProjectVersion      v1.0.3-mc1.15.2-fabric+build.88   (in build output jar name)
-//   fullArtifactVersion     1.0.3-mc1.15.2-fabric-SNAPSHOT    (maven artifact version)
-
-
-
-version = fullProjectVersion
 group = project.maven_group
-base { archivesName.set("${project.mod_name}") }
 
-stonecutter.const('FABRIC', project.platform == 'fabric')
-stonecutter.const('QUILT', project.platform == 'quilt')
-stonecutter.const('FORGE', project.platform == 'forge')
-stonecutter.const('NEOFORGE', project.platform == 'neoforge')
-stonecutter.const('PAPER', project.platform == 'paper')
-stonecutter.swap("mod_version", "\"${fullArtifactVersion}\";")
+version = "${project.mod_version}+mc${project.minecraft_version}-${project.platform}"
+base {
+    archivesName.set("${project.mod_name}")
+}
+
+stonecutter {
+    constants.match(project.platform, 'fabric', 'quilt', 'forge', 'neoforge', 'paper')
+    swaps["mod_version"] = "\"${project.mod_version}\";".toString()
+}
 
 if (use_architectury_loom) {
     configurations {
@@ -126,6 +117,7 @@ dependencies {
 
     if (project.platform == 'fabric') {
         modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+        modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
     }
     if (project.platform == 'forge') {
         forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
@@ -138,6 +130,8 @@ dependencies {
         compileOnly "io.papermc.paper:paper-api:${project.minecraft_version}-R0.1-SNAPSHOT"
         paperweight.paperDevBundle("${project.minecraft_version}-R0.1-SNAPSHOT")
     }
+
+    implementation "net.snackbag.shit:shit:${project.shit_version}"
 }
 
 if (use_architectury_loom) {
@@ -162,7 +156,7 @@ processResources {
 
     inputs.property "id", project.mod_id
     inputs.property "name", project.mod_name
-    inputs.property "version", fullModVersion
+    inputs.property "version", project.mod_version
     inputs.property "minecraft_dependency", project.minecraft_dependency
 
     def good_files = [] as Set
@@ -185,7 +179,7 @@ processResources {
                 def valueMap = [
                         "id": project.mod_id,
                         "name": project.mod_name,
-                        "version": fullModVersion,
+                        "version": project.mod_version,
                         "minecraft_dependency": project.minecraft_dependency,
 
                         "description": project.mod_description,
@@ -193,6 +187,7 @@ processResources {
                         "homepage": project.mod_homepage,
                         "sources": project.mod_sources,
                         "issue": project.mod_issue,
+                        "license": project.mod_license,
                         "java_compatibility_level": "JAVA_${MIXIN_COMPATIBILITY.ordinal() + 1}",
                 ]
                 expand valueMap
@@ -246,7 +241,7 @@ stonecutter {
 
 jar {
     from(rootProject.file('LICENSE')) {
-        rename { "${it}_${project.archives_base_name}" }
+        rename { "${it}_${project.mod_id}" }
     }
 }
 
@@ -259,8 +254,8 @@ if (use_paperweight) {
 relocator {
     group = project.group
     platform = project.platform
-    originalJar = project.file("build/libs/${project.mod_name}-${fullProjectVersion}.jar")
-    mergedJar = project.file("build/libs/${project.mod_name}-${fullProjectVersion}-relocate.jar")
+    originalJar = project.file("build/libs/${project.mod_name}-${version}.jar")
+    mergedJar = project.file("build/libs/${project.mod_name}-${version}-relocate.jar")
     mixins = MIXIN_CONFIG_PATHS
 }
 

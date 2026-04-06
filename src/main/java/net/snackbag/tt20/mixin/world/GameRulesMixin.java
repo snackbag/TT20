@@ -2,7 +2,10 @@ package net.snackbag.tt20.mixin.world;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-//? if (>=1.21.11) {
+//? if >=26.1 {
+/*import net.minecraft.world.level.gamerules.GameRule;
+import net.minecraft.world.level.gamerules.GameRules;
+*///? } else if (>=1.21.11) {
 /*import net.minecraft.world.rule.GameRule;
 import net.minecraft.world.rule.GameRules;
 *///?} else {
@@ -15,7 +18,10 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(GameRules.class)
 public class GameRulesMixin {
-    //? if (>=1.21.11) {
+    //? if >=26.1 {
+    /*@ModifyReturnValue(method = "get", at = @At("RETURN"))
+    private Object randomTickSpeedAcceleration(Object original, @Local(argsOnly = true) GameRule<?> rule) {
+    *///? } else if (>=1.21.11) {
     /*@ModifyReturnValue(method = "getValue", at = @At("RETURN"))
     private Object randomTickSpeedAcceleration(Object original, @Local(argsOnly = true) GameRule<?> rule) {
     *///?} else {

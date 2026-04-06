@@ -1,6 +1,8 @@
 package net.snackbag.tt20.config;
 
-//? if >=1.20.1 {
+//? if >=26.1 {
+/*import net.minecraft.core.registries.BuiltInRegistries;
+*///?} else if >=1.20.1 {
 import net.minecraft.registry.Registries;
 //?} else {
 /*import net.minecraft.util.registry.Registry;
@@ -32,7 +34,9 @@ public class BlockEntityMaskConfig extends JSONConfiguration {
         super.reload();
 
         if (reloaded) {
-            //? if >=1.20.1 {
+            //? if >=26.1 {
+            /*this.mask = new Mask(BuiltInRegistries.BLOCK, this, "blocks");
+            *///?} else if >=1.20.1 {
             this.mask = new Mask(Registries.BLOCK, this, "blocks");
             //?} else {
             /*this.mask = new Mask(Registry.BLOCK, this, "blocks");

@@ -17,7 +17,6 @@
 	"license": "PolyForm Shield License 1.0.0",
 	"icon": "assets/tt20/icon.png",
 	"environment": "*",
-	"accessWidener": "tt20.accesswidener",
 	"entrypoints": {
 		"main": [
 			"net.snackbag.tt20.TT20"
@@ -33,8 +32,8 @@
 		"tt20.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.15.11",
-		"minecraft": "~${minecraft}",
+		"fabricloader": ">=0.18.4",
+		"minecraft": ">=1.19.2",
 		"java": ">=17",
 		"fabric-api": "*"
 	},

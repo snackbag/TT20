@@ -12,6 +12,7 @@ fi
 echo "Found mod properties: $mod_name-$mod_version"
 
 out_dir="publish-builds"
+rm -rf "$out_dir"
 mkdir -p "$out_dir"
 
 for mcdir in versions/*; do

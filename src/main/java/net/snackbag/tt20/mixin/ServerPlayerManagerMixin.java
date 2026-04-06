@@ -5,7 +5,6 @@ package net.snackbag.tt20.mixin;
 //import net.minecraft.server.network.CommonListenerCookie;
 
 import net.minecraft.network.Connection;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
 import net.snackbag.tt20.ModUpdater;
@@ -15,6 +14,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static net.snackbag.tt20.TT20.literal;
+import static net.snackbag.tt20.TT20.sendMessage;
 
 @Mixin(PlayerList.class)
 public abstract class ServerPlayerManagerMixin {
@@ -31,8 +33,8 @@ public abstract class ServerPlayerManagerMixin {
         *///?} else {
         if (player.getServer().getPlayerList().isOp(player.getGameProfile())) {
         //?}
-            player.sendSystemMessage(Component.literal(ModUpdater.updateMessage));
-            player.sendSystemMessage(Component.literal("§oOnly operators can see this message"));
+            sendMessage(player, literal(ModUpdater.updateMessage));
+            sendMessage(player, literal("§oOnly operators can see this message"));
         }
     }
 }

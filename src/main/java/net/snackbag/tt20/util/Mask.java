@@ -60,11 +60,7 @@ public class Mask {
 
         // if <namespace>:<path>
         if (!split[0].equals("*") && !split[1].equals("*")) {
-            //? if >=1.21.11 {
-            /*return List.of(Identifier.tryBuild(split[0], split[1]));
-            *///?} else {
-            return List.of(ResourceLocation.tryBuild(split[0], split[1]));
-            //?}
+            return List.of(TT20.id(split[0], split[1]));
         }
 
         // if *:<path>

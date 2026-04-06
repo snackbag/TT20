@@ -37,10 +37,14 @@ public class RegistryIndex {
         this.namespaceIndex = new HashMap<>();
         this.pathIndex = new HashMap<>();
 
+        //? if >1.18.2 {
         for (ResourceKey<?> key : registry.registryKeySet()) {
+        //?} else {
+        /*for (ResourceLocation identifier : registry.keySet()) {
+        *///?}
             //? if >=1.21.11 {
             /*Identifier identifier = key.identifier();
-            *///?} else {
+            *///?} else if >1.18.2 {
             ResourceLocation identifier = key.location();
             //?}
 

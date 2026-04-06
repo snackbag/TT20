@@ -20,9 +20,9 @@ public class MinecraftServerMixin {
     }
 
     @Inject(method = "loadLevel", at = @At("TAIL"))
-    private void onServerStart(CallbackInfo ci) {
+    private void tt20$onServerStart(CallbackInfo ci) {
         MinecraftServer server = (MinecraftServer)(Object) this;
         CommandDispatcher<CommandSourceStack> dispatcher = server.getCommands().getDispatcher();
-        MainCommand.register(dispatcher, null, null);
+        MainCommand.register(dispatcher);
     }
 }

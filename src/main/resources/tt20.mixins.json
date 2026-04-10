@@ -5,6 +5,7 @@
   "compatibilityLevel": "${java_compatibility_level}",
   "plugin": "net.snackbag.tt20.mixin.TT20MixinPlugin",
   "mixins": [
+    "CommandsMixin",
     "LivingEntityMixin",
     "MinecraftServerMixin",
     "PlayerMixin",

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-mod_name="$(grep -E '^mod_name=' gradle.properties | cut -d'=' -f2)"
+mod_name="$(grep -E '^mod_publish_name=' gradle.properties | cut -d'=' -f2)"
 mod_version="$(grep -E '^mod_version=' gradle.properties | cut -d'=' -f2)"
 
 if [ -z "$mod_version" ]; then

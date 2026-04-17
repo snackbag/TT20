@@ -42,12 +42,12 @@ public class TPSCalculator {
         return tpsHistory.stream()
                 .mapToDouble(Double::doubleValue)
                 .average()
-                .orElse(0.1);
+                .orElse(20);
     }
 
     public double getTPS() {
-        if (lastTick == null) return -1;
-        if (getMSPT() <= 0) return 0.1;
+        if (lastTick == null) return 20;
+        if (getMSPT() <= 0) return 20;
 
         double tps = 1000 / (double) getMSPT();
         return tps > MAX_TPS ? MAX_TPS : tps;

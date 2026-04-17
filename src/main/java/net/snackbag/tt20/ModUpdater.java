@@ -17,7 +17,7 @@ public class ModUpdater {
 
     static {
         try {
-            updateUrl = new URL("https://playout.snackbag.net/updater/v1/tt20");
+            updateUrl = new URL("https://playout.snackbag.net/updater/v2/tt20");
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -25,7 +25,7 @@ public class ModUpdater {
 
     public static void check() {
         if (!TT20.config.automaticUpdater()) {
-            TT20.LOGGER.info("(TT20) Not checking for updates, because the updater is disabled. Current version: " + TT20.VERSION);
+            TT20.LOGGER.info("(TT20) Not checking for updates, because the updater is disabled. Current patch: " + TT20.PATCH);
             return;
         }
 
@@ -47,43 +47,22 @@ public class ModUpdater {
             throw new RuntimeException("(TT20) Failed to check for updates, status is false.");
         }
 
-        String latest = body.get("latest").getAsString();
-        boolean shouldUpdate = checkUpdatesAvailable(latest);
+        body = body.get("unified").getAsJsonObject();
+
+        int latest = body.get("patch").getAsInt();
+        boolean shouldUpdate = checkShouldUpdate(latest);
 
         if (!shouldUpdate) {
-            TT20.LOGGER.info("(TT20) Running the latest version");
+            TT20.LOGGER.info("(TT20) Running latest patch (" + TT20.PATCH + ")");
             return;
         }
 
         updateMessage = body.get("updateMessage").getAsString();
         hasUpdate = true;
-        TT20.LOGGER.warn("(TT20) User is running an outdated version of TT20. Latest: " + latest + " - current: " + TT20.VERSION);
+        TT20.LOGGER.warn("(TT20) User is running an outdated version of TT20. Latest: " + latest + " - current: " + TT20.PATCH);
     }
 
-    public static boolean checkUpdatesAvailable(String latest) {
-        String[] latestVer = latest.split("\\.");
-        String[] oldVer = TT20.VERSION.split("\\.");
-
-        return laterVersion(latestVer, oldVer);
-    }
-
-    public static boolean laterVersion(String[] newVer, String[] oldVer) {
-        int newVerMajor = Integer.valueOf(newVer[0]);
-        int newVerMinor = Integer.valueOf(newVer[1]);
-        int newVerPatch = Integer.valueOf(newVer[2]);
-
-        int oldVerMajor = Integer.valueOf(oldVer[0]);
-        int oldVerMinor = Integer.valueOf(oldVer[1]);
-        int oldVerPatch = Integer.valueOf(oldVer[2]);
-
-        if (newVerMajor > oldVerMajor) {
-            return true;
-        }
-
-        if (newVerMinor > oldVerMinor) {
-            return true;
-        }
-
-        return newVerPatch > oldVerPatch;
+    public static boolean checkShouldUpdate(int latestPatch) {
+        return latestPatch > TT20.PATCH;
     }
 }

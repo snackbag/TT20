@@ -12,13 +12,13 @@ TT20 only fixes the symptoms of TPS lag, not the actual lag. It re-calculates th
 - [X] Eating delay
 - [X] Item pickup delay
 - [X] Block entity tick acceleration (experimental, off by default)
-- [ ] Block state delay
 - [X] Portal delay
 - [X] Sleeping delay
 - [X] Potion delay
 - [X] Fluid spread speed
 - [X] Random tickspeed acceleration
 - [X] Day/nighttime acceleration
+- [X] Bow/crossbow acceleration
 - [X] TNT acceleration (off by default)
 
 If you believe there is features missing, please tell us by creating a new issue\

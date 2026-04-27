@@ -113,7 +113,7 @@ group = project.maven_group
 
 version = "${project.mod_version}+mc${project.minecraft_version}-${project.platform}"
 base {
-    archivesName.set("${project.mod_name}")
+    archivesName.set("${project.mod_id}")
 }
 
 stonecutter {

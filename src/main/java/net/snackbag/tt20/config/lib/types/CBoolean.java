@@ -1,4 +1,4 @@
-package net.snackbag.tt20.config.rework.types;
+package net.snackbag.tt20.config.lib.types;
 
 public class CBoolean extends CValue<Boolean> {
     private final boolean defaultValue;

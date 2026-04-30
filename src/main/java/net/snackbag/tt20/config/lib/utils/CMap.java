@@ -1,6 +1,6 @@
-package net.snackbag.tt20.config.rework.utils;
+package net.snackbag.tt20.config.lib.utils;
 
-import net.snackbag.tt20.config.rework.types.CValue;
+import net.snackbag.tt20.config.lib.types.CValue;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

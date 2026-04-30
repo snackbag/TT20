@@ -1,13 +1,13 @@
-package net.snackbag.tt20.config.impl;
+package net.snackbag.tt20.config;
 
 import net.snackbag.tt20.TT20;
-import net.snackbag.tt20.config.rework.CExporter;
-import net.snackbag.tt20.config.rework.utils.CCategory;
-import net.snackbag.tt20.config.rework.CConfig;
-import net.snackbag.tt20.config.rework.types.CBoolean;
-import net.snackbag.tt20.config.rework.types.CEnum;
-import net.snackbag.tt20.config.rework.types.CMask;
-import net.snackbag.tt20.config.rework.utils.MaskType;
+import net.snackbag.tt20.config.lib.CExporter;
+import net.snackbag.tt20.config.lib.utils.CCategory;
+import net.snackbag.tt20.config.lib.CConfig;
+import net.snackbag.tt20.config.lib.types.CBoolean;
+import net.snackbag.tt20.config.lib.types.CEnum;
+import net.snackbag.tt20.config.lib.types.CMask;
+import net.snackbag.tt20.config.lib.utils.MaskType;
 import org.jetbrains.annotations.NotNull;
 
 public class TT20Config extends CConfig {

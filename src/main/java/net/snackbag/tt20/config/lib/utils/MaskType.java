@@ -1,4 +1,4 @@
-package net.snackbag.tt20.config.rework.utils;
+package net.snackbag.tt20.config.lib.utils;
 
 public enum MaskType {
     WHITELIST,

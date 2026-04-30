@@ -1,21 +1,12 @@
-package net.snackbag.tt20.config.lib.utils;
+package net.snackbag.tt20.util;
 
-//? if >=26.1 {
-/*import net.minecraft.core.Registry;
-*///? } else if >=1.20.1 {
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-//?} else {
-/*import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
-*///?}
-
-//? if >=26.1 {
-/*import net.minecraft.resources.Identifier;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-*///? } else {
-import net.minecraft.util.Identifier;
- //? }
+//? if >=1.21.11 {
+/*import net.minecraft.resources.Identifier;
+*///?} else {
+import net.minecraft.resources.ResourceLocation;
+//?}
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,11 +16,17 @@ public class RegistryIndex {
     private static final HashMap<Registry<?>, RegistryIndex> indexes = new HashMap<>();
 
     private final Registry<?> registry;
-    private final List<Identifier> identifiers;
     private final List<String> namespaces;
     private final List<String> paths;
+    //? if >=1.21.11 {
+    /*private final List<Identifier> identifiers;
     private final HashMap<String, List<Identifier>> namespaceIndex;
     private final HashMap<String, List<Identifier>> pathIndex;
+    *///?} else {
+    private final List<ResourceLocation> identifiers;
+    private final HashMap<String, List<ResourceLocation>> namespaceIndex;
+    private final HashMap<String, List<ResourceLocation>> pathIndex;
+     //?}
 
     private RegistryIndex(Registry<?> registry) {
         this.registry = registry;
@@ -40,13 +37,17 @@ public class RegistryIndex {
         this.namespaceIndex = new HashMap<>();
         this.pathIndex = new HashMap<>();
 
-        //? if >=26.1 {
-        /*for (ResourceKey<?> key : registry.registryKeySet()) {
-            Identifier identifier = key.identifier();
-        *///? } else {
-        for (RegistryKey<?> key : registry.getKeys()) {
-            Identifier identifier = key.getValue();
-        //? }
+        //? if >1.18.2 {
+        for (ResourceKey<?> key : registry.registryKeySet()) {
+        //?} else {
+        /*for (ResourceLocation identifier : registry.keySet()) {
+        *///?}
+            //? if >=1.21.11 {
+            /*Identifier identifier = key.identifier();
+            *///?} else if >1.18.2 {
+            ResourceLocation identifier = key.location();
+            //?}
+
             String namespace = identifier.getNamespace();
             String path = identifier.getPath();
 
@@ -70,15 +71,27 @@ public class RegistryIndex {
         return registry;
     }
 
-    public List<Identifier> getIdentifiers() {
+    //? if >=1.21.11 {
+    /*public List<Identifier> getResourceLocations() {
+    *///?} else {
+    public List<ResourceLocation> getResourceLocations() {
+    //?}
         return identifiers;
     }
 
-    public HashMap<String, List<Identifier>> getNamespaceIndex() {
+    //? if >=1.21.11 {
+    /*public HashMap<String, List<Identifier>> getNamespaceIndex() {
+    *///?} else {
+    public HashMap<String, List<ResourceLocation>> getNamespaceIndex() {
+    //?}
         return new HashMap<>(namespaceIndex);
     }
 
-    public HashMap<String, List<Identifier>> getPathIndex() {
+    //? if >=1.21.11 {
+        /*public HashMap<String, List<Identifier>> getPathIndex() {
+    *///?} else {
+    public HashMap<String, List<ResourceLocation>> getPathIndex() {
+    //?}
         return new HashMap<>(pathIndex);
     }
 

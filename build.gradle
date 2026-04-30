@@ -1,104 +1,303 @@
 plugins {
-	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
-	id 'maven-publish'
-}
+    id 'java'
 
-version = property("mod.version")
+    // https://github.com/architectury/architectury-loom
+    id 'dev.architectury.loom' version '1.13-SNAPSHOT' apply false
+    id 'dev.architectury.loom-no-remap' version '1.14-SNAPSHOT' apply false
 
-base {
-	archivesName = project.archives_base_name
+    // https://docs.papermc.io/paper/dev/userdev
+    id 'io.papermc.paperweight.userdev' version '2.0.0-beta.21' apply false
+    // https://github.com/jpenilla/run-task
+    id 'xyz.jpenilla.run-paper' version '3.0.2' apply false
+
+    // https://github.com/Fallen-Breath/yamlang
+    id 'me.fallenbreath.yamlang' version '1.5.0'
 }
 
 repositories {
-	maven { url = "https://artifacts.snackbag.net/artifactory/shitlib" } // ShitLib
+    mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
+    maven {
+        url 'https://www.cursemaven.com'
+    }
+    maven {
+        url = "https://api.modrinth.com/maven"
+    }
+    maven {
+        url 'https://maven.neoforged.net/releases'
+    }
+    maven {
+        name = 'papermc'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+    maven {
+        url "https://libraries.minecraft.net"
+    }
+    maven {
+        url = "https://artifacts.snackbag.net/artifactory/shitlib"
+    }
     maven {
         name = "Terraformers"
         url = "https://maven.terraformersmc.com/"
     }
 }
 
-loom {
-	runConfigs.all {
-		ideConfigGenerated = true
-		runDir = "../../run"
-	}
+def use_architectury_loom = project.platform in ['fabric', 'quilt', 'forge', 'neoforge']
+def use_paperweight = project.platform in ['paper']
+
+static Number convertVersion(String version) {
+    def parts = version.split('\\.')*.toInteger()
+    def major = parts[0] * 10000
+    def minor = parts[1] * 100
+    def patch = parts.size() > 2 ? parts[2] : 0
+    return major + minor + patch // ex. 1.20.1 -> 12001 || 26.1 -> 260100 || 26.1.1 -> 260101
 }
 
-fabricApi {
-	configureDataGeneration()
+def mcVersion = convertVersion(project.minecraft_version)
+
+if (use_architectury_loom) {
+    if (mcVersion >= 260100) {
+        apply plugin: 'dev.architectury.loom-no-remap'
+    } else {
+        apply plugin: 'dev.architectury.loom'
+    }
+}
+if (use_paperweight) {
+    apply plugin: 'io.papermc.paperweight.userdev'
+    apply plugin: 'xyz.jpenilla.run-paper'
+}
+
+String MOD_ICON_PATH = 'assets/tt20/icon.png'
+List<String> MIXIN_CONFIG_PATHS = ['tt20.mixins.json']
+String LANG_DIR = 'assets/tt20/lang'
+JavaVersion JAVA_COMPATIBILITY
+JavaVersion MIXIN_COMPATIBILITY
+int javaVersion
+if (mcVersion >= 260001) { // 26.1
+    JAVA_COMPATIBILITY = JavaVersion.VERSION_25
+    MIXIN_COMPATIBILITY = JavaVersion.VERSION_25
+    javaVersion = 25
+} else if (mcVersion >= 12005) { // 1.20.5
+    JAVA_COMPATIBILITY = JavaVersion.VERSION_21
+    MIXIN_COMPATIBILITY = JavaVersion.VERSION_21
+    javaVersion = 21
+} else if (mcVersion >= 11800) { // 1.18
+    JAVA_COMPATIBILITY = JavaVersion.VERSION_17
+    MIXIN_COMPATIBILITY = JavaVersion.VERSION_17
+    javaVersion = 17
+} else if (mcVersion >= 11700) { // 1.17
+    JAVA_COMPATIBILITY = JavaVersion.VERSION_16
+    MIXIN_COMPATIBILITY = JavaVersion.VERSION_16
+    javaVersion = 16
+} else {
+    JAVA_COMPATIBILITY = JavaVersion.VERSION_1_8
+    MIXIN_COMPATIBILITY = JavaVersion.VERSION_1_8
+}
+
+def parchmentVersions = [
+        "1.18.2":  "1.18.2:2022.11.06",
+        "1.19.2":  "1.19.2:2022.11.27",
+        "1.20.1":  "1.20.1:2023.09.03",
+        "1.20.2":  "1.20.2:2023.12.10",
+        "1.20.3":  "1.20.3:2023.12.31",
+        "1.20.5":  "1.20.6:2024.06.16",
+        "1.21.1":  "1.21.1:2024.11.17",
+        "1.21.2":  "1.21.3:2024.12.07",
+        "1.21.9":  "1.21.9:2025.10.05",
+        "1.21.11": "1.21.11:2025.12.20"
+]
+
+group = project.maven_group
+
+version = "${project.mod_version}+mc${project.minecraft_version}-${project.platform}"
+base {
+    archivesName.set("${project.mod_name}")
+}
+
+stonecutter {
+    constants.match(project.platform, 'fabric', 'quilt', 'forge', 'neoforge', 'paper')
+    swaps["mod_version"] = "\"${project.mod_version}\";".toString()
+}
+
+if (use_architectury_loom) {
+    configurations {
+        modRuntimeOnly.exclude group: 'net.fabricmc', module: 'fabric-loader'
+    }
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${property('deps.minecraft')}"
-	mappings "net.fabricmc:yarn:${property('deps.yarn_mappings')}:v2"
+    // loom
+    if (use_architectury_loom) {
+        minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-	modImplementation "net.fabricmc:fabric-loader:${property('deps.fabric_loader')}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${property('deps.fabric_api')}"
+        if (mcVersion < 260100) {
+            mappings loom.layered() {
+                officialMojangMappings()
+                parchment("org.parchmentmc.data:parchment-${parchmentVersions[project.minecraft_version]}@zip")
+            }
+        }
+    }
+    if (use_paperweight) {
+        paperweight.paperDevBundle("${project.minecraft_version}-R0.1-SNAPSHOT")
+    }
 
-	// ShitLib
-	implementation "net.snackbag.shit:shit:${project.shitlib_version}"
-	include "net.snackbag.shit:shit:${project.shitlib_version}"
+    if (project.platform == 'fabric') {
+        if (mcVersion < 260100) {
+            modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+            modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+        } else {
+            implementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+            implementation("com.terraformersmc:modmenu:${project.modmenu_version}") {
+                exclude group: "net.fabricmc.fabric-api"
+            }
+        }
+        if (mcVersion >= 12005) {
+            if (mcVersion < 260100) {
+                runtimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+            } else {
+                modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+            }
 
-    // ModMenu
-    modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+        }
+    }
+    if (project.platform == 'forge') {
+        forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+        compileOnly "org.spongepowered:mixin:0.8.5"
+
+        compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.3"))
+        implementation(include("io.github.llamalad7:mixinextras-forge:0.5.3"))
+    }
+    if (project.platform == 'neoforge') {
+        neoForge "net.neoforged:neoforge:${project.neoforge_version}"
+
+        compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.3"))
+        implementation(include("io.github.llamalad7:mixinextras-neoforge:0.5.3"))
+    }
+    if (project.platform == 'paper') {
+        compileOnly "io.papermc.paper:paper-api:${project.minecraft_version}-R0.1-SNAPSHOT"
+        paperweight.paperDevBundle("${project.minecraft_version}-R0.1-SNAPSHOT")
+    }
+
+    implementation "net.snackbag.shit:shit:${project.shit_version}"
+}
+
+if (use_architectury_loom) {
+    loom {
+        def commonVmArgs = ['-Dmixin.debug.export=true', '-Dmixin.debug.countInjections=true']
+        runConfigs.configureEach {
+            // to make sure it generates all "Minecraft Client (:subproject_name)" applications
+            ideConfigGenerated = true
+            vmArgs commonVmArgs
+        }
+
+        if (project.platform == 'forge') {
+            forge {
+                mixinConfigs = MIXIN_CONFIG_PATHS
+            }
+        }
+    }
 }
 
 processResources {
-	inputs.property "version", project.version
-	inputs.property "minecraft", stonecutter.current.version
+    outputs.upToDateWhen { false }
 
-	def map = ["version": project.version, "minecraft": stonecutter.current.version]
+    inputs.property "id", project.mod_id
+    inputs.property "name", project.mod_name
+    inputs.property "version", project.mod_version
+    inputs.property "minecraft_dependency", project.minecraft_dependency
 
-	filesMatching("fabric.mod.json") {
-		expand map
-	}
+    def good_files = [] as Set
+    def all_files = [] as Set
+    [
+            'fabric':   MIXIN_CONFIG_PATHS + ['fabric.mod.json'],
+            'forge':    MIXIN_CONFIG_PATHS + ['META-INF', 'META-INF/mods.toml', 'pack.mcmeta'],
+            'neoforge': MIXIN_CONFIG_PATHS + ['META-INF', 'META-INF/neoforge.mods.toml', 'pack.mcmeta'],
+            'paper':    ['plugin.yml'],
+    ].forEach { brand, paths ->
+        all_files.addAll(paths)
+        if (brand == project.platform) {
+            good_files.addAll(paths)
+        }
+    }
+    all_files.forEach { it2 ->
+        def path = it2 as String
+        if (good_files.contains(path)) {
+            filesMatching(path) {
+                def valueMap = [
+                        "id": project.mod_id,
+                        "name": project.mod_name,
+                        "version": project.mod_version,
+                        "minecraft_dependency": project.minecraft_dependency,
+
+                        "description": project.mod_description,
+                        "authors": project.mod_authors,
+                        "homepage": project.mod_homepage,
+                        "sources": project.mod_sources,
+                        "issue": project.mod_issue,
+                        "license": project.mod_license,
+                        "java": JAVA_COMPATIBILITY,
+                        "java_compatibility_level": "JAVA_${MIXIN_COMPATIBILITY.ordinal() + 1}",
+                ]
+                expand valueMap
+            }
+        } else {
+            exclude path
+        }
+    }
+
+    if (project.platform in ['forge', 'neoforge']) {
+        // forge requires the mod icon file to be at the resource root
+        filesMatching(MOD_ICON_PATH) { f -> f.path = new File(f.path).getName() }
+    }
+}
+
+// https://github.com/Fallen-Breath/yamlang
+yamlang {
+    targetSourceSets = [sourceSets.main]
+    inputDir = LANG_DIR
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 17
+    it.options.release = javaVersion
+    options.encoding = "UTF-8"
+    options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
+    if (JAVA_COMPATIBILITY <= JavaVersion.VERSION_1_8) {
+        // suppressed "source/target value 8 is obsolete and will be removed in a future release"
+        options.compilerArgs << '-Xlint:-options'
+    }
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
-	withSourcesJar()
+    sourceCompatibility = JAVA_COMPATIBILITY
+    targetCompatibility = JAVA_COMPATIBILITY
 
-	if (stonecutter.compare(stonecutter.current.version, "1.20.5") >= 0) {
-		sourceCompatibility = JavaVersion.VERSION_21
-		targetCompatibility = JavaVersion.VERSION_21
-	} else if (stonecutter.compare(stonecutter.current.version, "1.21") >= 0) {
-		sourceCompatibility = JavaVersion.VERSION_21
-		targetCompatibility = JavaVersion.VERSION_21
-	} else {
-		sourceCompatibility = JavaVersion.VERSION_17
-		targetCompatibility = JavaVersion.VERSION_17
-	}
+    // Configure the java toolchain. This allows gradle to auto-provision JDK 21 on systems that only have JDK 11 installed for example.
+    toolchain.languageVersion = JavaLanguageVersion.of(JAVA_COMPATIBILITY.ordinal() + 1)
+
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+    // if it is present.
+    // If you remove this line, sources will not be generated.
+    withSourcesJar()
+}
+
+stonecutter {
+    java {
+        withSourcesJar()
+        sourceCompatibility = JAVA_COMPATIBILITY
+        targetCompatibility = JAVA_COMPATIBILITY
+    }
 }
 
 jar {
-    inputs.property "archivesName", "tt20-${project.version}+mc${stonecutter.current.version}"
-
-	from("LICENSE") {
-		rename { "${it}_${project.base.archivesName.get()}"}
-	}
+    from(rootProject.file('LICENSE')) {
+        rename { "${it}_${project.mod_id}" }
+    }
 }
 
-// configure the maven publication
-publishing {
-	publications {
-		create("mavenJava", MavenPublication) {
-			artifactId = project.archives_base_name
-			from components.java
-		}
-	}
-
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
-	}
+if (use_paperweight) {
+    tasks.assemble {
+        dependsOn(tasks.reobfJar)
+    }
 }

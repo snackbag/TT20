@@ -1,29 +1,32 @@
 {
   "required": true,
+  "minVersion": "0.8",
   "package": "net.snackbag.tt20.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "${java_compatibility_level}",
   "plugin": "net.snackbag.tt20.mixin.TT20MixinPlugin",
   "mixins": [
-    "DedicatedServerWatchdogMixin",
+    "CommandsMixin",
     "LivingEntityMixin",
-    "PlayerEntityMixin",
-    "PortalManagerMixin",
-    "ServerPlayerEntityMixin",
+    "MinecraftServerMixin",
+    "PlayerMixin",
+    "PortalProcessorMixin",
+    "PrimedTntMixin",
+    "ServerGamePacketListenerImplMixin",
     "ServerPlayerManagerMixin",
+    "ServerWatchdogMixin",
+    "accessor.ServerPlayerAccessor",
     "fluid.LavaFluidMixin",
     "fluid.WaterFluidMixin",
+    "item.BowItemMixin",
+    "item.CrossbowItemMixin",
     "item.ItemEntityMixin",
     "item.ItemMixin",
-    "world.AbstractBlockMixin",
+    "world.BlockBehaviourMixin",
     "world.GameRulesMixin",
-    "world.ServerWorldMixin",
-    "world.WorldChunkMixin"
+    "world.LevelChunkMixin",
+    "world.ServerLevelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "client": [
-    "client.ChatHudMixin",
-    "client.IntegratedServerMixin"
-  ]
+  }
 }

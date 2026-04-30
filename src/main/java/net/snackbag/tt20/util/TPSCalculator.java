@@ -1,7 +1,5 @@
 package net.snackbag.tt20.util;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -15,11 +13,9 @@ public class TPSCalculator {
     public static final int MAX_TPS = 20;
     public static final int FULL_TICK = 50;
 
-    public TPSCalculator() {
-        ServerTickEvents.START_SERVER_TICK.register(server -> onTick());
-    }
+    public TPSCalculator() {}
 
-    private void onTick() {
+    public void onTick() {
         if (currentTick != null) {
             lastTick = currentTick;
         }
@@ -46,12 +42,12 @@ public class TPSCalculator {
         return tpsHistory.stream()
                 .mapToDouble(Double::doubleValue)
                 .average()
-                .orElse(0.1);
+                .orElse(20);
     }
 
     public double getTPS() {
-        if (lastTick == null) return -1;
-        if (getMSPT() <= 0) return 0.1;
+        if (lastTick == null) return 20;
+        if (getMSPT() <= 0) return 20;
 
         double tps = 1000 / (double) getMSPT();
         return tps > MAX_TPS ? MAX_TPS : tps;

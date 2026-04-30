@@ -1,0 +1,9 @@
+{
+  "pack": {
+    "description": "${id} resources",
+    "min_format": 15,
+    "max_format": 101,
+    "pack_format": 15,
+    "supported_formats": [15, 101]
+  }
+}

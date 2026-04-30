@@ -1,53 +1,66 @@
-package net.snackbag.tt20.config.lib.utils;
+package net.snackbag.tt20.util;
 
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
+import com.google.gson.JsonElement;
+import net.minecraft.core.Registry;
+//? if >=1.21.11 {
+/*import net.minecraft.resources.Identifier;
+*///?} else {
+import net.minecraft.resources.ResourceLocation;
+//?}
+import net.snackbag.tt20.TT20;
+import net.snackbag.tt20.config.JSONConfiguration;
 
 import java.util.*;
 
-import static net.snackbag.tt20.TT20.LOGGER;
-
 public class Mask {
+    private final JSONConfiguration file;
     private final MaskType maskType;
     private final Registry<?> registry;
     private final RegistryIndex index;
-    private final Set<Identifier> entries;
+    //? if >=1.21.11 {
+    /*private final Set<Identifier> entries;
+    *///?} else {
+    private final Set<ResourceLocation> entries;
+    //?}
 
-    public Mask(Registry<?> registry, MaskType maskType, List<String> rawEntries) {
+    public Mask(Registry<?> registry, JSONConfiguration file, String maskKey) {
+        this.file = file;
+        this.maskType = MaskType.fromString(file.getAsString("type"));
         this.registry = registry;
-        this.maskType = maskType;
         this.index = RegistryIndex.getIndex(this.registry);
         this.entries = new HashSet<>();
 
-        for (String entry : rawEntries) {
-            entries.addAll(manageEntry(entry));
+        for (JsonElement element : file.getAsArray(maskKey)) {
+            if (!(element.isJsonPrimitive() && element.getAsJsonPrimitive().isString())) {
+                TT20.LOGGER.error("(TT20) Mask element '" + element + "' isn't a string");
+                return;
+            }
+
+            entries.addAll(manageEntry(element.getAsString()));
         }
     }
 
     @SuppressWarnings("ConstantConditions")
-    public List<Identifier> manageEntry(String entry) {
+    //? if >=1.21.11 {
+    /*public List<Identifier> manageEntry(String entry) {
+    *///?} else {
+    public List<ResourceLocation> manageEntry(String entry) {
+    //?}
         String[] split = entry.split(":");
 
         if (split.length != 2) {
-            LOGGER.error("'{}' is not a valid identifier. Correct format is <namespace>:<path>", entry);
+            TT20.LOGGER.error("(TT20) '" + entry + "' is not a valid identifier. Correct format is <namespace>:<path>");
             return new ArrayList<>();
         }
 
         // if *:*
         if (split[0].equals("*") && split[1].equals("*")) {
-            return index.getIdentifiers();
+            return index.getResourceLocations();
         }
 
         // if <namespace>:<path>
         if (!split[0].equals("*") && !split[1].equals("*")) {
-            Identifier id = Identifier.of(split[0], split[1]);
-            if (id == null) {
-                LOGGER.error("'{}' is not a valid identifier. Correct format is <namespace>:<path>", entry);
-                return new ArrayList<>();
-            }
-            List<Identifier> result = new ArrayList<>(1);
-            result.add(id);
-            return result;
+            return List.of(TT20.id(split[0], split[1]));
         }
 
         // if *:<path>
@@ -55,31 +68,40 @@ public class Mask {
             return index.getPathIndex().getOrDefault(split[1], new ArrayList<>());
         }
 
+
         // if <namespace>:*
         if (!split[0].equals("*") && split[1].equals("*")) {
             return index.getNamespaceIndex().getOrDefault(split[0], new ArrayList<>());
         }
 
-        return new ArrayList<>();
+        return null;
     }
 
     public Registry<?> getRegistry() {
         return registry;
     }
 
-    public MaskType getMaskType() {
-        return maskType;
+    public JSONConfiguration getFile() {
+        return file;
     }
 
-    public boolean matches(Identifier identifier) {
+    //? if >=1.21.11 {
+    /*public boolean matches(Identifier identifier) {
+    *///?} else {
+    public boolean matches(ResourceLocation identifier) {
+    //?}
         return entries.contains(identifier);
     }
 
-    public boolean isOkay(Identifier identifier) {
-        return (maskType == MaskType.WHITELIST) == entries.contains(identifier);
-    }
-
-    public Set<Identifier> getEntries() {
-        return Collections.unmodifiableSet(entries);
+    //? if >=1.21.11 {
+    /*public boolean isOkay(Identifier identifier) {
+    *///?} else {
+    public boolean isOkay(ResourceLocation identifier) {
+    //?}
+        if (maskType == MaskType.WHITELIST) {
+            return entries.contains(identifier);
+        } else {
+            return !entries.contains(identifier);
+        }
     }
 }

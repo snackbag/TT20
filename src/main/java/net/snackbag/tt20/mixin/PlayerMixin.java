@@ -1,0 +1,42 @@
+package net.snackbag.tt20.mixin;
+
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.snackbag.tt20.TT20;
+import net.snackbag.tt20.util.TPSUtil;
+import org.objectweb.asm.Opcodes;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+
+@Mixin(Player.class)
+public abstract class PlayerMixin {
+    //? if <=1.20.5 {
+    @ModifyReturnValue(method = "getPortalWaitTime", at = @At("RETURN"))
+    private int netherPortalTimeTT20(int original) {
+        if (!TT20.config.enabled() || !TT20.config.portalAcceleration()) return original;
+        //? if >1.19.2 {
+        if (((Entity)(Object)this).level().isClientSide()) return original;
+        //?} else {
+        /*if (((Entity)(Object)this).level.isClientSide()) return original;
+        *///?}
+        if (original == 1) return original;
+
+        return TPSUtil.tt20(original, false);
+    }
+    //?}
+
+    @ModifyExpressionValue(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;sleepCounter:I", opcode = Opcodes.GETFIELD))
+    private int tickTT20(int original) {
+        Player player = (Player)(Object)this;
+
+        if (!TT20.config.enabled() || !TT20.config.sleepingAcceleration()) return original;
+        //? if >=1.20.1 {
+        if (((Entity)(Object)this).level().isClientSide()) return original;
+        //?} else {
+        /*if (((Entity)(Object)this).level.isClientSide()) return original;
+        *///?}
+        return player.isSleeping() ? original + TT20.TPS_CALCULATOR.applicableMissedTicks() : original;
+    }
+}

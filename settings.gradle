@@ -1,38 +1,42 @@
 pluginManagement {
     repositories {
-        maven {
-            name = 'Fabric'
-            url = 'https://maven.fabricmc.net/'
-        }
-
-        maven {
-            name = "KikuGie Snapshots"
-            url = "https://maven.kikugie.dev/snapshots"
-        }
-
-        mavenCentral()
         gradlePluginPortal()
+        mavenCentral()
+        maven { url "https://maven.fabricmc.net/" }
+        maven { url "https://maven.architectury.dev" }
+        maven { url "https://maven.minecraftforge.net" }
+        maven { url "https://maven.neoforged.net/releases/" }
+        maven { url "https://maven.parchmentmc.org" }
     }
 }
 
 plugins {
-    id "org.gradle.toolchains.foojay-resolver-convention" version "1.0.0"
     id "dev.kikugie.stonecutter" version "0.9"
 }
 
 stonecutter {
+    centralScript = "build.gradle"
     kotlinController = false
-    centralScript = "build.fabric.gradle"
 
-    create(getRootProject()) {
-        def remapScript = "build.fabric.gradle"
-        def noremapScript = "build.fabric_noremap.gradle"
-        def allVersions = ["1.19.2", "1.20.1", "1.20.2", "1.20.3", "1.20.5", "1.21", "1.21.2", "1.21.9", "1.21.11", "26.1.1"]
-
-        allVersions.each { ver ->
-            def script = ver.matches("^26\\..*") ? noremapScript : remapScript
-            version(ver, ver).buildscript = script
+    shared {
+        def mc = { String version, String... loaders ->
+            for (loader in loaders) {
+                vers("${loader}-${version}", version)
+            }
         }
-        vcsVersion = "1.20.1"
+
+        mc("1.18.2", "forge")
+        mc("1.19.2", "fabric", "forge")
+        mc("1.20.1", "fabric", "forge")
+        mc("1.20.3", "neoforge")
+        mc("1.20.5", "fabric", "neoforge")
+        mc("1.21.1", "fabric", "neoforge")
+        mc("1.21.2", "fabric", "neoforge")
+        mc("1.21.9", "fabric", "neoforge")
+        mc("1.21.11", "fabric", "neoforge")
+        mc("26.1.1", "fabric", "neoforge")
+
+        vcsVersion = "fabric-1.20.1"
     }
+    create(getRootProject())
 }

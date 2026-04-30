@@ -1,8 +1,8 @@
-package net.snackbag.tt20.config.rework;
+package net.snackbag.tt20.config.lib;
 
-import net.snackbag.tt20.config.rework.types.CValue;
-import net.snackbag.tt20.config.rework.utils.CCategory;
-import net.snackbag.tt20.config.rework.utils.CMap;
+import net.snackbag.tt20.config.lib.types.CValue;
+import net.snackbag.tt20.config.lib.utils.CCategory;
+import net.snackbag.tt20.config.lib.utils.CMap;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashMap;

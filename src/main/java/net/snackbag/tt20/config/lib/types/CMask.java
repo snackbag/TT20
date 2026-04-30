@@ -1,9 +1,9 @@
-package net.snackbag.tt20.config.rework.types;
+package net.snackbag.tt20.config.lib.types;
 
 import net.minecraft.registry.Registries;
-import net.snackbag.tt20.config.rework.CConfig;
-import net.snackbag.tt20.config.rework.utils.Mask;
-import net.snackbag.tt20.config.rework.utils.MaskType;
+import net.snackbag.tt20.config.lib.CConfig;
+import net.snackbag.tt20.config.lib.utils.Mask;
+import net.snackbag.tt20.config.lib.utils.MaskType;
 
 import java.util.List;
 

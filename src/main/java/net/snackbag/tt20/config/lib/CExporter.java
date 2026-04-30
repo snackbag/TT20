@@ -1,13 +1,13 @@
-package net.snackbag.tt20.config.rework;
+package net.snackbag.tt20.config.lib;
 
 import net.fabricmc.loader.api.FabricLoader;
-import net.snackbag.tt20.config.rework.types.CBoolean;
-import net.snackbag.tt20.config.rework.types.CEnum;
-import net.snackbag.tt20.config.rework.types.CMask;
-import net.snackbag.tt20.config.rework.types.CValue;
-import net.snackbag.tt20.config.rework.utils.CCategory;
-import net.snackbag.tt20.config.rework.utils.CMap;
-import net.snackbag.tt20.config.rework.utils.MaskType;
+import net.snackbag.tt20.config.lib.types.CBoolean;
+import net.snackbag.tt20.config.lib.types.CEnum;
+import net.snackbag.tt20.config.lib.types.CMask;
+import net.snackbag.tt20.config.lib.types.CValue;
+import net.snackbag.tt20.config.lib.utils.CCategory;
+import net.snackbag.tt20.config.lib.utils.CMap;
+import net.snackbag.tt20.config.lib.utils.MaskType;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,11 +15,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+
+import static net.snackbag.tt20.TT20.LOGGER;
 
 public class CExporter {
-    private static final Logger LOGGER = Logger.getLogger("TT20/Config");
-
     public enum Format {
         JSON5(".json5"),
         TOML(".toml");
@@ -51,7 +50,7 @@ public class CExporter {
                 case TOML  -> parseToml(content, defaults);
             };
         } catch (IOException e) {
-            LOGGER.warning("Failed to read config " + path.getFileName() + ": " + e.getMessage());
+            LOGGER.warn("Failed to read config " + path.getFileName() + ": " + e.getMessage());
             return defaults;
         }
     }
@@ -62,7 +61,8 @@ public class CExporter {
         try {
             Files.createDirectories(path.getParent());
         } catch (IOException e) {
-            LOGGER.warning("Failed to create config directory: " + e.getMessage());
+            LOGGER.warn("Failed to create config directory: {}", e.getMessage());
+            e.printStackTrace();
             return false;
         }
 
@@ -75,7 +75,8 @@ public class CExporter {
             Files.writeString(path, content);
             return true;
         } catch (IOException e) {
-            LOGGER.warning("Failed to write config " + path.getFileName() + ": " + e.getMessage());
+            LOGGER.warn("Failed to write config {}: {}", path.getFileName(), e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }

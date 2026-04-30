@@ -1,9 +1,11 @@
-package net.snackbag.tt20.config.rework.utils;
+package net.snackbag.tt20.config.lib.utils;
 
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 import java.util.*;
+
+import static net.snackbag.tt20.TT20.LOGGER;
 
 public class Mask {
     private final MaskType maskType;
@@ -27,7 +29,7 @@ public class Mask {
         String[] split = entry.split(":");
 
         if (split.length != 2) {
-            System.err.println("(TT20) '" + entry + "' is not a valid identifier. Correct format is <namespace>:<path>");
+            LOGGER.error("'{}' is not a valid identifier. Correct format is <namespace>:<path>", entry);
             return new ArrayList<>();
         }
 
@@ -40,7 +42,7 @@ public class Mask {
         if (!split[0].equals("*") && !split[1].equals("*")) {
             Identifier id = Identifier.of(split[0], split[1]);
             if (id == null) {
-                System.err.println("(TT20) '" + entry + "' is not a valid identifier. Correct format is <namespace>:<path>");
+                LOGGER.error("'{}' is not a valid identifier. Correct format is <namespace>:<path>", entry);
                 return new ArrayList<>();
             }
             List<Identifier> result = new ArrayList<>(1);
@@ -74,7 +76,7 @@ public class Mask {
     }
 
     public boolean isOkay(Identifier identifier) {
-        return maskType == MaskType.WHITELIST ? entries.contains(identifier) : !entries.contains(identifier);
+        return (maskType == MaskType.WHITELIST) == entries.contains(identifier);
     }
 
     public Set<Identifier> getEntries() {

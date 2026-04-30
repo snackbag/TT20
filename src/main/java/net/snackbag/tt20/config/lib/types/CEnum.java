@@ -1,4 +1,4 @@
-package net.snackbag.tt20.config.rework.types;
+package net.snackbag.tt20.config.lib.types;
 
 import java.util.Arrays;
 

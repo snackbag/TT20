@@ -50,8 +50,8 @@ public class TT20
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final TPSCalculator TPS_CALCULATOR = new TPSCalculator();
 
-	public static final String VERSION = /*$ mod_version */"0.8.0";
-	public static final int PATCH = 0;
+	public static final String VERSION = /*$ mod_version */"0.8.1";
+	public static final int PATCH = 1;
 
 	public static final MainConfig config = new MainConfig();
 	public static final BlockEntityMaskConfig blockEntityMaskConfig = new BlockEntityMaskConfig();

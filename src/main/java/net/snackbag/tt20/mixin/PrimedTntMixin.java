@@ -15,6 +15,6 @@ public class PrimedTntMixin {
             ordinal = 0
     )
     private int modifyFuseDecrement(int original) {
-        return TT20.config.tntAcceleration() ? TPSUtil.tt20(original, true) : original;
+        return TT20.config.tntAcceleration() ? original + TT20.TPS_CALCULATOR.applicableMissedTicks() : original;
     }
 }

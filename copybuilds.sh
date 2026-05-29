@@ -30,4 +30,6 @@ for mcdir in versions/*; do
   else
     echo "Skipping $mod_name-$mod_version+mc$mcver-$mcplatform (not found)"
   fi
+
+  rm -rf "$mcdir/build/libs/"
 done

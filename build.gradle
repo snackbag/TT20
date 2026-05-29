@@ -120,6 +120,9 @@ base {
 stonecutter {
     constants.match(project.platform, 'fabric', 'quilt', 'forge', 'neoforge', 'paper')
     swaps["mod_version"] = "\"${project.mod_version}\";".toString()
+
+    def patch = project.mod_version.split('\\.')[2]
+    swaps["mod_patch"] = "${patch};".toString()
 }
 
 if (use_architectury_loom) {

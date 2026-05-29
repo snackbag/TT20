@@ -189,11 +189,10 @@ dependencies {
 
 if (use_architectury_loom) {
     loom {
-        def commonVmArgs = ['-Dmixin.debug.export=true', '-Dmixin.debug.countInjections=true']
         runConfigs.configureEach {
             // to make sure it generates all "Minecraft Client (:subproject_name)" applications
             ideConfigGenerated = true
-            vmArgs commonVmArgs
+            vmArgs ['']
         }
 
         if (project.platform == 'forge') {

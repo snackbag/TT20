@@ -16,7 +16,7 @@ TT20 only fixes the symptoms of TPS lag, not the actual lag. It re-calculates th
 - [X] Sleeping delay
 - [X] Potion delay
 - [X] Fluid spread speed
-- [X] Random tickspeed acceleration
+- [X] Random tick speed acceleration
 - [X] Day/nighttime acceleration
 - [X] Bow/crossbow acceleration
 - [X] TNT acceleration (off by default)
@@ -27,6 +27,7 @@ If you believe there is features missing, please tell us by creating a new issue
 ### Supported versions
 |   TT20    | Fabric/Quilt | Forge | NeoForge |
 |:---------:|:------------:|:-----:|:--------:|
+|   26.2    |      ⏳       |   ❌   |    ⏳     |
 | 26.1(.1)  |      ✅       |   ❌   |    ✅     |
 |  1.21.11  |      ✅       |   ❌   |    ✅     |
 | 1.21.9/10 |      ✅       |   ❌   |    ✅     |
@@ -36,12 +37,12 @@ If you believe there is features missing, please tell us by creating a new issue
 | 1.20.2-4  |      ✅       |   ❌   |    ✅     |
 | 1.20(.1)  |      ✅       |   ✅   |    ❌     |
 |  1.19.2   |      ✅       |   ✅   |    ❌     |
-|  1.18.2   |      ❌       |   ⏳   |    ❌     |
+|  1.18.2   |      ❌       |   ✅   |    ❌     |
 |  1.16.5   |      ❌       |   ⏳   |    ❌     |
 |  1.12.2   |      ❌       |   ✅   |    ❌     |
 |   1.8.9   |      ❌       |   ⏳   |    ❌     |
 |  1.7.10   |      ❌       |   ⏳   |    ❌     |
 |   1.6.4   |      ❌       |   ⏳   |    ❌     |
-✅ - Supported\
-⏳ - Planned/WIP\
+✅ - Supported
+⏳ - Planned/WIP
 ❌ - Unsupported

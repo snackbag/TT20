@@ -1,3 +1,5 @@
+[Looking for TT20 legacy?](https://github.com/snackbag/TT20-Gregged/)
+
 # TT20 
 TT20 helps reduce lag by optimizing how ticks work when the server's TPS is low.
 

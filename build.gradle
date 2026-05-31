@@ -48,6 +48,7 @@ def use_architectury_loom = project.platform in ['fabric', 'quilt', 'forge', 'ne
 def use_paperweight = project.platform in ['paper']
 
 static Number convertVersion(String version) {
+    version = version.split('-')[0]
     def parts = version.split('\\.')*.toInteger()
     def major = parts[0] * 10000
     def minor = parts[1] * 100

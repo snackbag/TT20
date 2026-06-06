@@ -48,7 +48,7 @@ public class TT20
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final TPSCalculator TPS_CALCULATOR = new TPSCalculator();
 
-	public static final String VERSION = /*$ mod_version */"0.8.3";
+	public static final String VERSION = /*$ mod_version */"1.8.3";
 	public static final int PATCH = 3;
 
 	public static final TT20Config config = new TT20Config();

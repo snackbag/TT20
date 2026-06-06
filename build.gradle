@@ -1,6 +1,8 @@
 plugins {
     id 'java'
 
+    id 'maven-publish'
+
     // https://github.com/architectury/architectury-loom
     id 'dev.architectury.loom' version '1.13-SNAPSHOT' apply false
     id 'dev.architectury.loom-no-remap' version '1.14-SNAPSHOT' apply false
@@ -300,5 +302,31 @@ jar {
 if (use_paperweight) {
     tasks.assemble {
         dependsOn(tasks.reobfJar)
+    }
+}
+
+publishing {
+    publications {
+        create("maven${project.name.capitalize()}", MavenPublication) {
+            artifactId = project.mod_id
+
+            from components.java
+        }
+    }
+
+    repositories {
+        def mavenToken = System.getenv("MAVEN_TOKEN")
+
+        if (mavenToken != null && !mavenToken.isEmpty()) {
+            maven {
+                url = uri("http://lemonnik.ddns.net:16555/releases")
+                allowInsecureProtocol = true
+
+                credentials {
+                    username = "lemonnik"
+                    password = mavenToken
+                }
+            }
+        }
     }
 }

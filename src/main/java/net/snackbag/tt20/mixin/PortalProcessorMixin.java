@@ -18,7 +18,7 @@ public abstract class PortalProcessorMixin {
 
     @ModifyExpressionValue(method = "processPortalTeleportation", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/PortalProcessor;portalTime:I", opcode = Opcodes.GETFIELD))
     private int runMissedTicks(int original, @Local ServerLevel world) {
-        if (!TT20.config.enabled() || !TT20.config.portalAcceleration()) return original;
+        if (!TT20.config.enabled.get() || !TT20.config.portal.get()) return original;
         if (world.isClientSide()) return original;
 
         portalTime = portalTime + TT20.TPS_CALCULATOR.applicableMissedTicks();
@@ -43,7 +43,7 @@ public abstract class PortalProcessorMixin {
 
     @ModifyExpressionValue(method = "processPortalTeleportation", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/PortalProcessor;portalTime:I", opcode = Opcodes.GETFIELD))
     private int runMissedTicks(int original, @Local ServerLevel level) {
-        if (!TT20.config.enabled() || !TT20.config.portalAcceleration()) return original;
+        if (!TT20.config.enabled.get() || !TT20.config.portal.get()) return original;
         if (level.isClientSide()) return original;
 
         portalTime = portalTime + TT20.TPS_CALCULATOR.applicableMissedTicks();

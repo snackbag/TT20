@@ -44,6 +44,12 @@ repositories {
         name = "Terraformers"
         url = "https://maven.terraformersmc.com/"
     }
+    maven {
+        name "lemonnik's maven"
+        url "http://lemonnik.ddns.net:16555/releases"
+        allowInsecureProtocol = true
+    }
+
 }
 
 def use_architectury_loom = project.platform in ['fabric', 'quilt', 'forge', 'neoforge']
@@ -183,16 +189,21 @@ dependencies {
         paperweight.paperDevBundle("${project.minecraft_version}-R0.1-SNAPSHOT")
     }
 
+    if (mcVersion < 260100) {
+        modImplementation "dev.lemonnik:fern_config:${project.fern_version}"
+    } else {
+        implementation "dev.lemonnik:fern_config:${project.fern_version}"
+    }
+
     implementation "net.snackbag.shit:shit:${project.shit_version}"
 }
 
 if (use_architectury_loom) {
     loom {
-        def commonVmArgs = ['-Dmixin.debug.export=true', '-Dmixin.debug.countInjections=true']
         runConfigs.configureEach {
             // to make sure it generates all "Minecraft Client (:subproject_name)" applications
             ideConfigGenerated = true
-            vmArgs commonVmArgs
+            vmArgs []
         }
 
         if (project.platform == 'forge') {
@@ -302,31 +313,5 @@ jar {
 if (use_paperweight) {
     tasks.assemble {
         dependsOn(tasks.reobfJar)
-    }
-}
-
-publishing {
-    publications {
-        create("maven${project.name.capitalize()}", MavenPublication) {
-            artifactId = project.mod_id
-
-            from components.java
-        }
-    }
-
-    repositories {
-        def mavenToken = System.getenv("MAVEN_TOKEN")
-
-        if (mavenToken != null && !mavenToken.isEmpty()) {
-            maven {
-                url = uri("http://lemonnik.ddns.net:16555/releases")
-                allowInsecureProtocol = true
-
-                credentials {
-                    username = "lemonnik"
-                    password = mavenToken
-                }
-            }
-        }
     }
 }

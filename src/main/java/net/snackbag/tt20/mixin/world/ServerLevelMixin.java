@@ -16,7 +16,7 @@ public abstract class ServerLevelMixin {
     @Inject(method = "tickTime", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;setDayTime(J)V"))
     //?}
     private void applyMissedTicks(CallbackInfo ci) {
-        if (!TT20.config.enabled() || !TT20.config.timeAcceleration()) return;
+        if (!TT20.config.enabled.get() || !TT20.config.time.get()) return;
 
         ServerLevel self = (ServerLevel) (Object) this;
 

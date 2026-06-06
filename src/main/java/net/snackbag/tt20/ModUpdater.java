@@ -24,8 +24,8 @@ public class ModUpdater {
     }
 
     public static void check() {
-        if (!TT20.config.automaticUpdater()) {
-            TT20.LOGGER.info("(TT20) Not checking for updates, because the updater is disabled. Current patch: " + TT20.PATCH);
+        if (!TT20.config.enabled.get() || !TT20.config.updateChecker.get()) {
+            TT20.LOGGER.info("(TT20) Not checking for updates, because the updater or mod is disabled. Current patch: " + TT20.PATCH);
             return;
         }
 

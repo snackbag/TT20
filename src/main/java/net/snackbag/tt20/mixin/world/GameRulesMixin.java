@@ -22,7 +22,7 @@ public class GameRulesMixin {
     @ModifyReturnValue(method = "getInt", at = @At("RETURN"))
     private int randomTickSpeedAcceleration(int original, @Local(argsOnly = true) GameRules.Key<GameRules.IntegerValue> key) {
     //?}
-        if (!TT20.config.enabled() || !TT20.config.randomTickSpeedAcceleration()) return original;
+        if (!TT20.config.enabled.get() || !TT20.config.randomTickSpeed.get()) return original;
 
         //? if (>=1.21.11) {
         /*if (gameRule != GameRules.RANDOM_TICK_SPEED) return original;

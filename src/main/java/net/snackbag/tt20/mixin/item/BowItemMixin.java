@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class BowItemMixin {
     @ModifyReturnValue(method = "getPowerForTime", at = @At("RETURN"))
     private static float bowProgress(float original) {
-        if (!TT20.config.enabled() || !TT20.config.bowAcceleration()) return original;
+        if (!TT20.config.enabled.get() || !TT20.config.bow.get()) return original;
 
         return original * TPSCalculator.MAX_TPS / (float) TT20.TPS_CALCULATOR.getMostAccurateTPS();
     }

@@ -25,8 +25,6 @@ import net.minecraft.resources.ResourceLocation;
 //? 1.18.2
 //import net.minecraft.network.chat.TextComponent;
 
-import net.snackbag.tt20.config.BlockEntityMaskConfig;
-import net.snackbag.tt20.config.MainConfig;
 import net.snackbag.tt20.util.TPSCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,8 +51,7 @@ public class TT20
 	public static final String VERSION = /*$ mod_version */"0.8.3";
 	public static final int PATCH = 3;
 
-	public static final MainConfig config = new MainConfig();
-	public static final BlockEntityMaskConfig blockEntityMaskConfig = new BlockEntityMaskConfig();
+	public static final TT20Config config = new TT20Config();
 
 	//? if fabric
 	@Override public void onInitialize()
@@ -70,6 +67,8 @@ public class TT20
 
 	{
 		LOGGER.info("Starting TT20...");
+
+		config.reload();
 
 		CompletableFuture.runAsync(() -> {
 			try {

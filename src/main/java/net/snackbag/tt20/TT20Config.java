@@ -1,13 +1,12 @@
-package net.snackbag.tt20.config;
+package net.snackbag.tt20;
 
-import net.snackbag.tt20.TT20;
-import net.snackbag.tt20.config.lib.CExporter;
-import net.snackbag.tt20.config.lib.utils.CCategory;
-import net.snackbag.tt20.config.lib.CConfig;
-import net.snackbag.tt20.config.lib.types.CBoolean;
-import net.snackbag.tt20.config.lib.types.CEnum;
-import net.snackbag.tt20.config.lib.types.CMask;
-import net.snackbag.tt20.config.lib.utils.MaskType;
+import dev.lemonnik.fern_config.CConfig;
+import dev.lemonnik.fern_config.CExporter;
+import dev.lemonnik.fern_config.types.CBoolean;
+import dev.lemonnik.fern_config.types.CEnum;
+import dev.lemonnik.fern_config.types.CMask;
+import dev.lemonnik.fern_config.utils.CCategory;
+import dev.lemonnik.fern_config.utils.MaskType;
 import org.jetbrains.annotations.NotNull;
 
 public class TT20Config extends CConfig {
@@ -33,16 +32,18 @@ public class TT20Config extends CConfig {
     public final CBoolean portal              = register(MAIN, new CBoolean("portal",            "time in portal acceleration",                                                                      true));
     public final CBoolean sleeping            = register(MAIN, new CBoolean("sleeping",          "time laying in bed acceleration",                                                                  true));
     public final CBoolean time                = register(MAIN, new CBoolean("time",              "daytime acceleration",                                                                             true));
+    public final CBoolean bow                 = register(MAIN, new CBoolean("bow",               "bow charge acceleration",                                                                          true));
+    public final CBoolean crossbow            = register(MAIN, new CBoolean("crossbow",          "crossbow charge acceleration",                                                                     true));
     public final CBoolean randomTickSpeed     = register(MAIN, new CBoolean("randomTickSpeed",   "random tick speed acceleration (ex. crop growth)",                                                 true));
     public final CBoolean tnt                 = register(MAIN, new CBoolean("tnt",               "tnt timer acceleration",                                                                           false));
     public final CBoolean lagback             = register(MAIN, new CBoolean("lagback",           "vanilla player lagback",                                                                           true));
-    public final CBoolean serverWatchdog      = register(MAIN, new CBoolean("serverWatchdog",    "server watchdog (vanilla's stop server after 1 minute of freeze behaviour)",                       true));
+    public final CBoolean watchdog            = register(MAIN, new CBoolean("watchdog",          "server watchdog (vanilla's stop server after 1 minute of freeze behaviour)",                       true));
 
     public final CBoolean singlePlayerWarning = register(MAIN, new CBoolean("singlePlayerWarning","should show warn if loading in a singleplayer?",                                                  true));
-    public final CBoolean automaticUpdater    = register(MAIN, new CBoolean("automaticUpdater",   "automatic update checker",                                                                        true));
+    public final CBoolean updateChecker       = register(MAIN, new CBoolean("updateChecker",      "automatic update checker",                                                                        true));
 
     private static final CCategory BLOCK_ENTITY_MASK = CCategory.of("block_entity_mask", "Block Entity Mask configuration", "Only change this if you know what you're doing!");
 
     public final CEnum<MaskType> blockEntityMaskType = register(BLOCK_ENTITY_MASK, new CEnum<>("type", "mask type", MaskType.class, MaskType.WHITELIST));
-    public final CMask           blockEntityMask     = register(BLOCK_ENTITY_MASK, new CMask("blocks", "block entity mask", new String[] {"*:*"}, "type", this));
+    public final CMask blockEntityMask               = register(BLOCK_ENTITY_MASK, new CMask("blocks", "block entity mask", "type", this, "*:*"));
 }

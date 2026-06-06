@@ -15,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.concurrent.CompletableFuture;
+
 import static net.snackbag.tt20.TT20.literal;
 import static net.snackbag.tt20.TT20.sendMessage;
 
@@ -27,14 +29,23 @@ public abstract class ServerPlayerManagerMixin {
     *///?} else {
     private void sendPlayerUpdateMessageIfCorrectPermissions(Connection netManager, ServerPlayer player, CallbackInfo ci) {
     //?}
-        if (!TT20.config.automaticUpdater() || !ModUpdater.hasUpdate) return;
         //? if >=1.21.9 {
         /*if (((ServerPlayerAccessor) player).getServer().getPlayerList().isOp(player.nameAndId())) {
         *///?} else {
         if (player.getServer().getPlayerList().isOp(player.getGameProfile())) {
         //?}
-            sendMessage(player, literal(ModUpdater.updateMessage));
-            sendMessage(player, literal("§oOnly operators can see this message"));
+            CompletableFuture.runAsync(() -> {
+                try {
+                    ModUpdater.check();
+                    if (!ModUpdater.hasUpdate) return;
+
+                    sendMessage(player, literal(ModUpdater.updateMessage));
+                    sendMessage(player, literal("§oOnly operators can see this message"));
+                } catch (RuntimeException e) {
+                    TT20.LOGGER.error("Failed to check for updates.");
+                    e.printStackTrace();
+                }
+            });
         }
     }
 }

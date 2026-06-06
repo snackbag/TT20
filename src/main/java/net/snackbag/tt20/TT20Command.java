@@ -30,27 +30,27 @@ public class TT20Command {
     }
 
     private static int executeStatus(CommandContext<CommandSourceStack> context) {
-        sendMessage(context, literal("§7TT20 enabled: " + (TT20.config.enabled() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Block entity acceleration: " + (TT20.config.blockEntityAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Block breaking acceleration: " + (TT20.config.blockBreakingAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Potion effect acceleration: " + (TT20.config.potionEffectAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Fluid acceleration: " + (TT20.config.fluidAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Pickup acceleration: " + (TT20.config.pickupAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Eating acceleration: " + (TT20.config.eatingAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Portal acceleration: " + (TT20.config.portalAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Sleeping acceleration: " + (TT20.config.sleepingAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Time acceleration: " + (TT20.config.timeAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Bow pull acceleration: " + (TT20.config.bowAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Crossbow pull acceleration: " + (TT20.config.crossbowAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7TNT acceleration: " + (TT20.config.tntAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Vanilla Lagback: " + (TT20.config.vanillaLagback() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Random tickspeed acceleration: " + (TT20.config.randomTickSpeedAcceleration() ? "§aON" : "§cOFF")));
-        sendMessage(context, literal("§7Server watchdog: " + (TT20.config.serverWatchdog() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7TT20 enabled: " + (TT20.config.enabled.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Block entity acceleration: " + (TT20.config.blockEntity.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Block breaking acceleration: " + (TT20.config.blockBreaking.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Potion effect acceleration: " + (TT20.config.potionEffect.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Fluid acceleration: " + (TT20.config.fluid.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Pickup acceleration: " + (TT20.config.pickup.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Eating acceleration: " + (TT20.config.eating.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Portal acceleration: " + (TT20.config.portal.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Sleeping acceleration: " + (TT20.config.sleeping.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Time acceleration: " + (TT20.config.time.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Bow pull acceleration: " + (TT20.config.bow.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Crossbow pull acceleration: " + (TT20.config.crossbow.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7TNT acceleration: " + (TT20.config.tnt.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Vanilla Lagback: " + (TT20.config.lagback.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Random tickspeed acceleration: " + (TT20.config.randomTickSpeed.get() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Server watchdog: " + (TT20.config.watchdog.get() ? "§aON" : "§cOFF")));
         executeTps(context, false);
         sendMessage(context, literal("\n§8Version: §7" + TT20.VERSION));
         sendMessage(context, literal("§8MSPT: §7" + TT20.TPS_CALCULATOR.getMSPT()));
         sendMessage(context, literal("§8Missed ticks: §7" + TPSUtil.formatMissedTicks(TT20.TPS_CALCULATOR.getAllMissedTicks())));
-        sendMessage(context, literal("§8Automatic updater: §7" + (TT20.config.automaticUpdater() ? "§aenabled" : "§cdisabled")));
+        sendMessage(context, literal("§8Updater checker: §7" + (TT20.config.updateChecker.get() ? "§aenabled" : "§cdisabled")));
 
         return 1;
     }
@@ -58,8 +58,6 @@ public class TT20Command {
     private static int executeReload(CommandContext<CommandSourceStack> context) {
         TT20.config.reload();
         sendMessage(context, literal("Reloaded config"));
-        TT20.blockEntityMaskConfig.reload();
-        sendMessage(context, literal("Reloaded block entity mask config"));
 
         return 1;
     }
@@ -81,10 +79,10 @@ public class TT20Command {
     }
 
     private static int executeToggle(CommandContext<CommandSourceStack> context) {
-        TT20.config.enabled(!TT20.config.enabled());
+        TT20.config.enabled.set(!TT20.config.enabled.get());
         TT20.config.save();
 
-        String enabledText = TT20.config.enabled() ? "enabled" : "disabled";
+        String enabledText = TT20.config.enabled.get() ? "enabled" : "disabled";
         sendMessage(context, literal("TT20 is now " + enabledText));
 
         return 1;
@@ -92,8 +90,8 @@ public class TT20Command {
 
 
     private static int executeMain(CommandContext<CommandSourceStack> context) {
-        sendMessage(context, literal("Running TT20 version " + TT20.VERSION));
-        sendMessage(context, literal("Enabled: " + TT20.config.enabled()));
+        sendMessage(context, literal("Running TT20 version " + TT20.VERSION + " (PATCH: " + TT20.PATCH + ")"));
+        sendMessage(context, literal("Enabled: " + TT20.config.enabled.get()));
 
         return 1;
     }

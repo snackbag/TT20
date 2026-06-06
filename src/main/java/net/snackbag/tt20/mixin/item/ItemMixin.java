@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class ItemMixin {
     @ModifyReturnValue(method = "getUseDuration", at = @At(value = "RETURN", ordinal = 0))
     private int onGetMaxUseTime(int original) {
-        if (!TT20.config.enabled() || !TT20.config.eatingAcceleration() || original == 0) return original;
+        if (!TT20.config.enabled.get() || !TT20.config.eating.get() || original == 0) return original;
         return TPSUtil.tt20(original, true);
     }
 }

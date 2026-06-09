@@ -1,5 +1,11 @@
 # TT20 Changelog
 
+0.8.3a
+======
+**1.19.2 only**
+* Hotfix
+  - Command register mixin signature fix
+
 0.8.3
 =====
 * Additions

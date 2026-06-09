@@ -1,7 +1,7 @@
 package net.snackbag.tt20.mixin;
 
 import com.mojang.brigadier.CommandDispatcher;
-//? >1.19.2
+//? >=1.19.2
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -20,7 +20,7 @@ public class CommandsMixin {
     private CommandDispatcher<CommandSourceStack> dispatcher;
 
     @Inject(method = "<init>", at = @At("RETURN"))
-    //? if >1.19.2 {
+    //? if >=1.19.2 {
     private void tt20$commandRegister(Commands.CommandSelection selection, CommandBuildContext context, CallbackInfo ci) {
     //?} else {
     /*private void tt20$commandRegister(Commands.CommandSelection selection, CallbackInfo ci) {

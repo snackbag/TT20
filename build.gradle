@@ -319,8 +319,7 @@ publishing {
 
         if (mavenToken != null && !mavenToken.isEmpty()) {
             maven {
-                url = uri("http://lemonnik.ddns.net:16555/releases")
-                allowInsecureProtocol = true
+                url = uri("https://maven.lemonnik.dev/releases/")
 
                 credentials {
                     username = "lemonnik"

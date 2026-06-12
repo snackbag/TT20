@@ -46,8 +46,7 @@ repositories {
     }
     maven {
         name "lemonnik's maven"
-        url "http://lemonnik.ddns.net:16555/releases"
-        allowInsecureProtocol = true
+        url "https://maven.lemonnik.dev/releases/"
     }
 
 }

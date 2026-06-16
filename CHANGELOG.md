@@ -1,5 +1,11 @@
 # TT20 Changelog
 
+0.8.3b
+======
+**26.1.1 only**
+* Metadata
+  - Mark as 26.2.X compatible
+
 0.8.3a
 ======
 **1.19.2 only**

@@ -11,12 +11,12 @@ public class ServerWatchdogMixin {
     @ModifyExpressionValue(
             method = "run",
             //? if >=1.21.11 {
-            /*at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Util;getNanos()J")
-            *///?} else if >=1.20.3 {
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Util;getNanos()J")
+            //?} else if >=1.20.3 {
             /*at = @At(value = "INVOKE", target = "Lnet/minecraft/Util;getNanos()J")
             *///?} else {
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/Util;getMillis()J")
-            //?}
+            /*at = @At(value = "INVOKE", target = "Lnet/minecraft/Util;getMillis()J")
+            *///?}
     )
     private long disableWatchdog(long original) {
         if (!TT20.config.enabled.get() || TT20.config.watchdog.get()) return original;

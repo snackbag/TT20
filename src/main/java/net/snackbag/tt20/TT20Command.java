@@ -20,12 +20,12 @@ public class TT20Command {
                         .then(Commands.literal("tps").executes(TT20Command::executeTps))
                         .then(Commands.literal("status").executes(TT20Command::executeStatus))
                         //? if (>=1.21.11) {
-                        /*.then(Commands.literal("toggle").requires(Commands.hasPermission(Commands.LEVEL_ADMINS)).executes(TT20Command::executeToggle))
+                        .then(Commands.literal("toggle").requires(Commands.hasPermission(Commands.LEVEL_ADMINS)).executes(TT20Command::executeToggle))
                         .then(Commands.literal("reload").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS)).executes(TT20Command::executeReload))
-                        *///?} else {
-                        .then(Commands.literal("toggle").requires(source -> source.hasPermission(3)).executes(TT20Command::executeToggle))
+                        //?} else {
+                        /*.then(Commands.literal("toggle").requires(source -> source.hasPermission(3)).executes(TT20Command::executeToggle))
                         .then(Commands.literal("reload").requires(source -> source.hasPermission(2)).executes(TT20Command::executeReload))
-                        //?}
+                        *///?}
         );
     }
 

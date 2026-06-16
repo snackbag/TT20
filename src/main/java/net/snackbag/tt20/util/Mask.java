@@ -3,10 +3,10 @@ package net.snackbag.tt20.util;
 import com.google.gson.JsonElement;
 import net.minecraft.core.Registry;
 //? if >=1.21.11 {
-/*import net.minecraft.resources.Identifier;
-*///?} else {
-import net.minecraft.resources.ResourceLocation;
-//?}
+import net.minecraft.resources.Identifier;
+//?} else {
+/*import net.minecraft.resources.ResourceLocation;
+*///?}
 import net.snackbag.tt20.TT20;
 import net.snackbag.tt20.config.JSONConfiguration;
 
@@ -18,10 +18,10 @@ public class Mask {
     private final Registry<?> registry;
     private final RegistryIndex index;
     //? if >=1.21.11 {
-    /*private final Set<Identifier> entries;
-    *///?} else {
-    private final Set<ResourceLocation> entries;
-    //?}
+    private final Set<Identifier> entries;
+    //?} else {
+    /*private final Set<ResourceLocation> entries;
+    *///?}
 
     public Mask(Registry<?> registry, JSONConfiguration file, String maskKey) {
         this.file = file;
@@ -42,10 +42,10 @@ public class Mask {
 
     @SuppressWarnings("ConstantConditions")
     //? if >=1.21.11 {
-    /*public List<Identifier> manageEntry(String entry) {
-    *///?} else {
-    public List<ResourceLocation> manageEntry(String entry) {
-    //?}
+    public List<Identifier> manageEntry(String entry) {
+    //?} else {
+    /*public List<ResourceLocation> manageEntry(String entry) {
+    *///?}
         String[] split = entry.split(":");
 
         if (split.length != 2) {
@@ -86,18 +86,18 @@ public class Mask {
     }
 
     //? if >=1.21.11 {
-    /*public boolean matches(Identifier identifier) {
-    *///?} else {
-    public boolean matches(ResourceLocation identifier) {
-    //?}
+    public boolean matches(Identifier identifier) {
+    //?} else {
+    /*public boolean matches(ResourceLocation identifier) {
+    *///?}
         return entries.contains(identifier);
     }
 
     //? if >=1.21.11 {
-    /*public boolean isOkay(Identifier identifier) {
-    *///?} else {
-    public boolean isOkay(ResourceLocation identifier) {
-    //?}
+    public boolean isOkay(Identifier identifier) {
+    //?} else {
+    /*public boolean isOkay(ResourceLocation identifier) {
+    *///?}
         if (maskType == MaskType.WHITELIST) {
             return entries.contains(identifier);
         } else {

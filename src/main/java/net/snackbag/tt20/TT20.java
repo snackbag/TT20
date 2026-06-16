@@ -17,10 +17,10 @@ import net.neoforged.fml.common.Mod;
 *///?}
 
 //? if >=1.21.11 {
-/*import net.minecraft.resources.Identifier;
-*///?} else {
-import net.minecraft.resources.ResourceLocation;
-//?}
+import net.minecraft.resources.Identifier;
+//?} else {
+/*import net.minecraft.resources.ResourceLocation;
+*///?}
 
 //? 1.18.2
 //import net.minecraft.network.chat.TextComponent;
@@ -81,15 +81,15 @@ public class TT20
 	}
 
 	//? >=1.21.11 {
-	/*public static Identifier id(String namespace, String path) {
-	*///?} else {
-	public static ResourceLocation id(String namespace, String path) {
-	//?}
+	public static Identifier id(String namespace, String path) {
+	//?} else {
+	/*public static ResourceLocation id(String namespace, String path) {
+	*///?}
 		//? if >=1.21.11 {
-		/*return Identifier.tryBuild(namespace, path);
-		 *///?} else if >1.18.2 {
-		return ResourceLocation.tryBuild(namespace, path);
-		 //?} else {
+		return Identifier.tryBuild(namespace, path);
+		 //?} else if >1.18.2 {
+		/*return ResourceLocation.tryBuild(namespace, path);
+		 *///?} else {
 		/*return new ResourceLocation(namespace, path);
 		*///?}
 	}

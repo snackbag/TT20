@@ -2,7 +2,7 @@ package net.snackbag.tt20.mixin;
 
 
 //? if >1.20.1
-//import net.minecraft.server.network.CommonListenerCookie;
+import net.minecraft.server.network.CommonListenerCookie;
 
 import net.minecraft.network.Connection;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,15 +25,15 @@ public abstract class ServerPlayerManagerMixin {
 
     @Inject(method = "placeNewPlayer", at = @At("TAIL"))
     //? if >1.20.1 {
-    /*private void sendPlayerUpdateMessageIfCorrectPermissions(Connection connection, ServerPlayer player, CommonListenerCookie cookie, CallbackInfo ci) {
-    *///?} else {
-    private void sendPlayerUpdateMessageIfCorrectPermissions(Connection netManager, ServerPlayer player, CallbackInfo ci) {
-    //?}
+    private void sendPlayerUpdateMessageIfCorrectPermissions(Connection connection, ServerPlayer player, CommonListenerCookie cookie, CallbackInfo ci) {
+    //?} else {
+    /*private void sendPlayerUpdateMessageIfCorrectPermissions(Connection netManager, ServerPlayer player, CallbackInfo ci) {
+    *///?}
         //? if >=1.21.9 {
-        /*if (((ServerPlayerAccessor) player).getServer().getPlayerList().isOp(player.nameAndId())) {
-        *///?} else {
-        if (player.getServer().getPlayerList().isOp(player.getGameProfile())) {
-        //?}
+        if (((ServerPlayerAccessor) player).getServer().getPlayerList().isOp(player.nameAndId())) {
+        //?} else {
+        /*if (player.getServer().getPlayerList().isOp(player.getGameProfile())) {
+        *///?}
             CompletableFuture.runAsync(() -> {
                 try {
                     ModUpdater.check();

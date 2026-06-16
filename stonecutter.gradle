@@ -1,4 +1,4 @@
 plugins {
     id "dev.kikugie.stonecutter"
 }
-stonecutter.active "fabric-1.20.1"
+stonecutter.active "fabric-26.1.1"

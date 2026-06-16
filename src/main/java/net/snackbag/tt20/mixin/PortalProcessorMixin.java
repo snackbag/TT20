@@ -1,7 +1,7 @@
 package net.snackbag.tt20.mixin;
 
 //? if >=26.1 {
-/*import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PortalProcessor;
@@ -25,7 +25,7 @@ public abstract class PortalProcessorMixin {
         return portalTime;
     }
 }
-*///?} else if >=1.21 {
+//?} else if >=1.21 {
 /*import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.server.level.ServerLevel;
@@ -52,7 +52,7 @@ public abstract class PortalProcessorMixin {
 }
 *///?} else {
 
-import net.snackbag.tt20.ModUpdater;
+/*import net.snackbag.tt20.ModUpdater;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -65,4 +65,4 @@ public class PortalProcessorMixin {
         throw new RuntimeException("Tried to load PortalProcessorMixin on <1.21");
     }
 }
-//?}
+*///?}

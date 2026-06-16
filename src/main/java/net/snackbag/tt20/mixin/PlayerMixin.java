@@ -13,19 +13,19 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(Player.class)
 public abstract class PlayerMixin {
     //? if <=1.20.5 {
-    @ModifyReturnValue(method = "getPortalWaitTime", at = @At("RETURN"))
+    /*@ModifyReturnValue(method = "getPortalWaitTime", at = @At("RETURN"))
     private int netherPortalTimeTT20(int original) {
         if (!TT20.config.enabled() || !TT20.config.portalAcceleration()) return original;
         //? if >1.19.2 {
         if (((Entity)(Object)this).level().isClientSide()) return original;
         //?} else {
-        /*if (((Entity)(Object)this).level.isClientSide()) return original;
-        *///?}
+        /^if (((Entity)(Object)this).level.isClientSide()) return original;
+        ^///?}
         if (original == 1) return original;
 
         return TPSUtil.tt20(original, false);
     }
-    //?}
+    *///?}
 
     @ModifyExpressionValue(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;sleepCounter:I", opcode = Opcodes.GETFIELD))
     private int tickTT20(int original) {

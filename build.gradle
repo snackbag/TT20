@@ -314,3 +314,28 @@ if (use_paperweight) {
         dependsOn(tasks.reobfJar)
     }
 }
+
+publishing {
+    publications {
+        create("maven${project.name.capitalize()}", MavenPublication) {
+            artifactId = project.mod_id
+
+            from components.java
+        }
+    }
+
+    repositories {
+        def mavenToken = System.getenv("MAVEN_TOKEN")
+
+        if (mavenToken != null && !mavenToken.isEmpty()) {
+            maven {
+                url = uri("https://maven.lemonnik.dev/releases/")
+
+                credentials {
+                    username = "lemonnik"
+                    password = mavenToken
+                }
+            }
+        }
+    }
+}

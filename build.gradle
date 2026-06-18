@@ -30,10 +30,10 @@ repositories {
     maven {
         url 'https://maven.neoforged.net/releases'
     }
-    maven {
+    /*maven {
         name = 'papermc'
         url = 'https://repo.papermc.io/repository/maven-public/'
-    }
+    }*/
     maven {
         url "https://libraries.minecraft.net"
     }

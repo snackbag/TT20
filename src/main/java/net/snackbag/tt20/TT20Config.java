@@ -7,8 +7,16 @@ import dev.lemonnik.fern_config.types.CEnum;
 import dev.lemonnik.fern_config.types.CMask;
 import dev.lemonnik.fern_config.utils.CCategory;
 import dev.lemonnik.fern_config.utils.MaskType;
+
+//? if >1.19.2 {
+import net.minecraft.core.registries.BuiltInRegistries;
+//?} else {
+/*import net.minecraft.core.Registry;
+*///?}
+
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("deprecation")
 public class TT20Config extends CConfig {
     @Override
     public @NotNull String getFileName() {
@@ -42,13 +50,17 @@ public class TT20Config extends CConfig {
     public final CBoolean updateChecker       = register(MAIN, new CBoolean("updateChecker",      "automatic update checker",                                                                        true));
 
     public final CMask blockEntityMask        = register(MAIN, new CMask("blocks", "Block Entity Mask configuration, only change this if you know what you're doing!",
+            //? if >1.19.2 {
+            BuiltInRegistries.BLOCK,
+            //?} else {
+            /*Registry.BLOCK,
+            *///?}
             new CEnum<>(
                     "type",
                     "mask type",
                     MaskType.class,
                     MaskType.WHITELIST
             ),
-            this,
             "*:*")
     );
 }

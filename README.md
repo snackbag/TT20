@@ -29,7 +29,7 @@ If you believe there is features missing, please tell us by creating a new issue
 ### Supported versions
 |    TT20    | Fabric/Quilt | Forge | NeoForge |
 |:----------:|:------------:|:-----:|:--------:|
-|    26.2    |      ⏳       |   ❌   |    ⏳     |
+|    26.2    |      ✅       |   ❌   |    ✅     |
 | 26.1(.1/2) |      ✅       |   ❌   |    ✅     |
 |  1.21.11   |      ✅       |   ❌   |    ✅     |
 | 1.21.9/10  |      ✅       |   ❌   |    ✅     |

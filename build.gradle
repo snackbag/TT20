@@ -44,6 +44,11 @@ repositories {
         name = "Terraformers"
         url = "https://maven.terraformersmc.com/"
     }
+    maven {
+        name "lemonnik's maven"
+        url "https://maven.lemonnik.dev/releases/"
+    }
+
 }
 
 def use_architectury_loom = project.platform in ['fabric', 'quilt', 'forge', 'neoforge']
@@ -183,6 +188,12 @@ dependencies {
         paperweight.paperDevBundle("${project.minecraft_version}-R0.1-SNAPSHOT")
     }
 
+    if (mcVersion < 260100) {
+        modImplementation "dev.lemonnik:fern_config:${project.fern_version}"
+    } else {
+        implementation "dev.lemonnik:fern_config:${project.fern_version}"
+    }
+
     implementation "net.snackbag.shit:shit:${project.shit_version}"
 }
 
@@ -191,7 +202,7 @@ if (use_architectury_loom) {
         runConfigs.configureEach {
             // to make sure it generates all "Minecraft Client (:subproject_name)" applications
             ideConfigGenerated = true
-            vmArgs ['']
+            vmArgs []
         }
 
         if (project.platform == 'forge') {

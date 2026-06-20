@@ -19,6 +19,7 @@ public class ServerWatchdogMixin {
             *///?}
     )
     private long disableWatchdog(long original) {
-        return TT20.config.serverWatchdog() ? original : 0;
+        if (!TT20.config.enabled.get() || TT20.config.watchdog.get()) return original;
+        return 0;
     }
 }

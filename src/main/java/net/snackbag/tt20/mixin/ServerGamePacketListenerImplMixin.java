@@ -20,6 +20,7 @@ public class ServerGamePacketListenerImplMixin {
             cancellable = true
     )
     private void onMovedTooQuickly(ServerboundMovePlayerPacket packet, CallbackInfo ci) {
-        if (!TT20.config.vanillaLagback()) ci.cancel();
+        if (!TT20.config.enabled.get() || TT20.config.lagback.get()) return;
+        ci.cancel();
     }
 }

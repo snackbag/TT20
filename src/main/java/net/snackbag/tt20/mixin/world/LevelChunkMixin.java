@@ -30,17 +30,16 @@ public abstract class LevelChunkMixin {
             Operation<Void> original
     ) {
         original.call(instance, world, blockPos, blockState, blockEntity);
-        if (!TT20.config.enabled()) return;
-        if (!TT20.config.blockEntityAcceleration()) return;
+        if (!TT20.config.enabled.get() || !TT20.config.blockEntity.get()) return;
         if (world.isClientSide()) return;
         //? if >=1.21.2 {
         Registry<Block> registry = world.registryAccess().lookupOrThrow(Registries.BLOCK);
-        if (!TT20.blockEntityMaskConfig.getMask().isOkay(registry.getKey(blockState.getBlock()))) return;
+        if (!TT20.config.blockEntityMask.get().isOkay(registry.getKey(blockState.getBlock()))) return;
         //?} else if >=1.20.1 {
         /*Registry<Block> registry = world.registryAccess().registryOrThrow(Registries.BLOCK);
-        if (!TT20.blockEntityMaskConfig.getMask().isOkay(registry.getKey(blockState.getBlock()))) return;
+        if (!TT20.config.blockEntityMask.get().isOkay(registry.getKey(blockState.getBlock()))) return;
         *///?} else {
-        /*if (!TT20.blockEntityMaskConfig.getMask().isOkay(Registry.BLOCK.getKey(blockState.getBlock()))) return;
+        /*if (!TT20.config.blockEntityMask.get().isOkay(Registry.BLOCK.getKey(blockState.getBlock()))) return;
         *///?}
 
         for (int i = 0; i < TT20.TPS_CALCULATOR.applicableMissedTicks(); i++) {

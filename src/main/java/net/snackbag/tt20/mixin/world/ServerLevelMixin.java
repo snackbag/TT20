@@ -1,15 +1,19 @@
 package net.snackbag.tt20.mixin.world;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.storage.ServerLevelData;
 import net.snackbag.tt20.TT20;
-import net.snackbag.tt20.mixin.accessor.ServerLevelAccessor;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelMixin {
+    @Accessor("serverLevelData")
+    public abstract ServerLevelData tt20$getServerLevelData();
+
     //? if >=26.1 {
     @Inject(method = "tickTime", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/ServerLevelData;setGameTime(J)V"))
     //?} else {
@@ -21,7 +25,7 @@ public abstract class ServerLevelMixin {
         ServerLevel self = (ServerLevel) (Object) this;
 
         //? if >=26.1 {
-        ((ServerLevelAccessor) self).getServerLevelData().setGameTime(self.getLevelData().getGameTime() + TT20.TPS_CALCULATOR.applicableMissedTicks());
+        tt20$getServerLevelData().setGameTime(self.getLevelData().getGameTime() + TT20.TPS_CALCULATOR.applicableMissedTicks());
         //?} else {
         /*self.setDayTime(self.getLevelData().getDayTime() + TT20.TPS_CALCULATOR.applicableMissedTicks());
         *///?}

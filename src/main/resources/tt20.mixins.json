@@ -15,7 +15,6 @@
     "ServerGamePacketListenerImplMixin",
     "ServerPlayerManagerMixin",
     "ServerWatchdogMixin",
-    "accessor.ServerLevelAccessor",
     "accessor.ServerPlayerAccessor",
     "fluid.LavaFluidMixin",
     "fluid.WaterFluidMixin",

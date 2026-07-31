@@ -1,5 +1,16 @@
 # TT20 Changelog
 
+0.8.4
+=====
+* Additions
+  - Mob grow & breed time acceleration
+
+* Changes
+  - [DEV] Build file cleanup
+  - [DEV] Auto mod publishing
+
+* Bug fixes
+
 0.8.3b
 ======
 **26.1.1 only**

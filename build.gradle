@@ -1,3 +1,5 @@
+import java.util.regex.Pattern
+
 plugins {
     id 'java'
 
@@ -6,6 +8,8 @@ plugins {
     // https://github.com/architectury/architectury-loom
     id 'dev.architectury.loom' version '1.17-SNAPSHOT' apply false
     id 'dev.architectury.loom-no-remap' version '1.17-SNAPSHOT' apply false
+
+    id "me.modmuss50.mod-publish-plugin" version "2.2.0"
 }
 
 repositories {
@@ -61,7 +65,6 @@ def parchmentVersions = [
         "1.18.2":  "1.18.2:2022.11.06",
         "1.19.2":  "1.19.2:2022.11.27",
         "1.20.1":  "1.20.1:2023.09.03",
-        "1.20.2":  "1.20.2:2023.12.10",
         "1.20.3":  "1.20.3:2023.12.31",
         "1.20.5":  "1.20.6:2024.06.16",
         "1.21.1":  "1.21.1:2024.11.17",
@@ -70,11 +73,36 @@ def parchmentVersions = [
         "1.21.11": "1.21.11:2025.12.20"
 ]
 
+def supportedVersions = [
+        "1.18.2":  [ "1.18.2" ],
+        "1.19.2":  [ "1.19.2" ],
+        "1.20.1":  [ "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4" ],
+        "1.20.3":  [ "1.20.3", "1.20.4" ],
+        "1.20.5":  [ "1.20.5", "1.20.6" ],
+        "1.21.1":  [ "1.21", "1.21.1" ],
+        "1.21.9":  [ "1.21.9", "1.21.10" ],
+        "1.21.11": [ "1.21.11" ],
+        "26.1.1":  [ "26.1", "26.1.1", "26.1.2", "26.2" ],
+]
+
+def getChangelog = {
+    def changelog = rootProject.file("CHANGELOG.md").text
+
+    def pattern = ~/(?ms)^${Pattern.quote(project.mod_version)}\R=+\R(.*?)(?=^\S[^\r\n]*\R=+|\z)/
+    def matcher = changelog =~ pattern
+
+    if (!matcher.find()) {
+        throw new GradleException("Couldn't find changelog for version ${project.mod_version}")
+    }
+
+    matcher.group(1).trim()
+}
+
 group = project.maven_group
 project.version = "${project.mod_version}+mc${project.minecraft_version}-${project.platform}"
 
 base {
-    archivesName.set("${project.mod_id}-${project.mod_version}+mc${project.minecraft_version}-${project.platform}")
+    archivesName.set(project.mod_id)
 }
 
 stonecutter {
@@ -183,7 +211,7 @@ processResources {
                         "issue": project.mod_issue,
                         "license": project.mod_license,
                         "java": JAVA_COMPATIBILITY,
-                        "java_compatibility_level": "JAVA_${MIXIN_COMPATIBILITY.ordinal() + 1}",
+                        "java_compatibility_level": "JAVA_${javaVersion}",
                 ]
                 expand valueMap
             }
@@ -223,6 +251,38 @@ stonecutter {
 jar {
     from(rootProject.file('LICENSE')) {
         rename { "${it}_${project.mod_id}" }
+    }
+}
+
+publishMods {
+    file = version >= "26.1"
+            ? tasks.named("jar").flatMap { it.archiveFile }
+            : tasks.named("remapJar").flatMap { it.archiveFile }
+
+    changelog = getChangelog()
+    type = STABLE
+    modLoaders.add(project.platform)
+
+    def curseforgeToken = System.getenv("CURSEFORGE_TOKEN")
+    def modrinthToken = System.getenv("MODRINTH_TOKEN")
+
+    if (curseforgeToken != null && !curseforgeToken.isEmpty()) {
+        curseforge {
+            projectId = "1368326"
+            accessToken = System.getenv("CURSEFORGE_TOKEN")
+            minecraftVersions = supportedVersions[project.minecraft_version]
+            server = true
+            changelogType = "markdown"
+        }
+    }
+
+    if (modrinthToken != null && !modrinthToken.isEmpty()) {
+        modrinth {
+            projectId = "tt20"
+            accessToken = System.getenv("MODRINTH_TOKEN")
+            minecraftVersions = supportedVersions[project.minecraft_version]
+            environment = SERVER_ONLY
+        }
     }
 }
 

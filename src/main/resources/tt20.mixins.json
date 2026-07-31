@@ -6,6 +6,7 @@
   "plugin": "net.snackbag.tt20.mixin.TT20MixinPlugin",
   "mixins": [
     "CommandsMixin",
+    "AgeableMobMixin",
     "LivingEntityMixin",
     "MinecraftServerMixin",
     "PlayerMixin",

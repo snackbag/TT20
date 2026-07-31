@@ -4,23 +4,12 @@ plugins {
     id 'maven-publish'
 
     // https://github.com/architectury/architectury-loom
-    id 'dev.architectury.loom' version '1.13-SNAPSHOT' apply false
-    id 'dev.architectury.loom-no-remap' version '1.14-SNAPSHOT' apply false
-
-    // https://docs.papermc.io/paper/dev/userdev
-    id 'io.papermc.paperweight.userdev' version '2.0.0-beta.21' apply false
-    // https://github.com/jpenilla/run-task
-    id 'xyz.jpenilla.run-paper' version '3.0.2' apply false
-
-    // https://github.com/Fallen-Breath/yamlang
-    id 'me.fallenbreath.yamlang' version '1.5.0'
+    id 'dev.architectury.loom' version '1.17-SNAPSHOT' apply false
+    id 'dev.architectury.loom-no-remap' version '1.17-SNAPSHOT' apply false
 }
 
 repositories {
     mavenCentral()
-    maven {
-        url 'https://jitpack.io'
-    }
     maven {
         url 'https://www.cursemaven.com'
     }
@@ -30,10 +19,6 @@ repositories {
     maven {
         url 'https://maven.neoforged.net/releases'
     }
-    /*maven {
-        name = 'papermc'
-        url = 'https://repo.papermc.io/repository/maven-public/'
-    }*/
     maven {
         url "https://libraries.minecraft.net"
     }
@@ -46,58 +31,31 @@ repositories {
     }
 }
 
-def use_architectury_loom = project.platform in ['fabric', 'quilt', 'forge', 'neoforge']
-def use_paperweight = project.platform in ['paper']
+def version = sc.current.parsed;
 
-static Number convertVersion(String version) {
-    version = version.split('-')[0]
-    def parts = version.split('\\.')*.toInteger()
-    def major = parts[0] * 10000
-    def minor = parts[1] * 100
-    def patch = parts.size() > 2 ? parts[2] : 0
-    return major + minor + patch // ex. 1.20.1 -> 12001 || 26.1 -> 260100 || 26.1.1 -> 260101
+if (version >= "26.1") {
+    apply plugin: 'dev.architectury.loom-no-remap'
+} else {
+    apply plugin: 'dev.architectury.loom'
 }
 
-def mcVersion = convertVersion(project.minecraft_version)
-
-if (use_architectury_loom) {
-    if (mcVersion >= 260100) {
-        apply plugin: 'dev.architectury.loom-no-remap'
-    } else {
-        apply plugin: 'dev.architectury.loom'
-    }
-}
-if (use_paperweight) {
-    apply plugin: 'io.papermc.paperweight.userdev'
-    apply plugin: 'xyz.jpenilla.run-paper'
-}
-
-String MOD_ICON_PATH = 'assets/tt20/icon.png'
 List<String> MIXIN_CONFIG_PATHS = ['tt20.mixins.json']
-String LANG_DIR = 'assets/tt20/lang'
+
 JavaVersion JAVA_COMPATIBILITY
-JavaVersion MIXIN_COMPATIBILITY
-int javaVersion
-if (mcVersion >= 260001) { // 26.1
+
+if (version >= "26.1") { // 26.1
     JAVA_COMPATIBILITY = JavaVersion.VERSION_25
-    MIXIN_COMPATIBILITY = JavaVersion.VERSION_25
-    javaVersion = 25
-} else if (mcVersion >= 12005) { // 1.20.5
+} else if (version >= "1.20.5") { // 1.20.5
     JAVA_COMPATIBILITY = JavaVersion.VERSION_21
-    MIXIN_COMPATIBILITY = JavaVersion.VERSION_21
-    javaVersion = 21
-} else if (mcVersion >= 11800) { // 1.18
+} else if (version >= "1.18") { // 1.18
     JAVA_COMPATIBILITY = JavaVersion.VERSION_17
-    MIXIN_COMPATIBILITY = JavaVersion.VERSION_17
-    javaVersion = 17
-} else if (mcVersion >= 11700) { // 1.17
+} else if (version >= "1.17") { // 1.17
     JAVA_COMPATIBILITY = JavaVersion.VERSION_16
-    MIXIN_COMPATIBILITY = JavaVersion.VERSION_16
-    javaVersion = 16
 } else {
     JAVA_COMPATIBILITY = JavaVersion.VERSION_1_8
-    MIXIN_COMPATIBILITY = JavaVersion.VERSION_1_8
 }
+
+int javaVersion = JAVA_COMPATIBILITY.ordinal() + 1;
 
 def parchmentVersions = [
         "1.18.2":  "1.18.2:2022.11.06",
@@ -113,41 +71,34 @@ def parchmentVersions = [
 ]
 
 group = project.maven_group
+project.version = "${project.mod_version}+mc${project.minecraft_version}-${project.platform}"
 
-version = "${project.mod_version}+mc${project.minecraft_version}-${project.platform}"
 base {
-    archivesName.set("${project.mod_id}")
+    archivesName.set("${project.mod_id}-${project.mod_version}+mc${project.minecraft_version}-${project.platform}")
 }
 
 stonecutter {
-    constants.match(project.platform, 'fabric', 'quilt', 'forge', 'neoforge', 'paper')
+    constants.match(project.platform, 'fabric', 'quilt', 'forge', 'neoforge')
     swaps["mod_version"] = "\"${project.mod_version}\";".toString()
+    swaps["mod_id"] = "\"${project.mod_id}\";".toString()
 }
 
-if (use_architectury_loom) {
-    configurations {
-        modRuntimeOnly.exclude group: 'net.fabricmc', module: 'fabric-loader'
-    }
+configurations {
+    modRuntimeOnly.exclude group: 'net.fabricmc', module: 'fabric-loader'
 }
 
 dependencies {
-    // loom
-    if (use_architectury_loom) {
-        minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-        if (mcVersion < 260100) {
-            mappings loom.layered() {
-                officialMojangMappings()
-                parchment("org.parchmentmc.data:parchment-${parchmentVersions[project.minecraft_version]}@zip")
-            }
+    if (version < "26.1") {
+        mappings loom.layered() {
+            officialMojangMappings()
+            parchment("org.parchmentmc.data:parchment-${parchmentVersions[project.minecraft_version]}@zip")
         }
-    }
-    if (use_paperweight) {
-        paperweight.paperDevBundle("${project.minecraft_version}-R0.1-SNAPSHOT")
     }
 
     if (project.platform == 'fabric') {
-        if (mcVersion < 260100) {
+        if (version < "26.1") {
             modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
             modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
         } else {
@@ -156,8 +107,8 @@ dependencies {
                 exclude group: "net.fabricmc.fabric-api"
             }
         }
-        if (mcVersion >= 12005) {
-            if (mcVersion < 260100) {
+        if (version >= "1.20.5") { // fabric api for modmenu on 1.20.5+
+            if (version >= "26.1") {
                 runtimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
             } else {
                 modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
@@ -178,33 +129,25 @@ dependencies {
         compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.3"))
         implementation(include("io.github.llamalad7:mixinextras-neoforge:0.5.3"))
     }
-    if (project.platform == 'paper') {
-        compileOnly "io.papermc.paper:paper-api:${project.minecraft_version}-R0.1-SNAPSHOT"
-        paperweight.paperDevBundle("${project.minecraft_version}-R0.1-SNAPSHOT")
-    }
 
     implementation "net.snackbag.shit:shit:${project.shit_version}"
 }
 
-if (use_architectury_loom) {
-    loom {
-        runConfigs.configureEach {
-            // to make sure it generates all "Minecraft Client (:subproject_name)" applications
-            ideConfigGenerated = true
-            vmArgs ['']
-        }
+loom {
+    runConfigs.configureEach {
+        // to make sure it generates all "Minecraft Client (:subproject_name)" applications
+        ideConfigGenerated = true
+        vmArgs ['']
+    }
 
-        if (project.platform == 'forge') {
-            forge {
-                mixinConfigs = MIXIN_CONFIG_PATHS
-            }
+    if (project.platform == 'forge') {
+        forge {
+            mixinConfigs = MIXIN_CONFIG_PATHS
         }
     }
 }
 
 processResources {
-    outputs.upToDateWhen { false }
-
     inputs.property "id", project.mod_id
     inputs.property "name", project.mod_name
     inputs.property "version", project.mod_version
@@ -248,17 +191,6 @@ processResources {
             exclude path
         }
     }
-
-    if (project.platform in ['forge', 'neoforge']) {
-        // forge requires the mod icon file to be at the resource root
-        filesMatching(MOD_ICON_PATH) { f -> f.path = new File(f.path).getName() }
-    }
-}
-
-// https://github.com/Fallen-Breath/yamlang
-yamlang {
-    targetSourceSets = [sourceSets.main]
-    inputDir = LANG_DIR
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -275,12 +207,8 @@ java {
     sourceCompatibility = JAVA_COMPATIBILITY
     targetCompatibility = JAVA_COMPATIBILITY
 
-    // Configure the java toolchain. This allows gradle to auto-provision JDK 21 on systems that only have JDK 11 installed for example.
-    toolchain.languageVersion = JavaLanguageVersion.of(JAVA_COMPATIBILITY.ordinal() + 1)
+    toolchain.languageVersion = JavaLanguageVersion.of(javaVersion)
 
-    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-    // if it is present.
-    // If you remove this line, sources will not be generated.
     withSourcesJar()
 }
 
@@ -295,12 +223,6 @@ stonecutter {
 jar {
     from(rootProject.file('LICENSE')) {
         rename { "${it}_${project.mod_id}" }
-    }
-}
-
-if (use_paperweight) {
-    tasks.assemble {
-        dependsOn(tasks.reobfJar)
     }
 }
 

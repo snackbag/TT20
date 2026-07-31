@@ -256,6 +256,7 @@ jar {
 }
 
 publishMods {
+    displayName = project.mod_version
     file = version >= "26.1"
             ? tasks.named("jar").flatMap { it.archiveFile }
             : tasks.named("remapJar").flatMap { it.archiveFile }

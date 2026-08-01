@@ -27,6 +27,8 @@ for mcdir in versions/*; do
   if [ -f "$jar" ]; then
     cp "$jar" "$out_dir/"
     echo "Copied $mod_name-$mod_version+mc$mcver-$mcplatform"
+    rm -rf "$mcdir/build/libs/"
+    echo "Removed $mcdir/build/libs/"
   else
     echo "Skipping $mod_name-$mod_version+mc$mcver-$mcplatform (not found)"
   fi

@@ -6,6 +6,7 @@
   "plugin": "net.snackbag.tt20.mixin.TT20MixinPlugin",
   "mixins": [
     "CommandsMixin",
+    "AgeableMobMixin",
     "LivingEntityMixin",
     "MinecraftServerMixin",
     "PlayerMixin",
@@ -14,7 +15,6 @@
     "ServerGamePacketListenerImplMixin",
     "ServerPlayerManagerMixin",
     "ServerWatchdogMixin",
-    "accessor.ServerLevelAccessor",
     "accessor.ServerPlayerAccessor",
     "fluid.LavaFluidMixin",
     "fluid.WaterFluidMixin",

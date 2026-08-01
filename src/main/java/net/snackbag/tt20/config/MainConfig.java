@@ -14,6 +14,7 @@ public class MainConfig extends JSONConfiguration {
     private boolean bowAcceleration = true;
     private boolean crossbowAcceleration = true;
     private boolean randomTickSpeedAcceleration = true;
+    private boolean mobTimerAcceleration = true;
     private boolean tntAcceleration = false;
     private boolean vanillaLagback = true;
 
@@ -37,6 +38,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("bow-acceleration", bowAcceleration);
         putIfEmpty("crossbow-acceleration", crossbowAcceleration);
         putIfEmpty("random-tickspeed-acceleration", randomTickSpeedAcceleration);
+        putIfEmpty("mob-timer-acceleration", mobTimerAcceleration);
         putIfEmpty("tnt-acceleration", tntAcceleration);
         putIfEmpty("vanilla-lagback", vanillaLagback);
 
@@ -63,6 +65,7 @@ public class MainConfig extends JSONConfiguration {
         this.bowAcceleration = getAsBooleanOrDefault("bow-acceleration", bowAcceleration);
         this.crossbowAcceleration = getAsBooleanOrDefault("crossbow-acceleration", crossbowAcceleration);
         this.randomTickSpeedAcceleration = getAsBooleanOrDefault("random-tickspeed-acceleration", randomTickSpeedAcceleration);
+        this.mobTimerAcceleration = getAsBooleanOrDefault("mob-acceleration", mobTimerAcceleration);
         this.tntAcceleration = getAsBooleanOrDefault("tnt-acceleration", tntAcceleration);
         this.vanillaLagback = getAsBooleanOrDefault("vanilla-lagback", vanillaLagback);
 
@@ -207,5 +210,13 @@ public class MainConfig extends JSONConfiguration {
 
     public void randomTickSpeedAcceleration(boolean enabled) {
         put("random-tickspeed-acceleration", enabled);
+    }
+
+    public void mobTimerAcceleration(boolean enabled) {
+        put("mob-timer-acceleration", enabled);
+    }
+
+    public boolean mobTimerAcceleration() {
+        return mobTimerAcceleration;
     }
 }

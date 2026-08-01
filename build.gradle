@@ -35,9 +35,9 @@ repositories {
     }
 }
 
-def version = sc.current.parsed;
+def platformVersion = sc.current.parsed;
 
-if (version >= "26.1") {
+if (platformVersion >= "26.1") {
     apply plugin: 'dev.architectury.loom-no-remap'
 } else {
     apply plugin: 'dev.architectury.loom'
@@ -47,13 +47,13 @@ List<String> MIXIN_CONFIG_PATHS = ['tt20.mixins.json']
 
 JavaVersion JAVA_COMPATIBILITY
 
-if (version >= "26.1") { // 26.1
+if (platformVersion >= "26.1") { // 26.1
     JAVA_COMPATIBILITY = JavaVersion.VERSION_25
-} else if (version >= "1.20.5") { // 1.20.5
+} else if (platformVersion >= "1.20.5") { // 1.20.5
     JAVA_COMPATIBILITY = JavaVersion.VERSION_21
-} else if (version >= "1.18") { // 1.18
+} else if (platformVersion >= "1.18") { // 1.18
     JAVA_COMPATIBILITY = JavaVersion.VERSION_17
-} else if (version >= "1.17") { // 1.17
+} else if (platformVersion >= "1.17") { // 1.17
     JAVA_COMPATIBILITY = JavaVersion.VERSION_16
 } else {
     JAVA_COMPATIBILITY = JavaVersion.VERSION_1_8
@@ -119,7 +119,7 @@ configurations {
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-    if (version < "26.1") {
+    if (platformVersion < "26.1") {
         mappings loom.layered() {
             officialMojangMappings()
             parchment("org.parchmentmc.data:parchment-${parchmentVersions[project.minecraft_version]}@zip")
@@ -127,7 +127,7 @@ dependencies {
     }
 
     if (project.platform == 'fabric') {
-        if (version < "26.1") {
+        if (platformVersion < "26.1") {
             modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
             modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
         } else {
@@ -136,8 +136,8 @@ dependencies {
                 exclude group: "net.fabricmc.fabric-api"
             }
         }
-        if (version >= "1.20.5") { // fabric api for modmenu on 1.20.5+
-            if (version >= "26.1") {
+        if (platformVersion >= "1.20.5") { // fabric api for modmenu on 1.20.5+
+            if (platformVersion >= "26.1") {
                 runtimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
             } else {
                 modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
@@ -257,7 +257,8 @@ jar {
 
 publishMods {
     displayName = project.mod_version
-    file = version >= "26.1"
+    version = project.mod_version
+    file = platformVersion >= "26.1"
             ? tasks.named("jar").flatMap { it.archiveFile }
             : tasks.named("remapJar").flatMap { it.archiveFile }
 
@@ -266,26 +267,19 @@ publishMods {
     modLoaders.add(project.platform)
     if (project.platform == "fabric") modLoaders.add("quilt")
 
-    def curseforgeToken = System.getenv("CURSEFORGE_TOKEN")
-    def modrinthToken = System.getenv("MODRINTH_TOKEN")
-
-    if (curseforgeToken != null && !curseforgeToken.isEmpty()) {
-        curseforge {
-            projectId = "1368326"
-            accessToken = System.getenv("CURSEFORGE_TOKEN")
-            minecraftVersions = supportedVersions[project.minecraft_version]
-            server = true
-            changelogType = "markdown"
-        }
+    curseforge {
+        projectId = "1368326"
+        accessToken = System.getenv("CURSEFORGE_TOKEN")
+        minecraftVersions = supportedVersions[project.minecraft_version]
+        server = true
+        changelogType = "markdown"
     }
 
-    if (modrinthToken != null && !modrinthToken.isEmpty()) {
-        modrinth {
-            projectId = "YS3ZignI"
-            accessToken = System.getenv("MODRINTH_TOKEN")
-            minecraftVersions = supportedVersions[project.minecraft_version]
-            environment = SERVER_ONLY
-        }
+    modrinth {
+        projectId = "YS3ZignI"
+        accessToken = System.getenv("MODRINTH_TOKEN")
+        minecraftVersions = supportedVersions[project.minecraft_version]
+        environment = SERVER_ONLY
     }
 }
 

@@ -45,6 +45,7 @@ public class TT20Command {
         sendMessage(context, literal("§7TNT acceleration: " + (TT20.config.tntAcceleration() ? "§aON" : "§cOFF")));
         sendMessage(context, literal("§7Vanilla Lagback: " + (TT20.config.vanillaLagback() ? "§aON" : "§cOFF")));
         sendMessage(context, literal("§7Random tickspeed acceleration: " + (TT20.config.randomTickSpeedAcceleration() ? "§aON" : "§cOFF")));
+        sendMessage(context, literal("§7Mob growth and breeding acceleration: " + (TT20.config.mobTimerAcceleration() ? "§aON" : "§cOFF")));
         sendMessage(context, literal("§7Server watchdog: " + (TT20.config.serverWatchdog() ? "§aON" : "§cOFF")));
         executeTps(context, false);
         sendMessage(context, literal("\n§8Version: §7" + TT20.VERSION));

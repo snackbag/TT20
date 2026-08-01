@@ -50,7 +50,7 @@ public class TT20
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final TPSCalculator TPS_CALCULATOR = new TPSCalculator();
 
-	public static final String VERSION = /*$ mod_version */"0.8.3";
+	public static final String VERSION = /*$ mod_version */"0.8.4";
 	public static final int PATCH = 3;
 
 	public static final MainConfig config = new MainConfig();
@@ -64,9 +64,6 @@ public class TT20
 
 	//? if forge
 	//public TT20()
-
-	//? if paper
-	/* @Override public void onEnable() */
 
 	{
 		LOGGER.info("Starting TT20...");

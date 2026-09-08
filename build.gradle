@@ -26,8 +26,11 @@ repositories {
     maven {
         url "https://libraries.minecraft.net"
     }
-    maven {
+    /*maven {
         url = "https://artifacts.snackbag.net/artifactory/shitlib"
+    }*/
+    maven {
+        url = "https://maven.lemonnik.dev/releases"
     }
     maven {
         name = "Terraformers"
@@ -160,7 +163,7 @@ dependencies {
         implementation(include("io.github.llamalad7:mixinextras-neoforge:0.5.3"))
     }
 
-    implementation "net.snackbag.shit:shit:${project.shit_version}"
+    implementation "net.snackbag:shit:${project.shit_version}"
 }
 
 loom {

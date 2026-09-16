@@ -12,6 +12,7 @@ authors = "${authors}"
 displayTest="IGNORE_ALL_VERSION"
 description = '''${description}'''
 logoFile = "icon.png"
+iconFile = "icon.png"
 
 [[dependencies."${id}"]]
 modId = "minecraft"

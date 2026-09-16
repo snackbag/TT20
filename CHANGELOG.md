@@ -1,5 +1,13 @@
 # TT20 Changelog
 
+0.8.5
+=====
+* Additions
+  - 26.3 support
+
+* Bug fixes
+  - Wrong mob timer key in config
+
 0.8.4
 =====
 * Additions

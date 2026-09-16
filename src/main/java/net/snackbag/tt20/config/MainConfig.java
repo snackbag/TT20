@@ -65,7 +65,7 @@ public class MainConfig extends JSONConfiguration {
         this.bowAcceleration = getAsBooleanOrDefault("bow-acceleration", bowAcceleration);
         this.crossbowAcceleration = getAsBooleanOrDefault("crossbow-acceleration", crossbowAcceleration);
         this.randomTickSpeedAcceleration = getAsBooleanOrDefault("random-tickspeed-acceleration", randomTickSpeedAcceleration);
-        this.mobTimerAcceleration = getAsBooleanOrDefault("mob-acceleration", mobTimerAcceleration);
+        this.mobTimerAcceleration = getAsBooleanOrDefault("mob-timer-acceleration", mobTimerAcceleration);
         this.tntAcceleration = getAsBooleanOrDefault("tnt-acceleration", tntAcceleration);
         this.vanillaLagback = getAsBooleanOrDefault("vanilla-lagback", vanillaLagback);
 

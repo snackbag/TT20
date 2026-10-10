@@ -25,6 +25,9 @@ public abstract class AgeableMobMixin {
         if (missedTicks == 0 || age == 0) return;
 
         if (age < 0) {
+            //? if >=26.1 {
+            if (!mob.canAgeUp()) return;
+            //?}
             mob.setAge(Math.min(0, age + missedTicks));
         } else {
             mob.setAge(Math.max(0, age - missedTicks));

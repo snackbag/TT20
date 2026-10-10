@@ -15,6 +15,8 @@ public class MainConfig extends JSONConfiguration {
     private boolean crossbowAcceleration = true;
     private boolean randomTickSpeedAcceleration = true;
     private boolean mobTimerAcceleration = true;
+    private boolean wardenAcceleration = true;
+    private boolean shriekerAcceleration = true;
     private boolean tntAcceleration = false;
     private boolean vanillaLagback = true;
 
@@ -39,6 +41,8 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("crossbow-acceleration", crossbowAcceleration);
         putIfEmpty("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         putIfEmpty("mob-timer-acceleration", mobTimerAcceleration);
+        putIfEmpty("warden-acceleration", wardenAcceleration);
+        putIfEmpty("shrieker-acceleration", shriekerAcceleration);
         putIfEmpty("tnt-acceleration", tntAcceleration);
         putIfEmpty("vanilla-lagback", vanillaLagback);
 
@@ -66,6 +70,8 @@ public class MainConfig extends JSONConfiguration {
         this.crossbowAcceleration = getAsBooleanOrDefault("crossbow-acceleration", crossbowAcceleration);
         this.randomTickSpeedAcceleration = getAsBooleanOrDefault("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         this.mobTimerAcceleration = getAsBooleanOrDefault("mob-timer-acceleration", mobTimerAcceleration);
+        this.wardenAcceleration = getAsBooleanOrDefault("warden-acceleration", wardenAcceleration);
+        this.shriekerAcceleration = getAsBooleanOrDefault("shrieker-acceleration", shriekerAcceleration);
         this.tntAcceleration = getAsBooleanOrDefault("tnt-acceleration", tntAcceleration);
         this.vanillaLagback = getAsBooleanOrDefault("vanilla-lagback", vanillaLagback);
 
@@ -218,5 +224,21 @@ public class MainConfig extends JSONConfiguration {
 
     public boolean mobTimerAcceleration() {
         return mobTimerAcceleration;
+    }
+
+    public void wardenAcceleration(boolean enabled) {
+        put("warden-acceleration", enabled);
+    }
+
+    public boolean wardenAcceleration() {
+        return wardenAcceleration;
+    }
+
+    public void shriekerAcceleration(boolean enabled) {
+        put("shrieker-acceleration", enabled);
+    }
+
+    public boolean shriekerAcceleration() {
+        return shriekerAcceleration;
     }
 }

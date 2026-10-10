@@ -12,6 +12,8 @@
     "PlayerMixin",
     "PortalProcessorMixin",
     "PrimedTntMixin",
+    "SculkShriekerBlockEntityMixin",
+    "WardenAiMixin",
     "ServerGamePacketListenerImplMixin",
     "ServerPlayerManagerMixin",
     "ServerWatchdogMixin",

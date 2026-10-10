@@ -21,10 +21,13 @@ public class TT20MixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         //? if <1.21 {
-        /*return !mixinClassName.equals("net.snackbag.tt20.mixin.PortalProcessorMixin");
-        *///?} else {
+        /*if (mixinClassName.equals("net.snackbag.tt20.mixin.PortalProcessorMixin")) return false;
+        *///?}
+        //? if <1.19 {
+        /*if (mixinClassName.equals("net.snackbag.tt20.mixin.WardenAiMixin")) return false;
+        if (mixinClassName.equals("net.snackbag.tt20.mixin.SculkShriekerBlockEntityMixin")) return false;
+        *///?}
         return true;
-        //?}
     }
 
     @Override

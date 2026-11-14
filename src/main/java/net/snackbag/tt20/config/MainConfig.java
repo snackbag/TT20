@@ -15,7 +15,10 @@ public class MainConfig extends JSONConfiguration {
     private boolean crossbowAcceleration = true;
     private boolean randomTickSpeedAcceleration = true;
     private boolean mobTimerAcceleration = true;
+    private boolean wardenAcceleration = true;
+    private boolean shriekerAcceleration = true;
     private boolean tntAcceleration = false;
+    private boolean iframeAcceleration = true;
     private boolean vanillaLagback = true;
 
     private boolean serverWatchdog = true;
@@ -39,7 +42,10 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("crossbow-acceleration", crossbowAcceleration);
         putIfEmpty("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         putIfEmpty("mob-timer-acceleration", mobTimerAcceleration);
+        putIfEmpty("warden-acceleration", wardenAcceleration);
+        putIfEmpty("shrieker-acceleration", shriekerAcceleration);
         putIfEmpty("tnt-acceleration", tntAcceleration);
+        putIfEmpty("iframe-acceleration", iframeAcceleration);
         putIfEmpty("vanilla-lagback", vanillaLagback);
 
         putIfEmpty("automatic-updater", automaticUpdater);
@@ -66,7 +72,10 @@ public class MainConfig extends JSONConfiguration {
         this.crossbowAcceleration = getAsBooleanOrDefault("crossbow-acceleration", crossbowAcceleration);
         this.randomTickSpeedAcceleration = getAsBooleanOrDefault("random-tickspeed-acceleration", randomTickSpeedAcceleration);
         this.mobTimerAcceleration = getAsBooleanOrDefault("mob-timer-acceleration", mobTimerAcceleration);
+        this.wardenAcceleration = getAsBooleanOrDefault("warden-acceleration", wardenAcceleration);
+        this.shriekerAcceleration = getAsBooleanOrDefault("shrieker-acceleration", shriekerAcceleration);
         this.tntAcceleration = getAsBooleanOrDefault("tnt-acceleration", tntAcceleration);
+        this.iframeAcceleration = getAsBooleanOrDefault("iframe-acceleration", iframeAcceleration);
         this.vanillaLagback = getAsBooleanOrDefault("vanilla-lagback", vanillaLagback);
 
         this.automaticUpdater = getAsBooleanOrDefault("automatic-updater", automaticUpdater);
@@ -116,9 +125,7 @@ public class MainConfig extends JSONConfiguration {
         put("fluid-acceleration", enabled);
     }
 
-    public boolean fluidAcceleration() {
-        return fluidAcceleration;
-    }
+    public boolean fluidAcceleration() { return fluidAcceleration; }
 
     public void pickupAcceleration(boolean enabled) {
         put("pickup-acceleration", enabled);
@@ -200,6 +207,10 @@ public class MainConfig extends JSONConfiguration {
         return tntAcceleration;
     }
 
+    public void iframeAcceleration(boolean enabled) { put("iframe-acceleration", enabled); }
+
+    public boolean iframeAcceleration() { return iframeAcceleration; }
+
     public void vanillaLagback(boolean enabled) {
         put("vanilla-lagback", enabled);
     }
@@ -218,5 +229,21 @@ public class MainConfig extends JSONConfiguration {
 
     public boolean mobTimerAcceleration() {
         return mobTimerAcceleration;
+    }
+
+    public void wardenAcceleration(boolean enabled) {
+        put("warden-acceleration", enabled);
+    }
+
+    public boolean wardenAcceleration() {
+        return wardenAcceleration;
+    }
+
+    public void shriekerAcceleration(boolean enabled) {
+        put("shrieker-acceleration", enabled);
+    }
+
+    public boolean shriekerAcceleration() {
+        return shriekerAcceleration;
     }
 }

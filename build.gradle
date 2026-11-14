@@ -114,6 +114,7 @@ stonecutter {
     constants.match(project.platform, 'fabric', 'quilt', 'forge', 'neoforge')
     swaps["mod_version"] = "\"${project.mod_version}\";".toString()
     swaps["mod_id"] = "\"${project.mod_id}\";".toString()
+    swaps["mod_patch"] = "${project.mod_patch};".toString()
 }
 
 configurations {

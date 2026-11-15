@@ -1,7 +1,7 @@
 package net.snackbag.tt20.mixin;
 
 import com.mojang.brigadier.CommandDispatcher;
-//? >=1.19.2
+//? if >=1.19.2
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;

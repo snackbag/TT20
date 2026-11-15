@@ -22,7 +22,7 @@ import net.minecraft.resources.Identifier;
 /*import net.minecraft.resources.ResourceLocation;
 *///?}
 
-//? 1.18.2
+//? if 1.18.2
 //import net.minecraft.network.chat.TextComponent;
 
 import net.snackbag.tt20.config.BlockEntityMaskConfig;
@@ -78,14 +78,14 @@ public class TT20
 		});
 	}
 
-	//? >=1.21.11 {
+	//? if >=1.21.11 {
 	public static Identifier id(String namespace, String path) {
 	//?} else {
 	/*public static ResourceLocation id(String namespace, String path) {
 	*///?}
 		//? if >=1.21.11 {
 		return Identifier.tryBuild(namespace, path);
-		 //?} else if >1.18.2 {
+		 //?} elif >1.18.2 {
 		/*return ResourceLocation.tryBuild(namespace, path);
 		 *///?} else {
 		/*return new ResourceLocation(namespace, path);

@@ -3,7 +3,7 @@ package net.snackbag.tt20;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 
-//? <=1.18.2
+//? if <=1.18.2
 //import net.minecraft.network.chat.TextComponent;
 
 import net.minecraft.commands.CommandSourceStack;

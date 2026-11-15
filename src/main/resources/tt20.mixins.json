@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "net.snackbag.tt20.mixin",
   "compatibilityLevel": "${java_compatibility_level}",
-  "plugin": "net.snackbag.tt20.mixin.TT20MixinPlugin",
+  "plugin": "net.snackbag.tt20.TT20MixinPlugin",
   "mixins": [
     "AgeableMobMixin",
     "CommandsMixin",

@@ -1,5 +1,3 @@
-import java.util.regex.Pattern
-
 plugins {
     id 'java'
 
@@ -90,17 +88,71 @@ def supportedVersions = [
         "26.3":    [ "26.3" ]
 ]
 
-def getChangelog = {
-    def changelog = rootProject.file("CHANGELOG.md").text
-
-    def pattern = ~/(?ms)^${Pattern.quote(project.mod_version)}\R=+\R(.*?)(?=^\S[^\r\n]*\R=+|\z)/
-    def matcher = changelog =~ pattern
-
-    if (!matcher.find()) {
-        throw new GradleException("Couldn't find changelog for version ${project.mod_version}")
+def parseChangelog = { ->
+    def file = rootProject.file("CHANGELOG.md")
+    if (!file.exists() || file.text.isEmpty()) {
+        throw new GradleException("CHANGELOG.md is empty or missing")
     }
 
-    matcher.group(1).trim()
+    def lines = file.readLines()
+    def entries = []
+
+    for (int i = 0; i < lines.size(); i++) {
+        boolean isHeader = i + 1 < lines.size() && lines[i] ==~ /^\S.*/ && lines[i + 1] ==~ /^=+\s*$/
+
+        if (isHeader) {
+            entries << [version: lines[i].trim(), patch: -1, body: []]
+            i++
+        } else if (entries) {
+            entries.last().body << lines[i]
+        }
+    }
+
+    entries.each { e ->
+        e.changelog = e.body.join("\n").trim()
+        e.remove("body")
+
+        def p = e.changelog =~ /\[PATCH\s+(\d+)\]/
+        if (p.find()) e.patch = p.group(1) as int
+    }
+
+    entries
+}
+
+def getChangelogEntry = { ->
+    def entry = parseChangelog().find { it.version == project.mod_version }
+    if (entry == null) {
+        throw new GradleException("Couldn't find changelog for version ${project.mod_version}")
+    }
+    entry
+}
+
+tasks.register("checkChangelogPatch") {
+    group = "verification"
+    description = "Official lemon stupidity preventer"
+
+    doLast {
+        def versions = parseChangelog()
+        def curVer = project.mod_version
+        def curPatch = project.mod_patch as int
+
+        def idx = versions.findIndexOf { it.version == curVer }
+        if (idx < 0) throw new GradleException("Version ${curVer} not found in CHANGELOG.md")
+
+        def cur = versions[idx]
+        if (cur.patch >= 0 && cur.patch != curPatch) {
+            throw new GradleException("Patch mismatch: CHANGELOG.md has [PATCH ${cur.patch}] but gradle.properties has mod_patch=${curPatch}")
+        }
+
+        def prev = idx + 1 < versions.size() ? versions[idx + 1] : null
+        if (prev != null && curPatch <= prev.patch) {
+            throw new GradleException("Patch must increase: ${prev.version} had [PATCH ${prev.patch}], ${curVer} has [PATCH ${curPatch}]")
+        }
+    }
+}
+
+tasks.named("build") {
+    dependsOn("checkChangelogPatch")
 }
 
 group = project.maven_group
@@ -267,7 +319,7 @@ publishMods {
             ? tasks.named("jar").flatMap { it.archiveFile }
             : tasks.named("remapJar").flatMap { it.archiveFile }
 
-    changelog = getChangelog()
+    changelog = getChangelogEntry().changelog
     type = STABLE
     modLoaders.add(project.platform)
     if (project.platform == "fabric") modLoaders.add("quilt")

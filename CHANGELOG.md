@@ -1,7 +1,21 @@
 # TT20 Changelog
 
+0.9.0
+=====
+[PATCH 4]
+
+* Additions
+  - Warden despawn acceleration
+  - Shrieker cooldown acceleration
+  - I-Frame cooldown acceleration
+
+* Bug fixes
+  - Golden dandelion age freeze
+
 0.8.5
 =====
+[PATCH 3]
+
 * Additions
   - 26.3 support
 
@@ -10,6 +24,8 @@
 
 0.8.4
 =====
+[PATCH 3]
+
 * Additions
   - Mob grow & breed time acceleration
 
@@ -21,18 +37,24 @@
 
 0.8.3b
 ======
+[PATCH 3]
+
 **26.1.1 only**
 * Metadata
   - Mark as 26.2.X compatible
 
 0.8.3a
 ======
+[PATCH 3]
+
 **1.19.2 only**
 * Hotfix
   - Command register mixin signature fix
 
 0.8.3
 =====
+[PATCH 3]
+
 * Additions
 
 
@@ -45,6 +67,8 @@
 
 0.8.0
 =====
+[PATCH 0]
+
 * Additions
   - Now available from 1.18.2 to 26.1.2!
   - Added (cross)bow acceleration

@@ -29,7 +29,11 @@ public abstract class LivingEntityMixin {
         }
     }
 
+    //? if >=26.1 {
     @ModifyConstant(method = "hurtServer", constant = @Constant(intValue = 20, ordinal = 0))
+    //?} else {
+    /*@ModifyConstant(method = "hurt", constant = @Constant(intValue = 20, ordinal = 0))
+    *///?}
     private int tt20$IframeFix(int constant) {
         if (!TT20.config.enabled() || !TT20.config.iframeAcceleration()) return constant;
         return TPSUtil.tt20(constant, true);

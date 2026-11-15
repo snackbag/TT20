@@ -1,5 +1,16 @@
 # TT20 Changelog
 
+0.9.2
+=====
+[PATCH 6]
+
+* Additions
+  - Item cooldown acceleration
+
+* Changes
+  - Item use cooldown acceleration from eating acceleration
+
+
 0.9.1
 =====
 [PATCH 5]

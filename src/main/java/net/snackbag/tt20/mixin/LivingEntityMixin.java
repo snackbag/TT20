@@ -7,7 +7,9 @@ import net.snackbag.tt20.util.TPSUtil;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
@@ -27,7 +29,13 @@ public abstract class LivingEntityMixin {
         }
     }
 
-    //? if >=26.1 {
+    //? if >=26.3 {
+    /*@Redirect(
+            method = "hurtServer",
+            at = @At(value = "FIELD",
+                    target = "Lnet/minecraft/world/entity/LivingEntity;damageCooldownTime:I",
+                    opcode = Opcodes.PUTFIELD))
+    *///?} elif >=26.1 {
     @Redirect(
             method = "hurtServer",
             at = @At(value = "FIELD",
@@ -41,6 +49,10 @@ public abstract class LivingEntityMixin {
                     opcode = Opcodes.PUTFIELD))
     *///?}
     private void tt20$iframe(LivingEntity instance, int value) {
+        //? if >=26.3 {
+        /*instance.damageCooldownTime = (!TT20.config.enabled() || !TT20.config.iframeAcceleration()) ? value : TPSUtil.tt20(value, true);
+        *///?} else {
         instance.invulnerableTime = (!TT20.config.enabled() || !TT20.config.iframeAcceleration()) ? value : TPSUtil.tt20(value, true);
+        //?}
     }
 }

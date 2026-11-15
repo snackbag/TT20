@@ -19,6 +19,7 @@ public class MainConfig extends JSONConfiguration {
     private boolean shriekerAcceleration = true;
     private boolean tntAcceleration = false;
     private boolean iframeAcceleration = true;
+    private boolean itemCooldownAcceleration = true;
     private boolean vanillaLagback = true;
 
     private boolean serverWatchdog = true;
@@ -46,6 +47,7 @@ public class MainConfig extends JSONConfiguration {
         putIfEmpty("shrieker-acceleration", shriekerAcceleration);
         putIfEmpty("tnt-acceleration", tntAcceleration);
         putIfEmpty("iframe-acceleration", iframeAcceleration);
+        putIfEmpty("item-cooldown-acceleration", itemCooldownAcceleration);
         putIfEmpty("vanilla-lagback", vanillaLagback);
 
         putIfEmpty("automatic-updater", automaticUpdater);
@@ -76,6 +78,7 @@ public class MainConfig extends JSONConfiguration {
         this.shriekerAcceleration = getAsBooleanOrDefault("shrieker-acceleration", shriekerAcceleration);
         this.tntAcceleration = getAsBooleanOrDefault("tnt-acceleration", tntAcceleration);
         this.iframeAcceleration = getAsBooleanOrDefault("iframe-acceleration", iframeAcceleration);
+        this.itemCooldownAcceleration = getAsBooleanOrDefault("item-cooldown-acceleration", itemCooldownAcceleration);
         this.vanillaLagback = getAsBooleanOrDefault("vanilla-lagback", vanillaLagback);
 
         this.automaticUpdater = getAsBooleanOrDefault("automatic-updater", automaticUpdater);
@@ -246,4 +249,13 @@ public class MainConfig extends JSONConfiguration {
     public boolean shriekerAcceleration() {
         return shriekerAcceleration;
     }
+
+    public void itemCooldownAcceleration(boolean enabled) {
+        put("item-cooldown-acceleration", enabled);
+    }
+
+    public boolean itemCooldownAcceleration() {
+        return itemCooldownAcceleration;
+    }
+
 }

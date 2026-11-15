@@ -214,11 +214,6 @@ dependencies {
 
         compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.3"))
         implementation(include("io.github.llamalad7:mixinextras-neoforge:0.5.3"))
-
-        if (platformVersion == "1.21.1") {
-            compileOnly "maven.modrinth:no-mans-land:${project.no_mans_land_version}"
-            compileOnly "maven.modrinth:biolith:${project.biolith_version}"
-        }
     }
 
     implementation "net.snackbag:shit:${project.shit_version}"
@@ -227,7 +222,7 @@ dependencies {
 loom {
     runConfigs.configureEach {
         // to make sure it generates all "Minecraft Client (:subproject_name)" applications
-        ideConfigGenerated = true
+        ideConfigGenerated = false
         vmArgs ['']
     }
 

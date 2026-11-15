@@ -1,5 +1,12 @@
 # TT20 Changelog
 
+0.9.1
+=====
+[PATCH 5]
+
+* Bug fixes
+  - I-Frame acceleration mixin crash
+
 0.9.0
 =====
 [PATCH 4]

@@ -21,7 +21,6 @@
     "accessor.ServerPlayerAccessor",
     "item.BowItemMixin",
     "item.ItemCooldownsMixin",
-    "item.CrossbowItemMixin",
     "item.ItemEntityMixin",
     "item.ItemStackMixin",
     "world.BlockBehaviourMixin",

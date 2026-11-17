@@ -231,6 +231,30 @@ loom {
             mixinConfigs = MIXIN_CONFIG_PATHS
         }
     }
+
+    def mixinDebugArgs = [
+            '-Dmixin.debug.export=true',
+            '-Dmixin.debug.verify=true',
+            '-Dmixin.debug.countInjections=true',
+            '-Dmixin.checks.interfaces=true',
+            '-Dmixin.dumpTargetOnFailure=true',
+    ]
+
+    runs {
+        mixinExportClient {
+            client()
+            name = "Minecraft Client (Mixin Export)"
+            ideConfigGenerated = false
+            vmArgs mixinDebugArgs
+        }
+
+        mixinExportServer {
+            server()
+            name = "Minecraft Server (Mixin Export)"
+            ideConfigGenerated = true
+            vmArgs mixinDebugArgs
+        }
+    }
 }
 
 processResources {

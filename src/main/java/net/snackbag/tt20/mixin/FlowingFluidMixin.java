@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin({WaterFluid.class, LavaFluid.class})
 public abstract class FlowingFluidMixin {
     @ModifyReturnValue(method = "getTickDelay", at = @At("RETURN"))
-    private int tickRateTT20(int original) {
+    private int tt20$fluid(int original) {
         if (!TT20.config.enabled() || !TT20.config.fluidAcceleration()) return original;
         return TPSUtil.tt20(original, true);
     }

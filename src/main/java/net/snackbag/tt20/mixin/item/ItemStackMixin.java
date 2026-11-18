@@ -19,7 +19,7 @@ public abstract class ItemStackMixin {
 
     @ModifyReturnValue(method = "getUseDuration", at = @At(value = "RETURN"))
     //? if >1.20.5 {
-    private int onGetMaxUseTime(int original, @Local(argsOnly = true) LivingEntity livingEntity) {
+    private int tt20$itemUse(int original, @Local(argsOnly = true) LivingEntity livingEntity) {
     //?} else {
     /*private int onGetMaxUseTime(int original) {
     *///?}

@@ -23,15 +23,15 @@ public abstract class ServerPlayerManagerMixin {
 
     @Inject(method = "placeNewPlayer", at = @At("TAIL"))
     //? if >1.20.1 {
-    private void sendPlayerUpdateMessageIfCorrectPermissions(Connection connection, ServerPlayer player, CommonListenerCookie cookie, CallbackInfo ci) {
+    private void tt20$updater(Connection connection, ServerPlayer player, CommonListenerCookie cookie, CallbackInfo ci) {
     //?} else {
-    /*private void sendPlayerUpdateMessageIfCorrectPermissions(Connection netManager, ServerPlayer player, CallbackInfo ci) {
+    /*private void tt20$updater(Connection netManager, ServerPlayer player, CallbackInfo ci) {
     *///?}
         if (!TT20.config.automaticUpdater() || !ModUpdater.hasUpdate) return;
         //? if >=1.21.9 {
-        if (((ServerPlayerAccessor) player).getServer().getPlayerList().isOp(player.nameAndId())) {
+        if (((ServerPlayerAccessor) player).tt20$getServer().getPlayerList().isOp(player.nameAndId())) {
         //?} else {
-        /*if (player.getServer().getPlayerList().isOp(player.getGameProfile())) {
+        /*if (player.tt20$getServer().getPlayerList().isOp(player.getGameProfile())) {
         *///?}
             sendMessage(player, literal(ModUpdater.updateMessage));
             sendMessage(player, literal("§oOnly operators can see this message"));

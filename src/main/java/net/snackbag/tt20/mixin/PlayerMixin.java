@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class PlayerMixin {
     //? if <=1.20.5 {
     /*@ModifyReturnValue(method = "getPortalWaitTime", at = @At("RETURN"))
-    private int netherPortalTimeTT20(int original) {
+    private int tt20$portal(int original) {
         if (!TT20.config.enabled() || !TT20.config.portalAcceleration()) return original;
         //? if >1.19.2 {
         if (((Entity)(Object)this).level().isClientSide()) return original;
@@ -28,7 +28,7 @@ public abstract class PlayerMixin {
     *///?}
 
     @ModifyExpressionValue(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;sleepCounter:I", opcode = Opcodes.GETFIELD))
-    private int tickTT20(int original) {
+    private int tt20$sleep(int original) {
         Player player = (Player)(Object)this;
 
         if (!TT20.config.enabled() || !TT20.config.sleepingAcceleration()) return original;

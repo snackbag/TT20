@@ -18,7 +18,7 @@ public abstract class LivingEntityMixin {
     @Shadow protected abstract void tickEffects();
 
     @Inject(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;tickEffects()V"))
-    private void fixPotionDelayTick(CallbackInfo ci) {
+    private void tt20$effect(CallbackInfo ci) {
         if (!TT20.config.enabled() || !TT20.config.potionEffectAcceleration()) return;
         //? if >=1.20.1 {
         if (((Entity)(Object)this).level().isClientSide()) return;
@@ -41,7 +41,7 @@ public abstract class LivingEntityMixin {
             at = @At(value = "CONSTANT", args = "floatValue=10.0")
     )
     *///?}
-    private float tt20$invincibleThreshold(float original) {
+    private float tt20$iframeThreshold(float original) {
         if (!TT20.config.enabled() || !TT20.config.iframeAcceleration()) return original;
         return TPSUtil.tt20(original, true);
     }

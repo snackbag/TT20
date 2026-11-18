@@ -30,7 +30,7 @@ public class ServerGamePacketListenerImplMixin {
     //? if >=26.3 {
     /*private void onMovedTooQuickly(double requestedX, double requestedY, double requestedZ, float requestedYRot, float requestedXRot, boolean isOnGround, boolean horizontalCollision, CallbackInfo ci) {
     *///?} else {
-    private void onMovedTooQuickly(ServerboundMovePlayerPacket packet, CallbackInfo ci) {
+    private void tt20$lagback(ServerboundMovePlayerPacket packet, CallbackInfo ci) {
      //?}
         if (!TT20.config.vanillaLagback()) ci.cancel();
     }

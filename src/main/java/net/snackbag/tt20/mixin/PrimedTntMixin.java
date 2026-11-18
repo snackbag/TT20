@@ -14,7 +14,7 @@ public class PrimedTntMixin {
             at = @At(value = "STORE"),
             ordinal = 0
     )
-    private int modifyFuseDecrement(int original) {
+    private int tt20$tnt(int original) {
         return TT20.config.tntAcceleration() ? original + TT20.TPS_CALCULATOR.applicableMissedTicks() : original;
     }
 }

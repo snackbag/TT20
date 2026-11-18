@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(BlockBehaviour.class)
 public abstract class BlockBehaviourMixin {
     @ModifyReturnValue(method = "getDestroyProgress", at = @At("RETURN"))
-    private float onBlockBreakingCalc(float original, @Local(argsOnly = true) Player player) {
+    private float tt20$blockBreak(float original, @Local(argsOnly = true) Player player) {
         if (!TT20.config.enabled() || !TT20.config.blockBreakingAcceleration()) return original;
         //? if >=1.20.1 {
         if (player.level().isClientSide()) return original;

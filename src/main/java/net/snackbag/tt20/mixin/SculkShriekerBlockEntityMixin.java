@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 @Mixin(SculkShriekerBlockEntity.class)
 public class SculkShriekerBlockEntityMixin {
     @ModifyConstant(method = "shriek", constant = @Constant(intValue = 90))
-    private int accelerateWarningTimer(int original) {
+    private int tt20$shrieker(int original) {
         if (!TT20.config.enabled() || !TT20.config.shriekerAcceleration()) return original;
         return TPSUtil.tt20(original, true);
     }
@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ModUpdater.class)
 public class SculkShriekerBlockEntityMixin {
     @Inject(method = "check", at = @At("HEAD"))
-    private static void onInitialize(CallbackInfo ci) {
+    private static void tt20$shrieker(CallbackInfo ci) {
         throw new RuntimeException("Tried to load SculkShriekerBlockEntityMixin on <1.19");
     }
 }

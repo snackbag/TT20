@@ -17,7 +17,7 @@ public class ItemCooldownsMixin {
     *///?} else {
     /*@ModifyVariable(method = "addCooldown(Lnet/minecraft/world/item/Item;I)V", at = @At("HEAD"), argsOnly = true)
     *///?}
-    private int onCooldownStarted(int time) {
+    private int tt20$itemCooldown(int time) {
         if (!((Object) this instanceof ServerItemCooldowns)) return time;
         if (!TT20.config.enabled() || !TT20.config.itemCooldownAcceleration()) return time;
 

@@ -17,7 +17,7 @@ public abstract class PortalProcessorMixin {
     @Shadow private int portalTime;
 
     @ModifyExpressionValue(method = "processPortalTeleportation", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/PortalProcessor;portalTime:I", opcode = Opcodes.GETFIELD))
-    private int runMissedTicks(int original, @Local ServerLevel world) {
+    private int tt20$portal(int original, @Local ServerLevel world) {
         if (!TT20.config.enabled() || !TT20.config.portalAcceleration()) return original;
         if (world.isClientSide()) return original;
 
@@ -42,7 +42,7 @@ public abstract class PortalProcessorMixin {
     @Shadow private int portalTime;
 
     @ModifyExpressionValue(method = "processPortalTeleportation", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/PortalProcessor;portalTime:I", opcode = Opcodes.GETFIELD))
-    private int runMissedTicks(int original, @Local ServerLevel level) {
+    private int tt20$portal(int original, @Local ServerLevel level) {
         if (!TT20.config.enabled() || !TT20.config.portalAcceleration()) return original;
         if (level.isClientSide()) return original;
 
@@ -61,7 +61,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ModUpdater.class)
 public class PortalProcessorMixin {
     @Inject(method = "check", at = @At("HEAD"))
-    private static void onInitialize(CallbackInfo ci) {
+    private static void tt20$portal(CallbackInfo ci) {
         throw new RuntimeException("Tried to load PortalProcessorMixin on <1.21");
     }
 }

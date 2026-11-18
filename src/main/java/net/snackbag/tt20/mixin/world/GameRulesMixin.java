@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class GameRulesMixin {
     //? if (>=1.21.11) {
     @ModifyReturnValue(method = "get", at = @At("RETURN"))
-    private Object randomTickSpeedAcceleration(Object original, @Local(argsOnly = true) GameRule<?> gameRule) {
+    private Object tt20$randomTickSpeed(Object original, @Local(argsOnly = true) GameRule<?> gameRule) {
     //?} else {
     /*@ModifyReturnValue(method = "getInt", at = @At("RETURN"))
     private int randomTickSpeedAcceleration(int original, @Local(argsOnly = true) GameRules.Key<GameRules.IntegerValue> key) {

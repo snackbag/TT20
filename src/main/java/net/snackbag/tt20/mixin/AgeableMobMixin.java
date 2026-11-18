@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AgeableMob.class)
 public abstract class AgeableMobMixin {
     @Inject(method = "aiStep", at = @At("TAIL"))
-    private void accelerateAge(CallbackInfo ci) {
+    private void tt20$age(CallbackInfo ci) {
         AgeableMob mob = (AgeableMob) (Object) this;
 
         if (!TT20.config.enabled() || !TT20.config.mobTimerAcceleration()) return;

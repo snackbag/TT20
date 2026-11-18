@@ -18,7 +18,7 @@ public class ServerWatchdogMixin {
             /*at = @At(value = "INVOKE", target = "Lnet/minecraft/Util;getMillis()J")
             *///?}
     )
-    private long disableWatchdog(long original) {
+    private long tt20$watchdog(long original) {
         return TT20.config.serverWatchdog() ? original : 0;
     }
 }

@@ -16,7 +16,7 @@ iconFile = "icon.png"
 
 [[dependencies."${id}"]]
 modId = "minecraft"
-mandatory = true
+${neoforge_dependency_type}
 versionRange = "${minecraft_dependency}"
 ordering = "NONE"
 side="BOTH"

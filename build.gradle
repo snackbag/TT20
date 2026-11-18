@@ -276,6 +276,10 @@ processResources {
             good_files.addAll(paths)
         }
     }
+    if (project.platform == 'neoforge' && platformVersion < "1.20.5") {
+        rename { it == 'neoforge.mods.toml' ? 'mods.toml' : it }
+    }
+
     all_files.forEach { it2 ->
         def path = it2 as String
         if (good_files.contains(path)) {
@@ -285,6 +289,7 @@ processResources {
                         "name": project.mod_name,
                         "version": project.mod_version,
                         "minecraft_dependency": project.minecraft_dependency,
+                        "neoforge_dependency_type": (project.platform == 'neoforge' && platformVersion >= "1.20.5") ? 'type = "required"' : 'mandatory = true',
 
                         "description": project.mod_description,
                         "authors": project.mod_authors,

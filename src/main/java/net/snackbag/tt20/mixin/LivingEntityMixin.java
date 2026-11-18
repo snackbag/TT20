@@ -30,7 +30,7 @@ public abstract class LivingEntityMixin {
         }
     }
 
-    //? if >=26.1 {
+    //? if >=1.21.2 {
     @ModifyExpressionValue(
             method = "hurtServer",
             at = @At(value = "CONSTANT", args = "floatValue=10.0")
@@ -52,7 +52,7 @@ public abstract class LivingEntityMixin {
             at = @At(value = "FIELD",
                     target = "Lnet/minecraft/world/entity/LivingEntity;damageCooldownTime:I",
                     opcode = Opcodes.PUTFIELD))
-    *///?} elif >=26.1 {
+    *///?} elif >=1.21.2 {
     @Redirect(
             method = "hurtServer",
             at = @At(value = "FIELD",

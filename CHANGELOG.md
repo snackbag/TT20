@@ -1,5 +1,17 @@
 # TT20 Changelog
 
+0.9.3
+=====
+[PATCH 7]
+
+* Additions
+  - [DEV] Mixin export configuration
+
+* Bug fixes
+  - Fixed quick tick-based damage (#93)
+  - Fixed crash caused by item use acceleration mixin (#92)
+  - Probably fixed bow draw acceleration (#85)
+
 0.9.2
 =====
 [PATCH 6]

@@ -5,25 +5,22 @@ import net.minecraft.world.item.ServerItemCooldowns;
 import net.snackbag.tt20.TT20;
 import net.snackbag.tt20.util.TPSUtil;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(ItemCooldowns.class)
 public class ItemCooldownsMixin {
-    @Shadow
-    private int tickCount;
-
-    //? if >=26.1.1 {
-    @ModifyArg(method = "addCooldown", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemCooldowns;addCooldown(Lnet/minecraft/resources/Identifier;I)V"), index = 1)
-    //?} else {
-    /*@ModifyArg(method = "addCooldown", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemCooldowns$CooldownInstance;<init>(II)V"), index = 1)
+    //? if >=1.21.11 {
+    @ModifyVariable(method = "addCooldown(Lnet/minecraft/resources/Identifier;I)V", at = @At("HEAD"), argsOnly = true)
+    //?} elif >=1.21.2 {
+    /*@ModifyVariable(method = "addCooldown(Lnet/minecraft/resources/ResourceLocation;I)V", at = @At("HEAD"), argsOnly = true)
+    *///?} else {
+    /*@ModifyVariable(method = "addCooldown(Lnet/minecraft/world/item/Item;I)V", at = @At("HEAD"), argsOnly = true)
     *///?}
-    private int onCooldownStarted(int endTime) {
-        if (!((Object) this instanceof ServerItemCooldowns)) return endTime;
-        if (!TT20.config.enabled() || !TT20.config.itemCooldownAcceleration()) return endTime;
+    private int onCooldownStarted(int time) {
+        if (!((Object) this instanceof ServerItemCooldowns)) return time;
+        if (!TT20.config.enabled() || !TT20.config.itemCooldownAcceleration()) return time;
 
-        int ticks = endTime - this.tickCount;
-        return this.tickCount + TPSUtil.tt20(ticks, true);
+        return TPSUtil.tt20(time, true);
     }
 }
